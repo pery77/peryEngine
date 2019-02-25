@@ -15,7 +15,7 @@ out vec4 finalColor;
 void main()
 {
 
-    vec4 source = texture(texture0, fragTexCoord);
+    vec4 source = texture(texture0, vec2(fragTexCoord.s , 1 - fragTexCoord.t));
 	vec4 brightColor;
 
 	float brightness = dot(source.rgb, vec3(0.2126, 0.7152, 0.0722));
