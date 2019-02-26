@@ -9,16 +9,8 @@ Glow::Glow(int screenWidth, int screenHeight, int screenScale)
 	
 	SetFilter(0);
 
-	Glow::screenScale = screenScale;
+	Glow::SetValues(0.5, 1, 1, 1);
 
-	float brightThreshold[1] = { 0.5 };
-	float brightPower[1] = { 3.0 };
-	float blurPower[1] = {1.05 };
-
-	SetShaderValue(bright, thresholdLoc, brightThreshold, 1);
-	SetShaderValue(bright, powerLoc, brightPower, 1);
-
-	SetShaderValue(blur, blurpowerLoc, blurPower, 1);
 }
 
 Glow::~Glow()
@@ -26,41 +18,32 @@ Glow::~Glow()
 	Unload();
 }
 
-void Glow::DrawGlow(Texture2D texture)
+Texture2D Glow::DrawGlow(Texture2D texture, float scale)
 {
 
 	//Extract bright pass.
 	BeginTextureMode(brightPass);
 		BeginShaderMode(bright);
-			DrawTextureEx(texture, { 0,0 }, 0, 1, WHITE);
+			DrawTextureEx(texture, { 0,0 }, 0, scale, WHITE);
 		EndShaderMode();
 	EndTextureMode();
+	
+	return Blur(brightPass.texture);
 
-	//Blend bloom and main draw.
-	BeginBlendMode(1);
-
-	if (!IsKeyDown(KEY_A))
-		DrawTextureEx(texture, { 0,0 }, 0, screenScale, WHITE);
-		
-	if (!IsKeyDown(KEY_S))
-	{
-		Texture2D t = Blur(brightPass.texture);
-		DrawTextureEx(t, { 0,0 }, 0, screenScale, WHITE);
-	}
-	EndBlendMode();
 }
 Texture2D Glow::Blur(Texture2D texture)
 {
 	//Horizontal blur pass
-	SetShaderValue(blur, blurDirLoc, h, 1);
+	directionPass[0] = 0;
+	SetShaderValue(blur, blurDirLoc, directionPass, 1);
 	BeginTextureMode(blurH);
 		BeginShaderMode(blur);
 			DrawTextureEx(texture, { 0,0 }, 0, 1, WHITE);
 		EndShaderMode();
 	EndTextureMode();
-
+	directionPass[0] = 1;
 	//Vertical blur pass
-	SetShaderValue(blur, blurDirLoc, v, 1);
+	SetShaderValue(blur, blurDirLoc, directionPass, 1);
 	BeginTextureMode(blurV);
 		BeginShaderMode(blur);
 			DrawTextureEx(blurH.texture, { 0,0 }, 0, 1, WHITE);
@@ -68,6 +51,19 @@ Texture2D Glow::Blur(Texture2D texture)
 	EndTextureMode();
 	
 	return blurV.texture;
+}
+
+void Glow::SetValues(float threshold, float brightPower, float blurPower, float spread)
+{
+	float brightThreshold[1] = { threshold };
+	float brightP[1] = { brightPower };
+	float blurP[1] = { blurPower };
+	float blurS[1] = { spread };
+	SetShaderValue(bright, thresholdLoc, brightThreshold, 1);
+	SetShaderValue(bright, powerLoc, brightP, 1);
+
+	SetShaderValue(blur, blurPowerLoc, blurP, 1);
+	SetShaderValue(blur, blurSpreadLoc, blurS, 1);
 }
 
 void Glow::SetFilter(int filter)

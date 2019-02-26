@@ -9,6 +9,7 @@ uniform sampler2D texture0;
 uniform float horizontal;
 uniform float weight[5] = float[] (0.227027, 0.1945946, 0.1216216, 0.054054, 0.016216);
 
+uniform float spread = 1;
 uniform float power = 1;
 
 void main()
@@ -21,8 +22,8 @@ void main()
     {
         for(int i = 1; i < 5; ++i)
         {
-            result += texture(texture0, fragTexCoord + vec2(tex_offset.x * i, 0.0)).rgb * weight[i];
-            result += texture(texture0, fragTexCoord - vec2(tex_offset.x * i, 0.0)).rgb * weight[i];
+            result += texture(texture0, fragTexCoord + vec2(spread * tex_offset.x * i, 0.0)).rgb * weight[i];
+            result += texture(texture0, fragTexCoord - vec2(spread * tex_offset.x * i, 0.0)).rgb * weight[i];
         
 		}
     }
@@ -30,8 +31,8 @@ void main()
     {
         for(int i = 1; i < 5; ++i)
         {
-            result += texture(texture0, fragTexCoord + vec2(0.0, tex_offset.y * i)).rgb * weight[i];
-            result += texture(texture0, fragTexCoord - vec2(0.0, tex_offset.y * i)).rgb * weight[i];
+            result += texture(texture0, fragTexCoord + vec2(0.0, spread * tex_offset.y * i)).rgb * weight[i];
+            result += texture(texture0, fragTexCoord - vec2(0.0, spread * tex_offset.y * i)).rgb * weight[i];
         }
     }
 

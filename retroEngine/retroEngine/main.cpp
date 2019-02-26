@@ -13,18 +13,18 @@ int main(int argc, char* argv[])
 	//--------------------------------------------------------------------------------------
 
 	SetConfigFlags(FLAG_VSYNC_HINT); 
-	InitWindow(screenWidth * screenScale, screenHeight* screenScale, "raylib [core] example - basic window");
+	InitWindow(screenWidth * screenScale, screenHeight* screenScale, "Pery Engine test");
 	
-	RenderTexture2D target = LoadRenderTexture(screenWidth, screenHeight);
-	SetTextureFilter(target.texture, 0);
+	RenderTexture2D mainRender = LoadRenderTexture(screenWidth, screenHeight);
+	SetTextureFilter(mainRender.texture, 0);
 
 	Glow glow(screenWidth, screenHeight, screenScale);
+	glow.SetFilter(1);
 
 	Texture2D bgImg = LoadTexture("../Assets/img1.png");
 	SetTextureFilter(bgImg, 0);
-	
 	Rectangle sourceRec = { 0.0f, 0.0f, (float)screenWidth, -(float)screenHeight };
-	
+	Rectangle water = { 0.0f, 0.0f, (float)screenWidth, (float)screenHeight };
 	SetTargetFPS(60);
 	//--------------------------------------------------------------------------------------
 	float a = 0;
@@ -56,15 +56,38 @@ int main(int argc, char* argv[])
 			ClearBackground(BLACK);
 
 			//Main draw
-				BeginTextureMode(target);
-					sourceRec.x = a;
+				BeginTextureMode(mainRender);
+					sourceRec.x = -GetMouseX();
 					DrawTextureRec(bgImg, sourceRec, { 0,0 }, WHITE);
-					//drawGrid();	
 				EndTextureMode();
-
 			//end main draw
 
-				glow.DrawGlow(target.texture);
+
+			//Blend bloom and main draw.
+				BeginBlendMode(1);
+
+				if (!IsKeyDown(KEY_A)) 
+				{
+					DrawTextureEx(mainRender.texture, { 0,0 }, 0, screenScale, WHITE);
+				}
+				if (!IsKeyDown(KEY_S))
+				{
+					//1 pass
+	
+					glow.SetValues(.65, 0.5, 1.2, 1);
+					Texture2D t = glow.DrawGlow(mainRender.texture, 1);
+					DrawTextureEx(t, { 0,0 }, 0, screenScale, WHITE);
+				
+
+					//2 pass
+					glow.SetValues(.6, 4, 1.5, 4);
+					t = glow.DrawGlow(mainRender.texture, 1);
+					glow.SetValues(0.5, 1, 1, 1);
+					t = glow.Blur(t);
+					DrawTextureEx(t, { 0,0 }, 0, screenScale, WHITE);
+				}
+
+				EndBlendMode();	
 
 		EndDrawing();
 		//----------------------------------------------------------------------------------
@@ -72,8 +95,7 @@ int main(int argc, char* argv[])
 
 	// Unloading
 	UnloadTexture(bgImg);       
-	UnloadRenderTexture(target);
-
+	UnloadRenderTexture(mainRender);
 	glow.Unload();
 
 
