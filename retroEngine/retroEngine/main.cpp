@@ -1,9 +1,10 @@
 #include "raylib.h"
 #include "glow.h"
+#include "water.h"
 
 int screenWidth = 480;
 int screenHeight = 272;
-int screenScale = 3;
+int screenScale = 2;
 
 void drawGrid();
 
@@ -18,13 +19,18 @@ int main(int argc, char* argv[])
 	RenderTexture2D mainRender = LoadRenderTexture(screenWidth, screenHeight);
 	SetTextureFilter(mainRender.texture, 0);
 
-	Glow glow(screenWidth, screenHeight, screenScale);
+	Glow glow(screenWidth, screenHeight);
 	glow.SetFilter(1);
 
+	Water water(screenWidth, screenHeight);
+	
 	Texture2D bgImg = LoadTexture("../Assets/img1.png");
 	SetTextureFilter(bgImg, 0);
+
+	Texture2D blurTexture;
+
 	Rectangle sourceRec = { 0.0f, 0.0f, (float)screenWidth, -(float)screenHeight };
-	Rectangle water = { 0.0f, 0.0f, (float)screenWidth, (float)screenHeight };
+	//Rectangle waterRec = { 0.0f, 0.0f, (float)screenWidth, (float)screenHeight };
 	SetTargetFPS(60);
 	//--------------------------------------------------------------------------------------
 	float a = 0;
@@ -62,6 +68,7 @@ int main(int argc, char* argv[])
 				EndTextureMode();
 			//end main draw
 
+				blurTexture = water.DrawWater(mainRender.texture);
 
 			//Blend bloom and main draw.
 				BeginBlendMode(1);
@@ -72,19 +79,21 @@ int main(int argc, char* argv[])
 				}
 				if (!IsKeyDown(KEY_S))
 				{
-					//1 pass
-	
-					glow.SetValues(.65, 0.5, 1.2, 1);
-					Texture2D t = glow.DrawGlow(mainRender.texture, 1);
-					DrawTextureEx(t, { 0,0 }, 0, screenScale, WHITE);
-				
+					glow.SetValues(.6, 1, 1);
+					glow.SetSpread(4);				
+					blurTexture = glow.DrawGlow(mainRender.texture);
+					glow.SetSpread(2);
+					blurTexture = glow.Blur(blurTexture);
+					glow.SetSpread(1);
+					blurTexture = glow.Blur(blurTexture);
 
-					//2 pass
-					glow.SetValues(.6, 4, 1.5, 4);
-					t = glow.DrawGlow(mainRender.texture, 1);
-					glow.SetValues(0.5, 1, 1, 1);
-					t = glow.Blur(t);
-					DrawTextureEx(t, { 0,0 }, 0, screenScale, WHITE);
+					DrawTextureEx(blurTexture, { 0,0 }, 0, screenScale, WHITE);
+					
+					glow.SetValues(.4, .4, 2);
+					blurTexture = glow.DrawGlow(mainRender.texture);
+					DrawTextureEx(blurTexture, { 0,0 }, 0, screenScale, WHITE);
+
+
 				}
 
 				EndBlendMode();	
@@ -94,7 +103,8 @@ int main(int argc, char* argv[])
 	}
 
 	// Unloading
-	UnloadTexture(bgImg);       
+	UnloadTexture(bgImg);
+	UnloadTexture(blurTexture);
 	UnloadRenderTexture(mainRender);
 	glow.Unload();
 

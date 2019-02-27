@@ -141,10 +141,12 @@
   <ItemGroup>
     <ClCompile Include="glow.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="water.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\raylib\include\raylib.h" />
     <ClInclude Include="glow.h" />
+    <ClInclude Include="water.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

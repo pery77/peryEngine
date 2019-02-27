@@ -21,6 +21,9 @@
     <ClCompile Include="glow.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="water.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\raylib\include\raylib.h">
@@ -28,6 +31,9 @@
     </ClInclude>
     <ClInclude Include="glow.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="water.h">
+      <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -23,8 +23,7 @@ void main()
         for(int i = 1; i < 5; ++i)
         {
             result += texture(texture0, fragTexCoord + vec2(spread * tex_offset.x * i, 0.0)).rgb * weight[i];
-            result += texture(texture0, fragTexCoord - vec2(spread * tex_offset.x * i, 0.0)).rgb * weight[i];
-        
+            result += texture(texture0, fragTexCoord - vec2(spread * tex_offset.x * i, 0.0)).rgb * weight[i];      
 		}
     }
     else
