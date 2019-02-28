@@ -2,7 +2,9 @@
 
 Water::Water(int screenWidth, int screenHeight)
 {
-
+	Water::screenWidth = screenWidth;
+	Water::screenHeight = screenHeight;
+	result = LoadRenderTexture(screenWidth, screenHeight);
 }
 
 Water::~Water()
@@ -12,11 +14,24 @@ Water::~Water()
 
 void Water::Unload()
 {
-	//UnloadRenderTexture();
+	UnloadRenderTexture(result);
+
 }
 
-Texture2D Water::DrawWater(Texture2D texture)
+void Water::DrawWater(Texture2D texture, float height)
 {
-	DrawTextureRec(texture, {0,0,480,277}, { 0,0 }, WHITE);
-	return texture;
+	BeginTextureMode(result);
+
+		//Original
+		DrawTexturePro(texture, 
+			{ 0, 0, (float)screenWidth, (float)screenHeight - height }, 
+			{ 0, 0, (float)screenWidth, (float)screenHeight - height }, 
+			{ 0, 0 }, 0, WHITE);
+		//Reflection
+		DrawTexturePro(texture, { 0, (float)screenHeight - ( height * 2), (float)screenWidth, - height }, 
+			{ 0, (float)screenHeight - height, (float)screenWidth, height }, 
+			{ 0, 0 }, 0, WHITE);
+
+	EndTextureMode();
+	
 }

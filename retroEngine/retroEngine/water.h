@@ -4,11 +4,17 @@ class Water
 {
 public:
 
+	RenderTexture2D result;
+
 	Water(int screenWidth, int screenHeight);
 	~Water();
 
-	Texture2D DrawWater(Texture2D mainTexture);
+	void DrawWater(Texture2D mainTexture, float height);
 	void Unload();
 
 private:
+
+	int screenWidth;
+	int screenHeight;
+
 };

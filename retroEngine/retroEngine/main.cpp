@@ -10,6 +10,9 @@ void drawGrid();
 
 int main(int argc, char* argv[])
 {
+
+
+
 	// Initialization
 	//--------------------------------------------------------------------------------------
 
@@ -67,21 +70,23 @@ int main(int argc, char* argv[])
 					DrawTextureRec(bgImg, sourceRec, { 0,0 }, WHITE);
 				EndTextureMode();
 			//end main draw
+				water.DrawWater(mainRender.texture, 32);
 
-				blurTexture = water.DrawWater(mainRender.texture);
 
+			//screenScale = 1;
 			//Blend bloom and main draw.
+				
 				BeginBlendMode(1);
 
 				if (!IsKeyDown(KEY_A)) 
 				{
-					DrawTextureEx(mainRender.texture, { 0,0 }, 0, screenScale, WHITE);
+					DrawTextureEx(water.result.texture, { 0,0 }, 0, screenScale, WHITE);
 				}
 				if (!IsKeyDown(KEY_S))
 				{
 					glow.SetValues(.6, 1, 1);
 					glow.SetSpread(4);				
-					blurTexture = glow.DrawGlow(mainRender.texture);
+					blurTexture = glow.DrawGlow(water.result.texture);
 					glow.SetSpread(2);
 					blurTexture = glow.Blur(blurTexture);
 					glow.SetSpread(1);
@@ -90,14 +95,13 @@ int main(int argc, char* argv[])
 					DrawTextureEx(blurTexture, { 0,0 }, 0, screenScale, WHITE);
 					
 					glow.SetValues(.4, .4, 2);
-					blurTexture = glow.DrawGlow(mainRender.texture);
+					blurTexture = glow.DrawGlow(water.result.texture);
 					DrawTextureEx(blurTexture, { 0,0 }, 0, screenScale, WHITE);
-
 
 				}
 
 				EndBlendMode();	
-
+				
 		EndDrawing();
 		//----------------------------------------------------------------------------------
 	}
@@ -106,8 +110,9 @@ int main(int argc, char* argv[])
 	UnloadTexture(bgImg);
 	UnloadTexture(blurTexture);
 	UnloadRenderTexture(mainRender);
-	glow.Unload();
 
+	glow.Unload();
+	water.Unload();
 
 	// De-Initialization
 	//--------------------------------------------------------------------------------------   

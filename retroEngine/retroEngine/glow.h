@@ -23,8 +23,8 @@ private:
 	RenderTexture2D blurH;
 	RenderTexture2D blurV;
 
-	Shader bright = LoadShader(0, "../Assets/brightness.fs");
-	Shader blur   = LoadShader(0, "../Assets/blur.fs");
+	Shader bright = LoadShader(0, "../Assets/Shaders/brightness.frag");
+	Shader blur   = LoadShader(0, "../Assets/Shaders/blur.frag");
 
 	int blurDirLoc = GetShaderLocation(blur, "horizontal");
 	int blurPowerLoc = GetShaderLocation(blur, "power");
@@ -34,4 +34,5 @@ private:
 	int powerLoc = GetShaderLocation(bright, "power");
 
 	float directionPass[1] = { 0 };
+
 };

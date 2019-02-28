@@ -14,7 +14,6 @@ out vec4 finalColor;
 
 void main()
 {
-
     vec4 source = texture(texture0, vec2(fragTexCoord.s , 1 - fragTexCoord.t));
 	vec4 brightColor;
 

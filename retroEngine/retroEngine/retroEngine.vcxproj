@@ -148,6 +148,10 @@
     <ClInclude Include="glow.h" />
     <ClInclude Include="water.h" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="..\Assets\Shaders\blur.frag" />
+    <None Include="..\Assets\Shaders\brightness.frag" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
