@@ -151,6 +151,7 @@
   <ItemGroup>
     <None Include="..\Assets\Shaders\blur.frag" />
     <None Include="..\Assets\Shaders\brightness.frag" />
+    <None Include="..\Assets\Shaders\water.frag" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

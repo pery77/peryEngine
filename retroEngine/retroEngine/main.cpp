@@ -4,7 +4,7 @@
 
 int screenWidth = 480;
 int screenHeight = 272;
-int screenScale = 2;
+int screenScale = 3;
 
 void drawGrid();
 
@@ -33,7 +33,7 @@ int main(int argc, char* argv[])
 	Texture2D blurTexture;
 
 	Rectangle sourceRec = { 0.0f, 0.0f, (float)screenWidth, -(float)screenHeight };
-	//Rectangle waterRec = { 0.0f, 0.0f, (float)screenWidth, (float)screenHeight };
+	Rectangle scaledRec = { 0.0f, 0.0f, (float)screenWidth * (float) screenScale, (float)screenHeight * (float) screenScale };
 	SetTargetFPS(60);
 	//--------------------------------------------------------------------------------------
 	float a = 0;
@@ -66,21 +66,18 @@ int main(int argc, char* argv[])
 
 			//Main draw
 				BeginTextureMode(mainRender);
-					sourceRec.x = -GetMouseX();
-					DrawTextureRec(bgImg, sourceRec, { 0,0 }, WHITE);
+					DrawTextureRec(bgImg, { (float)-GetMouseX(), 0.0f, (float)screenWidth, -(float)screenHeight } , { 0,0 }, WHITE);
 				EndTextureMode();
 			//end main draw
-				water.DrawWater(mainRender.texture, 32);
 
-
-			//screenScale = 1;
-			//Blend bloom and main draw.
+				water.DrawWater(mainRender.texture, 16 * 5);
 				
+			//Blend bloom and final draw.
 				BeginBlendMode(1);
 
 				if (!IsKeyDown(KEY_A)) 
 				{
-					DrawTextureEx(water.result.texture, { 0,0 }, 0, screenScale, WHITE);
+					DrawTexturePro(water.result.texture, sourceRec, scaledRec, { 0, 0 }, 0, WHITE);
 				}
 				if (!IsKeyDown(KEY_S))
 				{
@@ -92,16 +89,17 @@ int main(int argc, char* argv[])
 					glow.SetSpread(1);
 					blurTexture = glow.Blur(blurTexture);
 
-					DrawTextureEx(blurTexture, { 0,0 }, 0, screenScale, WHITE);
+					DrawTexturePro(blurTexture, sourceRec, scaledRec, { 0, 0 }, 0, WHITE);
 					
 					glow.SetValues(.4, .4, 2);
 					blurTexture = glow.DrawGlow(water.result.texture);
-					DrawTextureEx(blurTexture, { 0,0 }, 0, screenScale, WHITE);
+
+					DrawTexturePro(blurTexture, sourceRec, scaledRec, { 0, 0 }, 0, WHITE);
 
 				}
 
 				EndBlendMode();	
-				
+	
 		EndDrawing();
 		//----------------------------------------------------------------------------------
 	}
