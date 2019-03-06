@@ -1,17 +1,10 @@
-#include "raylib.h"
-#include "glow.h"
-#include "water.h"
-
-int screenWidth = 480;
-int screenHeight = 272;
-int screenScale = 3;
-
-void drawGrid();
+#include "engine.h"
 
 int main(int argc, char* argv[])
 {
-
-
+	Engine* engine = new Engine();
+	engine->Go();
+/*
 
 	// Initialization
 	//--------------------------------------------------------------------------------------
@@ -25,7 +18,6 @@ int main(int argc, char* argv[])
 	Glow glow(screenWidth, screenHeight);
 	glow.SetFilter(1);
 
-	Water water(screenWidth, screenHeight);
 	
 	Texture2D bgImg = LoadTexture("../Assets/img1.png");
 	SetTextureFilter(bgImg, 0);
@@ -66,24 +58,24 @@ int main(int argc, char* argv[])
 
 			//Main draw
 				BeginTextureMode(mainRender);
-					DrawTextureRec(bgImg, { (float)-GetMouseX(), 0.0f, (float)screenWidth, -(float)screenHeight } , { 0,0 }, WHITE);
+					DrawTextureRec(bgImg, { (float)-GetMouseX(), 0.0f, (float)screenWidth, (float)screenHeight } , { 0,0 }, WHITE);
 				EndTextureMode();
 			//end main draw
 
-				water.DrawWater(mainRender.texture, 16 * 5);
+	
 				
 			//Blend bloom and final draw.
 				BeginBlendMode(1);
 
 				if (!IsKeyDown(KEY_A)) 
 				{
-					DrawTexturePro(water.result.texture, sourceRec, scaledRec, { 0, 0 }, 0, WHITE);
+					DrawTexturePro(mainRender.texture, sourceRec, scaledRec, { 0, 0 }, 0, WHITE);
 				}
 				if (!IsKeyDown(KEY_S))
 				{
 					glow.SetValues(.6, 1, 1);
 					glow.SetSpread(4);				
-					blurTexture = glow.DrawGlow(water.result.texture);
+					blurTexture = glow.DrawGlow(mainRender.texture);
 					glow.SetSpread(2);
 					blurTexture = glow.Blur(blurTexture);
 					glow.SetSpread(1);
@@ -92,7 +84,7 @@ int main(int argc, char* argv[])
 					DrawTexturePro(blurTexture, sourceRec, scaledRec, { 0, 0 }, 0, WHITE);
 					
 					glow.SetValues(.4, .4, 2);
-					blurTexture = glow.DrawGlow(water.result.texture);
+					blurTexture = glow.DrawGlow(mainRender.texture);
 
 					DrawTexturePro(blurTexture, sourceRec, scaledRec, { 0, 0 }, 0, WHITE);
 
@@ -110,30 +102,12 @@ int main(int argc, char* argv[])
 	UnloadRenderTexture(mainRender);
 
 	glow.Unload();
-	water.Unload();
+
 
 	// De-Initialization
 	//--------------------------------------------------------------------------------------   
 	CloseWindow();        // Close window and OpenGL context
 	//--------------------------------------------------------------------------------------
-
+*/
 	return 0;
-}
-
-void drawGrid()
-{
-
-	for (int y = 0; y < screenHeight; y = y + 16)
-	{
-		DrawLine(0, y, screenWidth, y, RED);
-	}
-
-	for (int x = 0; x < screenWidth; x = x + 16)
-	{
-		DrawLine(x, 0, x, screenHeight, RED);
-
-	}
-
-	DrawRectangleLines(0, 0, screenWidth, screenHeight, GREEN);
-	
 }
