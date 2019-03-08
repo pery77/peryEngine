@@ -22,6 +22,8 @@ void Engine::Init()
 	glow = new Glow(ScreenWidth, ScreenHeight);
 	glow->SetFilter(1);
 
+	tilesetManager = new TilesetManager();
+
 	LoadImages();
 
 	//Texture2D blurTexture;
@@ -38,7 +40,7 @@ void Engine::Go()
 
 void Engine::MainLoop()
 {
-	
+
 	while (!WindowShouldClose())    // Detect window close button or ESC key
 	{
 		ProcessInput();
@@ -59,24 +61,19 @@ void Engine::Update()
 
 void Engine::RenderFrame()
 {
+
 	BeginDrawing();
 	ClearBackground(GRAY);
 	BeginTextureMode(mainRender);
-	Texture2D ts = Texture2D(tilesetManager.GetTileset(0));
 
-	Tile t(ts, 2, 1);
-
-	tilesetManager.AddTile(t);
 	for (int x=0; x < 30; x++)
 	{
 		for (int y = 0; y < 17; y++) 
 		{
-			tilesetManager.GetTile(0).Draw(x * 16, y * 16);
-			//DrawPixel(x * 16, y * 16, WHITE);
+			tilesetManager->GetTile((x+y)%2)->Draw(x * 16, y * 16);
 		}
 	}
-	DrawTextureRec(tilesetManager.GetTileset(0), { 0, 0, 100, 100 },
-		{ 10, 10 }, WHITE);  // Draw part of the texture
+
 	EndTextureMode();
 
 	DrawTexturePro(mainRender.texture, sourceRec, scaledRec, { 0, 0 }, 0, WHITE);
@@ -89,8 +86,16 @@ void Engine::LoadImages()
 	Texture2D tileset1 = LoadTexture("../Assets/blocks.png");
 	SetTextureFilter(tileset1, 0);
 
-	tilesetManager.AddTileset(tileset1);
+	Texture2D tileset2 = LoadTexture("../Assets/food.png");
+	SetTextureFilter(tileset2, 0);
 
+	tilesetManager->AddTileset(tileset1);
+	tilesetManager->AddTileset(tileset2);
 
+	Tile* tile;
 
+	tile = new Tile(tilesetManager->GetTileset(0), 0, 0);
+	tilesetManager->AddTile(tile);
+	tile = new Tile(tilesetManager->GetTileset(0), 2, 2);
+	tilesetManager->AddTile(tile);
 }

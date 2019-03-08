@@ -1,4 +1,5 @@
 #include "tile.h"
+#include <iostream>
 
 Tile::Tile(Texture2D & tileset, int tileCol, int tileRow)
 	:tilesetTexture (tileset)
@@ -9,13 +10,10 @@ Tile::Tile(Texture2D & tileset, int tileCol, int tileRow)
 
 Tile::~Tile()
 {
-	//UnloadTexture(tilesetTexture);
 }
 
 void Tile::Draw(int x, int y)
 {
 	DrawTextureRec(tilesetTexture, {(float)col, (float)row , (float)size, (float)size}, 
 		{ (float)x, (float)y }, WHITE);  // Draw part of the texture
-	
-	DrawPixel(col, row, WHITE);
 }                                                                                                                                                                                                                                                                                                                                                                                                                         

@@ -33,6 +33,5 @@ private:
 
 	void LoadImages();
 
-	TilesetManager tilesetManager;
-
+	TilesetManager* tilesetManager;
 };
