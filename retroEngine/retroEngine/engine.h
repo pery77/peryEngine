@@ -1,7 +1,7 @@
 #pragma once
 #include "raylib.h"
 #include "glow.h"
-#include "Texture2DManager.h"
+#include "tilesetManager.h"
 
 class Engine {
 
@@ -25,7 +25,7 @@ private:
 	void ProcessInput();
 	void Update();
 
-	RenderTexture2D* mainRender;
+	RenderTexture2D mainRender;
 	Glow* glow;
 
 	Rectangle sourceRec = { 0.0f, 0.0f, (float)ScreenWidth, -(float)ScreenHeight };
@@ -33,6 +33,6 @@ private:
 
 	void LoadImages();
 
-	Texture2DManager textureManager;
-	Tile* testTile;
+	TilesetManager tilesetManager;
+
 };

@@ -142,7 +142,7 @@
     <ClCompile Include="engine.cpp" />
     <ClCompile Include="glow.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="Texture2DManager.cpp" />
+    <ClCompile Include="tilesetManager.cpp" />
     <ClCompile Include="tile.cpp" />
     <ClCompile Include="water.cpp" />
   </ItemGroup>
@@ -150,7 +150,7 @@
     <ClInclude Include="..\..\raylib\include\raylib.h" />
     <ClInclude Include="engine.h" />
     <ClInclude Include="glow.h" />
-    <ClInclude Include="Texture2DManager.h" />
+    <ClInclude Include="tilesetManager.h" />
     <ClInclude Include="tile.h" />
     <ClInclude Include="water.h" />
   </ItemGroup>

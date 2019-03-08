@@ -6,7 +6,7 @@ Engine::Engine()
 
 Engine::~Engine()
 {
-
+	UnloadRenderTexture(mainRender);
 }
 
 void Engine::Init()
@@ -16,17 +16,15 @@ void Engine::Init()
 		"Pery Engine test");
 	SetTargetFPS(60);
 	
-	mainRender = &LoadRenderTexture(ScreenWidth, ScreenHeight);
-	SetTextureFilter(mainRender->texture, 0);
+	mainRender = LoadRenderTexture(ScreenWidth, ScreenHeight);
+	SetTextureFilter(mainRender.texture, 0);
 
 	glow = new Glow(ScreenWidth, ScreenHeight);
 	glow->SetFilter(1);
 
 	LoadImages();
-	Texture2D bgImg = LoadTexture("../Assets/img1.png");
-	SetTextureFilter(bgImg, 0);
 
-	Texture2D blurTexture;
+	//Texture2D blurTexture;
 
 	
 
@@ -62,17 +60,32 @@ void Engine::Update()
 void Engine::RenderFrame()
 {
 	BeginDrawing();
-		ClearBackground(RAYWHITE);
-		testTile->Draw(0,0);
+	ClearBackground(GRAY);
+	BeginTextureMode(mainRender);
+
+	for (int x=0; x < 30; x++)
+	{
+		for (int y = 0; y < 17; y++) 
+		{
+			tilesetManager.GetTile[0]->Draw(x * 16, y * 16);
+		}
+	}
+	EndTextureMode();
+
+	DrawTexturePro(mainRender.texture, sourceRec, scaledRec, { 0, 0 }, 0, WHITE);
+
 	EndDrawing();
 }
 
 void Engine::LoadImages()
 {
-	Texture2D bgImg = LoadTexture("../Assets/img1.png");
+	Texture2D bgImg = LoadTexture("../Assets/blocks.png");
 	SetTextureFilter(bgImg, 0);
 
-	textureManager.AddTexture(bgImg);
+	tilesetManager.AddTilesetTexture(bgImg);
+	Tile* t = new Tile(tilesetManager.GetTilesetTexture(0), 0, 0);
+	Tile& tt = *t;
+	tilesetManager.AddTile(tt);
 
-	testTile = new Tile(textureManager.GetTexture(0));
+	UnloadTexture(bgImg);
 }

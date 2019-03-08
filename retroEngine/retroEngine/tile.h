@@ -5,12 +5,15 @@ class Tile
 {
 public:
 
-	Tile(Texture2D& texture);
+	Tile(Texture2D& tileset, int tileCol, int tileRow);
 	~Tile();
 
 	void Draw(int x, int y);
 
 private:
 
-	Texture2D baseSprite;
+	Texture2D tilesetTexture;
+	int col;
+	int row;
+	const int size = 16;
 };
