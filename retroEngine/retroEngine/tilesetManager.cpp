@@ -9,22 +9,22 @@ TilesetManager::~TilesetManager()
 
 }
 
-void TilesetManager::AddTilesetTexture(Texture2D & texture)
+void TilesetManager::AddTileset(Texture2D  texture)
 {
-	textureList.push_back(texture);
+	tilesetsList.push_back(texture);
 }
 
-Texture2D & TilesetManager::GetTilesetTexture(int index)
+Texture2D  TilesetManager::GetTileset(int index)
 {
-	return textureList[index];
+	return tilesetsList[index];
 }
 
-void TilesetManager::AddTile(Tile & tile)
+void TilesetManager::AddTile(Tile tile)
 {
 	tilesList.push_back(tile);
 }
 
-Tile & TilesetManager::GetTile(int index)
+Tile TilesetManager::GetTile(int index)
 {
 	return tilesList[index];
 }

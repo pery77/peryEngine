@@ -10,14 +10,14 @@ public:
 	TilesetManager();
 	~TilesetManager();
 
-	void AddTilesetTexture(Texture2D& texture);
-	Texture2D& GetTilesetTexture(int index);
+	void AddTileset(Texture2D texture);
+	Texture2D GetTileset(int index);
 
-	void AddTile(Tile & tile);
-	Tile& GetTile(int index);
+	void AddTile(Tile tile);
+	Tile GetTile(int index);
 
 private:
 
-	std::vector <Texture2D> textureList;
-	std::vector<Tile> tilesList;
+	std::vector <Texture2D> tilesetsList;
+	std::vector <Tile>      tilesList;
 };

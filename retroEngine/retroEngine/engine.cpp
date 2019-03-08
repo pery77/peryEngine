@@ -62,14 +62,21 @@ void Engine::RenderFrame()
 	BeginDrawing();
 	ClearBackground(GRAY);
 	BeginTextureMode(mainRender);
+	Texture2D ts = Texture2D(tilesetManager.GetTileset(0));
 
+	Tile t(ts, 2, 1);
+
+	tilesetManager.AddTile(t);
 	for (int x=0; x < 30; x++)
 	{
 		for (int y = 0; y < 17; y++) 
 		{
-			tilesetManager.GetTile[0]->Draw(x * 16, y * 16);
+			tilesetManager.GetTile(0).Draw(x * 16, y * 16);
+			//DrawPixel(x * 16, y * 16, WHITE);
 		}
 	}
+	DrawTextureRec(tilesetManager.GetTileset(0), { 0, 0, 100, 100 },
+		{ 10, 10 }, WHITE);  // Draw part of the texture
 	EndTextureMode();
 
 	DrawTexturePro(mainRender.texture, sourceRec, scaledRec, { 0, 0 }, 0, WHITE);
@@ -79,13 +86,11 @@ void Engine::RenderFrame()
 
 void Engine::LoadImages()
 {
-	Texture2D bgImg = LoadTexture("../Assets/blocks.png");
-	SetTextureFilter(bgImg, 0);
+	Texture2D tileset1 = LoadTexture("../Assets/blocks.png");
+	SetTextureFilter(tileset1, 0);
 
-	tilesetManager.AddTilesetTexture(bgImg);
-	Tile* t = new Tile(tilesetManager.GetTilesetTexture(0), 0, 0);
-	Tile& tt = *t;
-	tilesetManager.AddTile(tt);
+	tilesetManager.AddTileset(tileset1);
 
-	UnloadTexture(bgImg);
+
+
 }

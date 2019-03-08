@@ -9,7 +9,7 @@ public:
 
 	const int ScreenWidth  = 480;
 	const int ScreenHeight = 272;
-	const int ScreenScale  = 2;
+	const int ScreenScale  = 3;
 
 	Engine();
 	~Engine();

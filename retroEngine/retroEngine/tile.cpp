@@ -1,16 +1,21 @@
 #include "tile.h"
 
-Tile::Tile(Texture2D & texture)
+Tile::Tile(Texture2D & tileset, int tileCol, int tileRow)
+	:tilesetTexture (tileset)
 {
-	baseSprite = texture;
+	col = tileCol * size;
+	row = tileRow * size;
 }
 
 Tile::~Tile()
 {
-	UnloadTexture(baseSprite);
+	//UnloadTexture(tilesetTexture);
 }
 
 void Tile::Draw(int x, int y)
 {
-	DrawTextureRec(baseSprite, {0,0,64,64}, { (float)x, (float)y }, WHITE);  // Draw part of the texture
+	DrawTextureRec(tilesetTexture, {(float)col, (float)row , (float)size, (float)size}, 
+		{ (float)x, (float)y }, WHITE);  // Draw part of the texture
+	
+	DrawPixel(col, row, WHITE);
 }                                                                                                                                                                                                                                                                                                                                                                                                                         
