@@ -55,6 +55,17 @@ Texture2D Glow::Blur(Texture2D texture)
 	return blurV.texture;
 }
 
+void Glow::BigGlow(Texture2D texture)
+{
+	SetValues(.6, 1, 1.1);
+	SetSpread(4);
+	BlurTexture = DrawGlow(texture);
+	SetSpread(2);
+	BlurTexture = Blur(BlurTexture);
+	SetSpread(1);
+	BlurTexture = Blur(BlurTexture);
+}
+
 void Glow::SetValues(float threshold, float brightPower, float blurPower)
 {
 	float brightThreshold[1] = { threshold };

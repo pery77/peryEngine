@@ -11,6 +11,9 @@ public:
 	
 	Texture2D DrawGlow(Texture2D texture);
 	Texture2D Blur(Texture2D texture);
+	void BigGlow(Texture2D texture);
+
+	Texture2D BlurTexture;
 
 	void SetFilter(int filter);
 	void SetValues(float threshold, float brightPower, float blurPower);

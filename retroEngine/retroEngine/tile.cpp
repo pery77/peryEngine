@@ -15,5 +15,5 @@ Tile::~Tile()
 void Tile::Draw(int x, int y)
 {
 	DrawTextureRec(tilesetTexture, {(float)col, (float)row , (float)size, (float)size}, 
-		{ (float)x, (float)y }, WHITE);  // Draw part of the texture
+		{ (float)x * size, (float)y  * size }, WHITE);  // Draw part of the texture
 }                                                                                                                                                                                                                                                                                                                                                                                                                         

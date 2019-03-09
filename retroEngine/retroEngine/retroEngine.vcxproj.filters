@@ -33,6 +33,12 @@
     <ClCompile Include="tilesetManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="level.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="jsmn.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\raylib\include\raylib.h">
@@ -51,6 +57,12 @@
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="tilesetManager.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="level.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="jsmn.h">
       <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>

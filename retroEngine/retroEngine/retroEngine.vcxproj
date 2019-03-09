@@ -141,6 +141,8 @@
   <ItemGroup>
     <ClCompile Include="engine.cpp" />
     <ClCompile Include="glow.cpp" />
+    <ClCompile Include="jsmn.c" />
+    <ClCompile Include="level.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="tilesetManager.cpp" />
     <ClCompile Include="tile.cpp" />
@@ -150,6 +152,8 @@
     <ClInclude Include="..\..\raylib\include\raylib.h" />
     <ClInclude Include="engine.h" />
     <ClInclude Include="glow.h" />
+    <ClInclude Include="jsmn.h" />
+    <ClInclude Include="level.h" />
     <ClInclude Include="tilesetManager.h" />
     <ClInclude Include="tile.h" />
     <ClInclude Include="water.h" />
