@@ -16,6 +16,8 @@ public:
 	void AddTile(Tile *tile);
 	Tile* GetTile(int index);
 
+	void MakeTiles();
+
 private:
 	std::vector <Texture2D> tilesetsList;
 	std::vector <Tile*>     tilesList;

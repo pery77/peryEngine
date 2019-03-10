@@ -23,6 +23,7 @@ Tile * Level::GetTile(int x, int y)
 
 void Level::LoadLevel()
 {
+	
 }
 
 int Level::GetWidth()

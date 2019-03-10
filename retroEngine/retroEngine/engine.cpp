@@ -17,7 +17,7 @@ void Engine::Init()
 	//Create window
 	InitWindow(ScreenWidth * ScreenScale, ScreenHeight* ScreenScale, "PeryEngine");
 	SetTargetFPS(60);
-	
+	//ToggleFullscreen();
 	//Create main texture and disable texture filter.
 	mainRender = LoadRenderTexture(ScreenWidth, ScreenHeight);
 	SetTextureFilter(mainRender.texture, 0);
@@ -89,7 +89,7 @@ void Engine::RenderFrame()
 				glow->BigGlow(mainRender.texture);
 				DrawTexturePro(glow->BlurTexture, sourceRec, scaledRec, { 0, 0 }, 0, WHITE);
 				//Draw glow second pass
-				glow->SetValues(.4, .4, 2);
+				glow->SetValues(.4, 1.1, 1.5);
 				glow->BlurTexture = glow->DrawGlow(mainRender.texture);
 				DrawTexturePro(glow->BlurTexture, sourceRec, scaledRec, { 0, 0 }, 0, WHITE);
 			//End draw main + postprocess 
@@ -106,21 +106,14 @@ void Engine::LoadImages()
 
 
 	tilesetManager->AddTileset(tileset1);
+	tilesetManager->MakeTiles();
 
-	Tile* tile;
-
-	tile = new Tile(tilesetManager->GetTileset(0), 4, 0);
-	tilesetManager->AddTile(tile);
-	tile = new Tile(tilesetManager->GetTileset(0), 2, 1);
-	tilesetManager->AddTile(tile);
-	tile = new Tile(tilesetManager->GetTileset(0), 5, 0);
-	tilesetManager->AddTile(tile);
 }
 
 void Engine::LoadLevel()
 {
 	//Temporary level for testing
-	level = new Level(50, 30);
+	level = new Level(30, 17);
 
 	Tile* tile;
 	for (int y = 0; y < level->GetHeight(); y++)
@@ -129,12 +122,12 @@ void Engine::LoadLevel()
 		{
 			
 			if (y % 4 == 0)
-				tile = tilesetManager->GetTile(0);
+				tile = tilesetManager->GetTile(33);
 			else
-				tile = tilesetManager->GetTile(1);
+				tile = tilesetManager->GetTile(18);
 
 			if (x == 0 || y == 0 || x == level->GetWidth()-1 || y == level->GetHeight()-1)
-				tile = tilesetManager->GetTile(2);
+				tile = tilesetManager->GetTile(5);
 				
 
 			level->AddTile(x, y, tile);

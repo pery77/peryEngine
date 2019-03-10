@@ -36,9 +36,6 @@
     <ClCompile Include="level.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="jsmn.c">
-      <Filter>Source Files</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\raylib\include\raylib.h">
@@ -47,22 +44,22 @@
     <ClInclude Include="glow.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="water.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
     <ClInclude Include="engine.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="tile.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="tilesetManager.h">
-      <Filter>Source Files</Filter>
+      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="level.h">
-      <Filter>Source Files</Filter>
+      <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="jsmn.h">
+    <ClInclude Include="water.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="tilesetManager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="minijson_reader.hpp">
       <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>
