@@ -14,7 +14,7 @@ Tile::~Tile()
 
 void Tile::Draw(int x, int y)
 {
-
+	if (this == NULL) return;
 	Vector2 pos = { (float)x * size, (float)y  * size };
 	DrawTextureRec(tilesetTexture, {(float)col, (float)row , (float)size, (float)size}, pos, WHITE);  // Draw part of the texture
 	//DrawText("123", pos.x, pos.y,0, RED);

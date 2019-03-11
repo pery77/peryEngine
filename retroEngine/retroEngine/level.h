@@ -1,11 +1,15 @@
 #pragma once
 #include <vector>
+#include <iostream>
+#include <fstream>
 #include "tile.h"
+#include "tilesetManager.h"
+#include "minijson_reader.hpp"
 
 class Level
 {
 public:
-	Level(int width, int height);
+	Level(std::string levelName);
 	~Level();
 
 	void AddTile(int x, int y, Tile* tile);
@@ -20,5 +24,9 @@ private:
 
 	int width, height;
 	void SetDimensions(int width, int height);
+	std::string levelName;
+
+	//Tileset manager
+	TilesetManager* tilesetManager;
 
 };

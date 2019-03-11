@@ -1,8 +1,8 @@
 #pragma once
 #include "raylib.h"
 #include "glow.h"
-#include "tilesetManager.h"
 #include "level.h"
+#include <iostream>
 
 class Engine {
 
@@ -34,9 +34,6 @@ private:
 	Rectangle sourceRec = { 0.0f, 0.0f, (float)ScreenWidth, -(float)ScreenHeight };
 	Rectangle scaledRec = { 0.0f, 0.0f, (float)ScreenWidth * (float)ScreenScale, (float)ScreenHeight * (float)ScreenScale };
 
-	void LoadImages();
-	void LoadLevel();
-	//Tileset manager and current level
-	TilesetManager* tilesetManager;
+	//Current level
 	Level* level;
 };

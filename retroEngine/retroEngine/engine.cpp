@@ -26,11 +26,7 @@ void Engine::Init()
 	glow = new Glow(ScreenWidth, ScreenHeight);
 	glow->SetFilter(1);
 
-	//Create tile manager
-	tilesetManager = new TilesetManager();
-
-	LoadImages();
-	LoadLevel();
+	level = new Level("test");
 }
 
 //Start engine.
@@ -64,7 +60,7 @@ void Engine::Update()
 //Draw loop.
 void Engine::RenderFrame()
 {
-
+	
 	BeginDrawing();
 		ClearBackground(BLACK);
 			//Draw game to texture.
@@ -73,13 +69,12 @@ void Engine::RenderFrame()
 				for (int x=0; x < level->GetWidth(); x++)
 				{
 					for (int y = 0; y < level->GetHeight(); y++) 
-					{
+					{					
 						level->GetTile(x, y)->Draw(x, y);
 					}
 				}
 			//End draw game in main texture.
 			EndTextureMode();
-
 
 			//Blend texture for postprocess effect.
 			BeginBlendMode(1);
@@ -97,40 +92,4 @@ void Engine::RenderFrame()
 
 	EndDrawing();
 
-}
-
-void Engine::LoadImages()
-{
-	Texture2D tileset1 = LoadTexture("../Assets/tileset1.png");
-	SetTextureFilter(tileset1, 0);
-
-
-	tilesetManager->AddTileset(tileset1);
-	tilesetManager->MakeTiles();
-
-}
-
-void Engine::LoadLevel()
-{
-	//Temporary level for testing
-	level = new Level(30, 17);
-
-	Tile* tile;
-	for (int y = 0; y < level->GetHeight(); y++)
-	{
-		for (int x = 0; x < level->GetWidth(); x++)
-		{
-			
-			if (y % 4 == 0)
-				tile = tilesetManager->GetTile(33);
-			else
-				tile = tilesetManager->GetTile(18);
-
-			if (x == 0 || y == 0 || x == level->GetWidth()-1 || y == level->GetHeight()-1)
-				tile = tilesetManager->GetTile(5);
-				
-
-			level->AddTile(x, y, tile);
-		}
-	}
 }
