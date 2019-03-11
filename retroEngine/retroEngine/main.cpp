@@ -24,6 +24,6 @@ int main(int argc, char* argv[])
 	Engine* engine = new Engine();
 	engine->Go();
 
-	std::cin.get(); //Wait key
+	//std::cin.get(); //Wait key
 	return 0;
 }

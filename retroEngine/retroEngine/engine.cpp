@@ -70,7 +70,7 @@ void Engine::RenderFrame()
 				{
 					for (int y = 0; y < level->GetHeight(); y++) 
 					{					
-						level->GetTile(x, y)->Draw(x, y);
+						level->GetTile(x, y)->Draw((x * 16) + GetMouseX()-1500 , y * 16 + GetMouseY()-600);
 					}
 				}
 			//End draw game in main texture.
