@@ -6,7 +6,11 @@ Engine::Engine()
 
 Engine::~Engine()
 {
+	std::cout << "Unload Engine" << std::endl;
 	UnloadRenderTexture(mainRender);
+	delete glow;
+	delete camera;
+	delete level;
 }
 
 //Initialize engine.
@@ -27,6 +31,8 @@ void Engine::Init()
 	glow->SetFilter(1);
 
 	level = new Level("test");
+	
+	camera = new Cam(30, 17, 0.5);
 }
 
 //Start engine.
@@ -60,19 +66,24 @@ void Engine::Update()
 //Draw loop.
 void Engine::RenderFrame()
 {
-	
+	int camOffsetX, camOffsetY;
+	Rectangle bounds = { 10,10,29,16 };// camera->GetTileBounds();
+	camOffsetX = GetMouseX();// camera->GetOffset().x;
+	camOffsetY = camera->GetOffset().y;
+	//std::cout<< bounds.height << std::endl;
 	BeginDrawing();
 		ClearBackground(BLACK);
 			//Draw game to texture.
 			BeginTextureMode(mainRender);
-
-				for (int x=0; x < level->GetWidth(); x++)
+			
+			for (int y = 0, tileY = bounds.y; y < bounds.height; y++, tileY++)
+			{
+				for (int x = 0, tileX = bounds.x; x < bounds.width; x++, tileX++)
 				{
-					for (int y = 0; y < level->GetHeight(); y++) 
-					{					
-						level->GetTile(x, y)->Draw((x * 16) + GetMouseX()-1500 , y * 16 + GetMouseY()-600);
-					}
+					level->GetTile(tileX, tileY)->Draw((x * 16) - camOffsetX, (y * 16) - camOffsetY);
 				}
+			}
+
 			//End draw game in main texture.
 			EndTextureMode();
 

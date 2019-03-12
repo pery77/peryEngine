@@ -18,10 +18,21 @@ Level::Level(std::string levelName)
 
 Level::~Level()
 {
+	std::cout << "Unload level" << endl;
+	delete tilesetManager;
+
+	map.clear();
+
 }
 
 void Level::AddTile(int x, int y, Tile * tile)
 {
+	if (map[x][y] != NULL)
+	{
+		delete map[x][y];
+		map[x][y] = NULL;
+	}
+
 	map[x][y] = tile;
 }
 
@@ -78,23 +89,19 @@ void Level::LoadLevel()
 	height = h;
 	SetDimensions(width, height);
 
-	Tile* tile;
 	int co = 0;
 	for (int y = 0; y < GetHeight(); y++)
 	{
 		for (int x = 0; x < GetWidth(); x++)
 		{
-
 			int t = data[co]-1;
 			co++;
 			
 			if (t >= 0) {
-				tile = tilesetManager->GetTile(t);
-				AddTile(x, y, tile);
+				AddTile(x, y, tilesetManager->GetTile(t));
 			}
 		}
 	}
-
 }
 
 int Level::GetWidth()

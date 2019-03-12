@@ -1,9 +1,9 @@
 #pragma once
 #include "raylib.h"
+#include <iostream>
 
 class Glow
 {
-
 public:
 
 	Glow(int screenWidth, int screenHeight);
@@ -21,21 +21,22 @@ public:
 	void Unload();
 
 private:
-
+	//Render textures 
 	RenderTexture2D brightPass;
 	RenderTexture2D blurH;
 	RenderTexture2D blurV;
-
+	//Shaders
 	Shader bright = LoadShader(0, "../Assets/Shaders/brightness.frag");
 	Shader blur   = LoadShader(0, "../Assets/Shaders/blur.frag");
-
-	int blurDirLoc = GetShaderLocation(blur, "horizontal");
-	int blurPowerLoc = GetShaderLocation(blur, "power");
+	//Shaders parameters
+	//for blur
+	int blurDirLoc    = GetShaderLocation(blur, "horizontal");
+	int blurPowerLoc  = GetShaderLocation(blur, "power");
 	int blurSpreadLoc = GetShaderLocation(blur, "spread");
-
+	//for bright
 	int thresholdLoc = GetShaderLocation(bright, "threshold");
-	int powerLoc = GetShaderLocation(bright, "power");
-
+	int powerLoc     = GetShaderLocation(bright, "power");
+	//Fake bool for shader blur
 	float directionPass[1] = { 0 };
 
 };

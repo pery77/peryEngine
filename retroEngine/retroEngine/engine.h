@@ -3,6 +3,7 @@
 #include "glow.h"
 #include "level.h"
 #include <iostream>
+#include "camera2D.h"
 
 class Engine {
 
@@ -36,4 +37,6 @@ private:
 
 	//Current level
 	Level* level;
+
+	Cam* camera;
 };

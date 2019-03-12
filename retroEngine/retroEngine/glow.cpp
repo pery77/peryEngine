@@ -16,7 +16,20 @@ Glow::Glow(int screenWidth, int screenHeight)
 
 Glow::~Glow()
 {
+	std::cout << "Unload glow"<<std::endl;
 	Unload();
+}
+
+void Glow::Unload()
+{
+	UnloadTexture(BlurTexture);
+
+	UnloadRenderTexture(brightPass);
+	UnloadRenderTexture(blurH);
+	UnloadRenderTexture(blurV);
+
+	UnloadShader(bright);
+	UnloadShader(blur);
 }
 
 Texture2D Glow::DrawGlow(Texture2D texture)
@@ -93,12 +106,4 @@ void Glow::SetFilter(int filter)
 	SetTextureFilter(blurV.texture, filter);
 }
 
-void Glow::Unload()
-{
-	UnloadRenderTexture(brightPass);
-	UnloadRenderTexture(blurH);
-	UnloadRenderTexture(blurV);
 
-	UnloadShader(bright);
-	UnloadShader(blur);
-}

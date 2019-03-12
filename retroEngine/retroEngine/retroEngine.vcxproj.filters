@@ -36,6 +36,9 @@
     <ClCompile Include="level.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="camera2D.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\raylib\include\raylib.h">
@@ -61,6 +64,9 @@
     </ClInclude>
     <ClInclude Include="minijson_reader.hpp">
       <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="camera2D.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -139,6 +139,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="camera2D.cpp" />
     <ClCompile Include="engine.cpp" />
     <ClCompile Include="glow.cpp" />
     <ClCompile Include="level.cpp" />
@@ -149,6 +150,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\raylib\include\raylib.h" />
+    <ClInclude Include="camera2D.h" />
     <ClInclude Include="engine.h" />
     <ClInclude Include="glow.h" />
     <ClInclude Include="level.h" />

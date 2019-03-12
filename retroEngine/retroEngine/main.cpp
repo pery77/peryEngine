@@ -24,6 +24,7 @@ int main(int argc, char* argv[])
 	Engine* engine = new Engine();
 	engine->Go();
 
-	//std::cin.get(); //Wait key
-	return 0;
+	delete engine;  //Deallocate engine from memory
+	std::cin.get(); //Wait for enter key
+	return 0;		//Exit program
 }

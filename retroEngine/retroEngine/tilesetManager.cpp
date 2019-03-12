@@ -4,11 +4,22 @@
 TilesetManager::TilesetManager()
 {
 	std::cout << "TileManager Created" << std::endl;
-
 }
 
 TilesetManager::~TilesetManager()
 {
+	std::cout << "Unload TilesetManager" << std::endl;
+	for (int i = 0; i < tilesList.size(); i++)
+	{
+		delete tilesList[i];
+	}
+	tilesList.clear();
+
+	for (int i = 0; i < tilesetsList.size(); i++)
+	{
+		UnloadTexture(tilesetsList[i]);
+	}
+	tilesetsList.clear();
 }
 
 void TilesetManager::AddTileset(Texture2D & texture)
