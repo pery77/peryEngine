@@ -1,11 +1,14 @@
 #pragma once
 #include "raylib.h"
+#include <math.h>
+
+#define TILESIZE 16
 
 class Cam
 {
 
 public:
-	Cam(int w, int h, float speed);
+	Cam(int w, int h, float speed, int levelWidth, int levelHeight);
 	~Cam();
 
 	//Moves camera immediately to coordinates
@@ -23,7 +26,7 @@ public:
 
 	//Helper function for retreiving camera's offset from
 	//nearest tile
-	Vector2 GetOffset() { return { (float)((int)position.x % 16), (float)((int)position.y % 16) }; }
+	Vector2 GetOffset() { return { (float)((int)position.x % TILESIZE), (float)((int)position.y % TILESIZE) }; }
 
 	//Helper function for retreiving a rectangle defining
 	//which tiles are visible through camera
@@ -42,4 +45,8 @@ private:
 
 	//Speed of camera, a value between 0.0 and 1.0
 	float speed;
+
+	//Prevent camera go out of map.
+	int stopX;
+	int stopY;
 };

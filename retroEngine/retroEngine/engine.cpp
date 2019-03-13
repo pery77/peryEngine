@@ -31,8 +31,8 @@ void Engine::Init()
 	glow->SetFilter(1);
 
 	level = new Level("test");
-	
-	camera = new Cam(30, 17, 0.5);
+
+	camera = new Cam(ScreenWidth, ScreenHeight, 1, level->GetWidth(), level->GetHeight());
 }
 
 //Start engine.
@@ -57,20 +57,52 @@ void Engine::MainLoop()
 
 void Engine::ProcessInput()
 {
+	if (IsMouseButtonReleased(MOUSE_LEFT_BUTTON))
+	{
+		int x = camera->GetPosition().x + GetMouseX();
+		int y = camera->GetPosition().y + GetMouseY();
+		camera->GoTo(x, y);
+	}
+
+	if (IsKeyPressed(KEY_W))
+	{
+		camera->GoTo(camera->GetPosition().x, camera->GetPosition().y - 16);
+	}
+	if (IsKeyPressed(KEY_S))
+	{
+		camera->GoTo(camera->GetPosition().x, camera->GetPosition().y + 16);
+	}
+	if (IsKeyPressed(KEY_D))
+	{
+		camera->GoTo(camera->GetPosition().x+16, camera->GetPosition().y);
+	}
+	if (IsKeyPressed(KEY_A))
+	{
+		camera->GoTo(camera->GetPosition().x - 16, camera->GetPosition().y);
+	}
+	if (IsKeyPressed(KEY_SPACE))
+	{
+		std::cout << "tile x:" << camera->GetTileBounds().x << std::endl;
+		std::cout << "tile w:" << camera->GetTileBounds().width << std::endl;
+		std::cout << "cam x:" << camera->GetPosition().x << std::endl;
+		camera->GoTo(400, 0);
+	}
+
 }
 
 void Engine::Update()
 {
+	camera->Update();
 }
 
 //Draw loop.
 void Engine::RenderFrame()
 {
 	int camOffsetX, camOffsetY;
-	Rectangle bounds = { 10,10,29,16 };// camera->GetTileBounds();
-	camOffsetX = GetMouseX();// camera->GetOffset().x;
+	Rectangle bounds = camera->GetTileBounds();
+	camOffsetX = camera->GetOffset().x;
 	camOffsetY = camera->GetOffset().y;
-	//std::cout<< bounds.height << std::endl;
+
 	BeginDrawing();
 		ClearBackground(BLACK);
 			//Draw game to texture.
@@ -80,7 +112,7 @@ void Engine::RenderFrame()
 			{
 				for (int x = 0, tileX = bounds.x; x < bounds.width; x++, tileX++)
 				{
-					level->GetTile(tileX, tileY)->Draw((x * 16) - camOffsetX, (y * 16) - camOffsetY);
+					level->GetTile(tileX, tileY)->Draw((x * TILESIZE) - camOffsetX, (y * TILESIZE) - camOffsetY);
 				}
 			}
 

@@ -2,6 +2,8 @@
 using namespace std;
 using namespace minijson;
 
+#include <iostream>
+
 Level::Level(std::string levelName)
 {
 	tilesetManager = new TilesetManager();
@@ -38,6 +40,12 @@ void Level::AddTile(int x, int y, Tile * tile)
 
 Tile * Level::GetTile(int x, int y)
 {
+	//Clamp array.
+	if (x < 0)			x = 0;
+	if (x > width - 1)  x = width - 1;
+	if (y < 0)			y = 0;
+	if (y > height - 1) y = height - 1;
+
 	return map[x][y];
 }
 
@@ -71,17 +79,17 @@ void Level::LoadLevel()
 						<< "data" >> [&] {
 						parse_array(ctx, [&](value va) {
 							data.push_back(va.as_double());							
-							ignore(ctx);
+							minijson::ignore(ctx);
 						});
 					};
-					ignore(ctx);
+					minijson::ignore(ctx);
 				});
 			});
 			std::cout << endl;
-			ignore(ctx); 
+			minijson::ignore(ctx);
 		}
 
-		<< any >> [&] { ignore(ctx); };
+		<< any >> [&] { minijson::ignore(ctx); };
 		
 	});
 
@@ -96,7 +104,7 @@ void Level::LoadLevel()
 		{
 			int t = data[co]-1;
 			co++;
-			
+
 			if (t >= 0) {
 				AddTile(x, y, tilesetManager->GetTile(t));
 			}
