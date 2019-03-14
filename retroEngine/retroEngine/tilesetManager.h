@@ -2,23 +2,29 @@
 #include "raylib.h"
 #include <vector>
 #include "tile.h"
+#include "tools.h"
 
-class TilesetManager {
+//How many tiles in texture
+#define TILESETSIZE 16
 
-public:
+namespace pery {
+	class TilesetManager {
 
-	TilesetManager();
-	~TilesetManager();
+	public:
 
-	void AddTileset(Texture2D &texture);
-	Texture2D& GetTileset(int index);
+		TilesetManager();
+		~TilesetManager();
 
-	void AddTile(Tile *tile);
-	Tile* GetTile(int index);
+		void AddTileset(Texture2D &texture);
+		Texture2D& GetTileset(int index);
 
-	void MakeTiles();
+		void AddTile(Tile *tile);
+		Tile* GetTile(int index);
 
-private:
-	std::vector <Texture2D> tilesetsList;
-	std::vector <Tile*>     tilesList;
-};
+		void MakeTiles();
+
+	private:
+		std::vector <Texture2D> tilesetsList;
+		std::vector <Tile*>     tilesList;
+	};
+}

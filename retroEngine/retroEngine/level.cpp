@@ -4,7 +4,7 @@ using namespace minijson;
 
 #include <iostream>
 
-Level::Level(std::string levelName)
+pery::Level::Level(std::string levelName)
 {
 	tilesetManager = new TilesetManager();
 
@@ -18,16 +18,16 @@ Level::Level(std::string levelName)
 	LoadLevel();
 }
 
-Level::~Level()
+pery::Level::~Level()
 {
-	std::cout << "Unload level" << endl;
+	LOG("Unload level");
 	delete tilesetManager;
 
 	map.clear();
 
 }
 
-void Level::AddTile(int x, int y, Tile * tile)
+void pery::Level::AddTile(int x, int y, Tile * tile)
 {
 	if (map[x][y] != NULL)
 	{
@@ -38,7 +38,7 @@ void Level::AddTile(int x, int y, Tile * tile)
 	map[x][y] = tile;
 }
 
-Tile * Level::GetTile(int x, int y)
+pery::Tile * pery::Level::GetTile(int x, int y)
 {
 	//Clamp array.
 	if (x < 0)			x = 0;
@@ -49,7 +49,7 @@ Tile * Level::GetTile(int x, int y)
 	return map[x][y];
 }
 
-void Level::LoadLevel()
+void pery::Level::LoadLevel()
 {
 	string c = "../Assets/" + this->levelName + ".json";
 
@@ -85,7 +85,6 @@ void Level::LoadLevel()
 					minijson::ignore(ctx);
 				});
 			});
-			std::cout << endl;
 			minijson::ignore(ctx);
 		}
 
@@ -112,17 +111,17 @@ void Level::LoadLevel()
 	}
 }
 
-int Level::GetWidth()
+int pery::Level::GetWidth()
 {
 	return width;
 }
 
-int Level::GetHeight()
+int pery::Level::GetHeight()
 {
 	return height;
 }
 
-void Level::SetDimensions(int width, int height)
+void pery::Level::SetDimensions(int width, int height)
 {
 	//width are rows
 	map.resize(width);

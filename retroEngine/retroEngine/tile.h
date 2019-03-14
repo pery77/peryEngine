@@ -1,19 +1,23 @@
 #pragma once
 #include "raylib.h"
+#include <iostream> //For NULL
+#define TILESIZE 16
 
-class Tile
+namespace pery
 {
-public:
+	class Tile
+	{
+	public:
 
-	Tile(Texture2D & tileset, int tileCol, int tileRow);
-	~Tile();
+		Tile(Texture2D & tileset, int tileCol, int tileRow);
+		~Tile();
 
-	void Draw(int x, int y);
+		void Draw(int x, int y);
 
-private:
+	private:
 
-	Texture2D & tilesetTexture;
-	int col;
-	int row;
-	const int size = 16;
-};
+		Texture2D & tilesetTexture;
+		int col;
+		int row;
+	};
+}

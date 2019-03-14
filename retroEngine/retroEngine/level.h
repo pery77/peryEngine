@@ -5,28 +5,32 @@
 #include "tile.h"
 #include "tilesetManager.h"
 #include "minijson_reader.hpp"
+#include "tools.h"
 
-class Level
+namespace pery
 {
-public:
-	Level(std::string levelName);
-	~Level();
+	class Level
+	{
+	public:
+		Level(std::string levelName);
+		~Level();
 
-	void AddTile(int x, int y, Tile* tile);
-	Tile* GetTile(int x, int y);
+		void AddTile(int x, int y, Tile* tile);
+		Tile* GetTile(int x, int y);
 
-	void LoadLevel();
-	int GetWidth();
-	int GetHeight();
+		void LoadLevel();
+		int GetWidth();
+		int GetHeight();
 
-private:
-	std::vector<std::vector<Tile*>> map;
+	private:
+		std::vector<std::vector<Tile*>> map;
 
-	int width, height;
-	void SetDimensions(int width, int height);
-	std::string levelName;
+		int width, height;
+		void SetDimensions(int width, int height);
+		std::string levelName;
 
-	//Tileset manager
-	TilesetManager* tilesetManager;
+		//Tileset manager
+		TilesetManager* tilesetManager;
 
-};
+	};
+}

@@ -1,14 +1,13 @@
 #include "tilesetManager.h"
-#include <iostream>
 
-TilesetManager::TilesetManager()
+pery::TilesetManager::TilesetManager()
 {
-	std::cout << "TileManager Created" << std::endl;
+	LOG("TileManager Created");
 }
 
-TilesetManager::~TilesetManager()
+pery::TilesetManager::~TilesetManager()
 {
-	std::cout << "Unload TilesetManager" << std::endl;
+	LOG("Unload TilesetManager");
 	for (int i = 0; i < tilesList.size(); i++)
 	{
 		delete tilesList[i];
@@ -22,32 +21,32 @@ TilesetManager::~TilesetManager()
 	tilesetsList.clear();
 }
 
-void TilesetManager::AddTileset(Texture2D & texture)
+void pery::TilesetManager::AddTileset(Texture2D & texture)
 {
 	tilesetsList.push_back(texture);
 }
 
-Texture2D & TilesetManager::GetTileset(int index)
+Texture2D & pery::TilesetManager::GetTileset(int index)
 {
 	return tilesetsList[index];
 }
 
-void TilesetManager::AddTile(Tile * tile)
+void pery::TilesetManager::AddTile(Tile * tile)
 {
 	tilesList.push_back(tile);
 }
 
-Tile* TilesetManager::GetTile(int index)
+pery::Tile* pery::TilesetManager::GetTile(int index)
 {
 	return tilesList[index];
 }
 
-void TilesetManager::MakeTiles()
+void pery::TilesetManager::MakeTiles()
 {
 	Tile* tile;
-	for (int y = 0; y < 16; y++)
+	for (int y = 0; y < TILESETSIZE; y++)
 	{
-		for (int x = 0; x < 16; x++)
+		for (int x = 0; x < TILESETSIZE; x++)
 		{
 			tile = new Tile(GetTileset(0), x, y);
 			AddTile(tile);

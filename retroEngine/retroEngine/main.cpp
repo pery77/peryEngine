@@ -1,8 +1,5 @@
 #include "engine.h"
-#include <iostream>
-#include <fstream>
-#include "minijson_reader.hpp"
-using namespace std;
+#include "reader.h"
 
 int main(int argc, char* argv[])
 {/*
@@ -20,11 +17,19 @@ int main(int argc, char* argv[])
 		<< minijson::any >> [&] { minijson::ignore(ctx); };
 	});*/
 
+	pery::Reader* reader = new pery::Reader();
+	reader->LoadFile("big");
+
 	//Create engine and start.
-	Engine* engine = new Engine();
-	engine->Go();
+	pery::Engine* engine = new pery::Engine();
+//	engine->Go();
 
 	delete engine;  //Deallocate engine from memory
-	std::cin.get(); //Wait for enter key
+	delete reader;
+#ifdef _DEBUG
+	LOG("Press ENTER to exit.");
+	std::cin.ignore(1); //Wait for enter key in debug mode.
+#endif
+	
 	return 0;		//Exit program
 }

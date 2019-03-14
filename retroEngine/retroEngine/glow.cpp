@@ -1,6 +1,6 @@
 #include "glow.h"
 
-Glow::Glow(int screenWidth, int screenHeight)
+pery::Glow::Glow(int screenWidth, int screenHeight)
 {
 
 	brightPass = LoadRenderTexture(screenWidth, screenHeight);
@@ -14,13 +14,13 @@ Glow::Glow(int screenWidth, int screenHeight)
 
 }
 
-Glow::~Glow()
+pery::Glow::~Glow()
 {
-	std::cout << "Unload glow"<<std::endl;
+	LOG("Unload glow");
 	Unload();
 }
 
-void Glow::Unload()
+void pery::Glow::Unload()
 {
 	UnloadTexture(BlurTexture);
 
@@ -32,7 +32,7 @@ void Glow::Unload()
 	UnloadShader(blur);
 }
 
-Texture2D Glow::DrawGlow(Texture2D texture)
+Texture2D pery::Glow::DrawGlow(Texture2D texture)
 {
 
 	//Extract bright pass.
@@ -46,7 +46,7 @@ Texture2D Glow::DrawGlow(Texture2D texture)
 
 }
 
-Texture2D Glow::Blur(Texture2D texture)
+Texture2D pery::Glow::Blur(Texture2D texture)
 {
 	//Horizontal blur pass
 	directionPass[0] = 0;
@@ -68,7 +68,7 @@ Texture2D Glow::Blur(Texture2D texture)
 	return blurV.texture;
 }
 
-void Glow::BigGlow(Texture2D texture)
+void pery::Glow::BigGlow(Texture2D texture)
 {
 	SetValues(.6, 1, 1.1);
 	SetSpread(4);
@@ -79,7 +79,7 @@ void Glow::BigGlow(Texture2D texture)
 	BlurTexture = Blur(BlurTexture);
 }
 
-void Glow::SetValues(float threshold, float brightPower, float blurPower)
+void pery::Glow::SetValues(float threshold, float brightPower, float blurPower)
 {
 	float brightThreshold[1] = { threshold };
 	float brightP[1] = { brightPower };
@@ -92,15 +92,14 @@ void Glow::SetValues(float threshold, float brightPower, float blurPower)
 
 }
 
-void Glow::SetSpread(float spread)
+void pery::Glow::SetSpread(float spread)
 {
 	float blurS[1] = { spread };
 	SetShaderValue(blur, blurSpreadLoc, blurS, 1);
 }
 
-void Glow::SetFilter(int filter)
+void pery::Glow::SetFilter(int filter)
 {
-	
 	SetTextureFilter(brightPass.texture, filter);
 	SetTextureFilter(blurH.texture, filter);
 	SetTextureFilter(blurV.texture, filter);
