@@ -89,8 +89,10 @@ pery::TMX2Map::TMX2Map(std::string TMXName)
 		dataNode = currentLayerNode->first_node("data");
 
 		Data d;
-		d.encoding    = dataNode->first_attribute("encoding")->value();
-		d.compression = dataNode->first_attribute("compression")->value();
+		if (dataNode->first_attribute("encoding") != 0)
+			d.encoding    = dataNode->first_attribute("encoding")->value();
+		if (dataNode->first_attribute("compression") != 0)
+			d.compression = dataNode->first_attribute("compression")->value();
 
 		d.content = dataNode->value();
 
