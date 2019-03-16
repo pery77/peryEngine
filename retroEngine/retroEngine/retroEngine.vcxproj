@@ -141,13 +141,14 @@
   <ItemGroup>
     <ClCompile Include="cameraView.cpp" />
     <ClCompile Include="engine.cpp" />
-    <ClCompile Include="gason.cpp" />
     <ClCompile Include="glow.cpp" />
     <ClCompile Include="level.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="miniz\miniz.c" />
     <ClCompile Include="reader.cpp" />
     <ClCompile Include="tilesetManager.cpp" />
     <ClCompile Include="tile.cpp" />
+    <ClCompile Include="TMX2Map.cpp" />
     <ClCompile Include="tools.cpp" />
     <ClCompile Include="water.cpp" />
   </ItemGroup>
@@ -159,9 +160,15 @@
     <ClInclude Include="glow.h" />
     <ClInclude Include="level.h" />
     <ClInclude Include="minijson_reader.hpp" />
+    <ClInclude Include="miniz\miniz.h" />
+    <ClInclude Include="rapidxml\rapidxml.hpp" />
+    <ClInclude Include="rapidxml\rapidxml_iterators.hpp" />
+    <ClInclude Include="rapidxml\rapidxml_print.hpp" />
+    <ClInclude Include="rapidxml\rapidxml_utils.hpp" />
     <ClInclude Include="reader.h" />
     <ClInclude Include="tilesetManager.h" />
     <ClInclude Include="tile.h" />
+    <ClInclude Include="TMX2Map.h" />
     <ClInclude Include="tools.h" />
     <ClInclude Include="water.h" />
   </ItemGroup>

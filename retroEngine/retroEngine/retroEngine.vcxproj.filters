@@ -13,6 +13,12 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Source Files\rapidxml">
+      <UniqueIdentifier>{7ff491a9-abbd-4e44-8e96-c12f08e8fc0e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\miniz">
+      <UniqueIdentifier>{d493137b-714e-47aa-9271-3383f14a0cf8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -45,7 +51,10 @@
     <ClCompile Include="reader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="gason.cpp">
+    <ClCompile Include="miniz\miniz.c">
+      <Filter>Source Files\miniz</Filter>
+    </ClCompile>
+    <ClCompile Include="TMX2Map.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -85,6 +94,24 @@
     </ClInclude>
     <ClInclude Include="gason.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="rapidxml\rapidxml.hpp">
+      <Filter>Source Files\rapidxml</Filter>
+    </ClInclude>
+    <ClInclude Include="rapidxml\rapidxml_iterators.hpp">
+      <Filter>Source Files\rapidxml</Filter>
+    </ClInclude>
+    <ClInclude Include="rapidxml\rapidxml_print.hpp">
+      <Filter>Source Files\rapidxml</Filter>
+    </ClInclude>
+    <ClInclude Include="rapidxml\rapidxml_utils.hpp">
+      <Filter>Source Files\rapidxml</Filter>
+    </ClInclude>
+    <ClInclude Include="miniz\miniz.h">
+      <Filter>Source Files\miniz</Filter>
+    </ClInclude>
+    <ClInclude Include="TMX2Map.h">
+      <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

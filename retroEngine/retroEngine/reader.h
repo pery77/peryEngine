@@ -6,7 +6,6 @@
 #include "tilesetManager.h"
 #include "minijson_reader.hpp"
 #include "tools.h"
-#include "gason.h"
 
 namespace pery
 {
