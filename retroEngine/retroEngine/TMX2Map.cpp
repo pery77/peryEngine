@@ -106,10 +106,15 @@ pery::TMX2Map::TMX2Map(std::string TMXName)
 		currentLayerNode = currentLayerNode->next_sibling("layer");
 	}
 
+
 	//--------------------------------------
 	//Objects
 
-	
+	//Decompress all layer data.
+	for (int i = 0; i < CurrentMap.layers.size(); i++)
+	{
+		DecompressLayerData(i);
+	}
 }
 
 pery::TMX2Map::~TMX2Map()
