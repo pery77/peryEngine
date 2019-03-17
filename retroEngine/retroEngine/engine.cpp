@@ -30,7 +30,7 @@ void pery::Engine::Init()
 	glow = new Glow(ScreenWidth, ScreenHeight);
 	glow->SetFilter(1);
 
-	level = new Level("test");
+	level = new Level("test2");
 
 	camera = new CameraView(ScreenWidth, ScreenHeight, 1, level->GetWidth(), level->GetHeight());
 }

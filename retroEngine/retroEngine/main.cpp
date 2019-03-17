@@ -1,14 +1,11 @@
 #include "engine.h"
 
-
 int main(int argc, char* argv[])
 {
-	pery::TMX2Map map("test");
-	map.ShowMapInfo();
 
 	//Create engine and start.
 	pery::Engine* engine = new pery::Engine();
-//	engine->Go();
+	engine->Go();
 
 	delete engine;  //Deallocate engine from memory
 

@@ -4,8 +4,9 @@
 #include <fstream>
 #include "tile.h"
 #include "tilesetManager.h"
-#include "minijson_reader.hpp"
 #include "tools.h"
+
+#include "TMX2Map.h"
 
 namespace pery
 {
@@ -21,6 +22,8 @@ namespace pery
 		void LoadLevel();
 		int GetWidth();
 		int GetHeight();
+
+		TMX2Map* CurrentMap;
 
 	private:
 		std::vector<std::vector<Tile*>> map;

@@ -1,19 +1,34 @@
 #include "level.h"
 using namespace std;
-using namespace minijson;
 
 #include <iostream>
 
 pery::Level::Level(std::string levelName)
 {
-	tilesetManager = new TilesetManager();
 
-	Texture2D tileset1 = LoadTexture("../Assets/tileset1.png");
-	SetTextureFilter(tileset1, 0);
+	CurrentMap = new TMX2Map (levelName);
+	CurrentMap->ShowMapInfo();
 
 	this->levelName = levelName;
-	tilesetManager->AddTileset(tileset1);
-	tilesetManager->MakeTiles();
+
+	tilesetManager = new TilesetManager();	
+
+	for (int ts = 0; ts < CurrentMap->MapLoaded.tilesets.size(); ts ++)
+	{
+
+		CurrentMap->MapLoaded.tilesets[ts].source;
+
+		Texture2D currenTileset = LoadTexture("../Assets/tileset1.png");
+		SetTextureFilter(currenTileset, 0);
+
+		tilesetManager->AddTileset(currenTileset);
+
+
+	}
+
+		tilesetManager->MakeTiles();
+
+
 
 	LoadLevel();
 }
@@ -22,6 +37,7 @@ pery::Level::~Level()
 {
 	LOG("Unload level");
 	delete tilesetManager;
+	delete CurrentMap;
 
 	map.clear();
 
@@ -40,7 +56,10 @@ void pery::Level::AddTile(int x, int y, Tile * tile)
 
 pery::Tile * pery::Level::GetTile(int x, int y)
 {
-	//Clamp array.
+
+	if ( map.size() == 0) return nullptr;
+
+ 	//Clamp array.
 	if (x < 0)			x = 0;
 	if (x > width - 1)  x = width - 1;
 	if (y < 0)			y = 0;
@@ -51,49 +70,13 @@ pery::Tile * pery::Level::GetTile(int x, int y)
 
 void pery::Level::LoadLevel()
 {
-	string c = "../Assets/" + this->levelName + ".json";
 
-	//Load file
-	const char *fname = c.c_str();
-	std::ifstream in(fname);
-	minijson::istream_context ctx(in);
 
-	int h = 0;
-	int w = 0;
-	std::vector<int> data;
-	//Main parse
-	parse_object(ctx, [&](const char *name, value v) {
-		dispatch(name)
-			<< "height" >> [&] { h = v.as_double(); }
-			<< "width" >>  [&] { w = v.as_double(); }
-			//Loop layers
-			<< "layers" >> [&] {
-			//Get layer.
-			minijson::parse_array(ctx, [&](minijson::value va)
-			{
-				std::cout << "layer-> ";
-				parse_object(ctx, [&](const char *name, value va) {
-					dispatch(name)
-						<< "id" >> [&] { std::cout << "ID: " << va.as_string() << endl; }
-						//Get tiles.
-						<< "data" >> [&] {
-						parse_array(ctx, [&](value va) {
-							data.push_back(va.as_double());							
-							minijson::ignore(ctx);
-						});
-					};
-					minijson::ignore(ctx);
-				});
-			});
-			minijson::ignore(ctx);
-		}
+	
 
-		<< any >> [&] { minijson::ignore(ctx); };
-		
-	});
+	width  = CurrentMap->MapLoaded.width;
+	height = CurrentMap->MapLoaded.height;
 
-	width = w;
-	height = h;
 	SetDimensions(width, height);
 
 	int co = 0;
@@ -101,9 +84,8 @@ void pery::Level::LoadLevel()
 	{
 		for (int x = 0; x < GetWidth(); x++)
 		{
-			int t = data[co]-1;
+			int t = CurrentMap->MapLoaded.layers[0].IDs[co]-1;
 			co++;
-
 			if (t >= 0) {
 				AddTile(x, y, tilesetManager->GetTile(t));
 			}

@@ -12,7 +12,7 @@
 namespace pery {
 
 	//Tileset structure
-	struct Tileset
+	struct MapTileset
 	{
 		int firstgid;
 		std::string source;
@@ -26,7 +26,7 @@ namespace pery {
 		std::string content;
 	};
 
-	struct Layer
+	struct MapLayer
 	{
 		//Attributes
 		int id;
@@ -55,23 +55,43 @@ namespace pery {
 		int tileHeight;
 
 		//Child nodes
-		std::vector<Tileset> tilesets;
-		std::vector<Layer>   layers;
+		std::vector<MapTileset> tilesets;
+		std::vector<MapLayer>   layers;
 	};
 
+	struct Image
+	{
+		std::string source;
+		int width;
+		int height;
+	};
+
+	struct TMXTileSet
+	{
+		//Tileset attibuttes
+		std::string name;
+		std::string version;
+
+		int tileWidth;
+		int tileHeight;
+		int tileCount;
+		int Columns;
+	};
 
 	class TMX2Map {
+
 	public:
+
 		TMX2Map(std::string TMXName);
 		~TMX2Map();
 
-		Map CurrentMap;
+		Map MapLoaded;
 
 		//Decompress zlib string.
 		void DecompressLayerData(int layer)
 		{
 			//Get data
-			std::string data = CurrentMap.layers[layer].data.content.c_str();
+			std::string data = MapLoaded.layers[layer].data.content.c_str();
 
 			//using a string stream we can remove whitespace such as tabs
 			std::stringstream ss;
@@ -82,7 +102,7 @@ namespace pery {
 			data = base64_decode(data);
 
 			//Get total layer tiles
-			int tileCount = CurrentMap.layers[layer].width * CurrentMap.layers[layer].height;
+			int tileCount = MapLoaded.layers[layer].width * MapLoaded.layers[layer].height;
 
 			std::size_t expectedSize = tileCount * 4; //4 bytes per tile
 			std::vector<unsigned char> byteData;
@@ -93,59 +113,21 @@ namespace pery {
 
 			byteData.insert(byteData.end(), data.begin(), data.end());
 
-			CurrentMap.layers[layer].IDs.reserve(tileCount);
+			MapLoaded.layers[layer].IDs.reserve(tileCount);
 
 			for (auto i = 0u; i < expectedSize - 3u; i += 4u)
 			{
 				std::uint32_t id = byteData[i] | byteData[i + 1] << 8 | byteData[i + 2] << 16 | byteData[i + 3] << 24;
-				CurrentMap.layers[layer].IDs.push_back(id);
+				MapLoaded.layers[layer].IDs.push_back(id);
 			}
 		}
-		
-		//Show map
-		void ShowMapInfo()
-		{
-			std::cout << "Map Name: " << CurrentMap.name << 
-				" | Version: " << CurrentMap.version <<
-				" | Orientation: "<< CurrentMap.orientation << std::endl;
 
-			std::cout << "Map size: [w:" << CurrentMap.width << ",h:" << CurrentMap.height << "]" << std::endl;
-			std::cout << "Tile size: [w:" << CurrentMap.tileWidth << ",h:" << CurrentMap.tileHeight << "]" << std::endl;
-			std::cout << "Background color: " << CurrentMap.backgroundColor << std::endl;
-		
-			std::cout << CurrentMap.tilesets.size() << " tileset(s)" << std::endl;
+		void ShowMapInfo();
 
-			for (int i = 0; i < CurrentMap.tilesets.size(); i++)
-			{
-				std::cout << "    ";
-				std::cout << "firstgid: " << CurrentMap.tilesets[i].firstgid << 
-					" , source: " << CurrentMap.tilesets[i].source << std::endl;
-
-			}	
-			/*
-
-			for (int i = 0; i < map.CurrentMap.layers.size(); i++)
-			{
-				LOG("Layer->");
-				LOG(map.CurrentMap.layers[i].name);
-				LOG(map.CurrentMap.layers[i].id);
-				LOG(map.CurrentMap.layers[i].width);
-				LOG(map.CurrentMap.layers[i].height);
-
-				LOG("Layer Data->");
-				LOG(map.CurrentMap.layers[i].data.encoding);
-				LOG(map.CurrentMap.layers[i].data.compression);
-				
-				for (int id = 0; id < map.CurrentMap.layers[i].IDs.size(); id++)
-				{
-					std::cout << map.CurrentMap.layers[i].IDs[id] << ",";
-				}
-				
-				LOG("_");
-			}*/
-
-		}
 	private:
+
+		//Decode and Decompress algorithm addapted from:
+		//https://github.com/fallahn/tmxlite
 
 		//Decode base64 string
 		static inline std::string base64_decode(std::string const& encoded_string)
