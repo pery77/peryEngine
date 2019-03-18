@@ -146,10 +146,26 @@ pery::TMX2Map::TMX2Map(std::string TMXName)
 		//Main node (Map node)
 		rapidxml::xml_node<char> * tilesetNode;
 		tilesetNode = tsxDoc.first_node("tileset");
-
-		std::cout << buffer.str();
-		std::cout << tilesetNode->value();
 		
+		MapLoaded.tilesets[ts].tileset.name    = tilesetNode->first_attribute("name")   ->value();
+		MapLoaded.tilesets[ts].tileset.version = tilesetNode->first_attribute("version")->value();
+
+		MapLoaded.tilesets[ts].tileset.tileWidth  = atoi(tilesetNode->first_attribute("tilewidth") ->value());
+		MapLoaded.tilesets[ts].tileset.tileHeight = atoi(tilesetNode->first_attribute("tileheight")->value());
+
+		MapLoaded.tilesets[ts].tileset.tileCount = atoi(tilesetNode->first_attribute("tilecount")->value());
+		MapLoaded.tilesets[ts].tileset.columns   = atoi(tilesetNode->first_attribute("columns")->value());
+
+		MapLoaded.tilesets[ts].tileset.rows = MapLoaded.tilesets[ts].tileset.tileCount / MapLoaded.tilesets[ts].tileset.columns;
+
+		//Image
+		rapidxml::xml_node<char> * imageNode;
+		imageNode = tilesetNode->first_node("image");
+
+		MapLoaded.tilesets[ts].tileset.image.source = imageNode->first_attribute("source")->value();
+
+		MapLoaded.tilesets[ts].tileset.image.width  = atoi(imageNode->first_attribute("width") ->value());
+		MapLoaded.tilesets[ts].tileset.image.height = atoi(imageNode->first_attribute("height")->value());
 	}
 
 }
@@ -183,7 +199,23 @@ void pery::TMX2Map::ShowMapInfo()
 		std::cout << "firstgid: " << MapLoaded.tilesets[i].firstgid <<
 			" , source: " << MapLoaded.tilesets[i].source << std::endl;
 
+		//Tsx file:
+		std::cout << "    Name: " << MapLoaded.tilesets[i].tileset.name <<
+			", Version: " << MapLoaded.tilesets[i].tileset.version <<
+			std::endl;
+
+		std::cout << "    Tile size: [w:" << MapLoaded.tilesets[i].tileset.tileWidth << ",h:" << MapLoaded.tilesets[i].tileset.tileHeight << "]" << std::endl;
+		std::cout << "    Tileset size: [rows:" << MapLoaded.tilesets[i].tileset.rows << ",cols:" << MapLoaded.tilesets[i].tileset.columns << 
+			"] (" << MapLoaded.tilesets[i].tileset.tileCount << " tiles.)"<< std::endl;
+
+		//Tileset image
+		std::cout << "    Image source: " << MapLoaded.tilesets[i].tileset.image.source << std::endl;
+		std::cout << "    Image size: [w:" << MapLoaded.tilesets[i].tileset.image.width << 
+			",h:" << MapLoaded.tilesets[i].tileset.image.height << "]" << std::endl;
+
+		std::cout << std::endl;
 	}
+
 	std::cout << std::endl;
 
 	//Show layers info

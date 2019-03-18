@@ -15,20 +15,8 @@ pery::Level::Level(std::string levelName)
 
 	for (int ts = 0; ts < CurrentMap->MapLoaded.tilesets.size(); ts ++)
 	{
-
-		CurrentMap->MapLoaded.tilesets[ts].source;
-
-		Texture2D currenTileset = LoadTexture("../Assets/tileset1.png");
-		SetTextureFilter(currenTileset, 0);
-
-		tilesetManager->AddTileset(currenTileset);
-
-
+		tilesetManager->AddTileset(CurrentMap->MapLoaded.tilesets[ts].tileset);
 	}
-
-		tilesetManager->MakeTiles();
-
-
 
 	LoadLevel();
 }

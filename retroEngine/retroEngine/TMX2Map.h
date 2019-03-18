@@ -5,17 +5,47 @@
 #include <sstream>
 #include <functional>
 
+#include "raylib.h"
+
 #include "tools.h"
 #include "rapidxml\rapidxml.hpp"
 #include "miniz\miniz.h"
 
 namespace pery {
 
+	//Struct image
+	struct Image
+	{
+		std::string source;
+		int width;
+		int height;
+	};
+
+	//Tsx file tileset
+	struct TSXTileSet
+	{
+		//Tileset attibuttes
+		std::string name;
+		std::string version;
+
+		int tileWidth;
+		int tileHeight;
+		int tileCount;
+		int columns;
+		int rows;
+
+		Image image;
+		RAYLIB_H::Texture2D texture;
+	};
+
 	//Tileset structure
 	struct MapTileset
 	{
 		int firstgid;
 		std::string source;
+
+		TSXTileSet tileset;
+
 	};
 
 	struct Data
@@ -59,24 +89,9 @@ namespace pery {
 		std::vector<MapLayer>   layers;
 	};
 
-	struct Image
-	{
-		std::string source;
-		int width;
-		int height;
-	};
 
-	struct TMXTileSet
-	{
-		//Tileset attibuttes
-		std::string name;
-		std::string version;
 
-		int tileWidth;
-		int tileHeight;
-		int tileCount;
-		int Columns;
-	};
+
 
 	class TMX2Map {
 

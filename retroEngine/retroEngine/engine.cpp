@@ -84,6 +84,11 @@ void pery::Engine::ProcessInput()
 	{
 		camera->GoTo(0, 0);
 	}
+	if (IsKeyPressed(KEY_Q)) //Reload level
+	{
+		level->~Level();
+		level = new Level("test2");
+	}
 }
 
 void pery::Engine::Update()
