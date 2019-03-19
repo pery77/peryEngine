@@ -9,15 +9,20 @@ namespace pery
 	{
 	public:
 
-		Tile(Texture2D & tileset, int tileCol, int tileRow);
+		Tile(Texture2D & tileset, int tileCol, int tileRow, int tileWidth, int tileHeight);
 		~Tile();
 
 		void Draw(int x, int y);
+		int tileWidth;
+		int tileHeight;
 
 	private:
 
 		Texture2D & tilesetTexture;
 		int col;
 		int row;
+
+
+
 	};
 }

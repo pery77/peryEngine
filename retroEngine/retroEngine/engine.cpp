@@ -110,14 +110,18 @@ void pery::Engine::RenderFrame()
 	BeginTextureMode(mainRender);
 
 	//Draw tiles.
-	for (int y = 0, tileY = bounds.y; y < bounds.height; y++, tileY++)
+	for (int layer = 0; layer < level->GetLayers(); layer++)
 	{
-		for (int x = 0, tileX = bounds.x; x < bounds.width; x++, tileX++)
+		for (int y = 0, tileY = bounds.y; y < bounds.height; y++, tileY++)
 		{
-			level->GetTile(tileX, tileY)->Draw((x * TILESIZE) - camOffsetX, (y * TILESIZE) - camOffsetY);
+			for (int x = 0, tileX = bounds.x; x < bounds.width; x++, tileX++)
+			{
+				Tile * t = level->GetTile(layer, tileX, tileY);
+				if (t == NULL) continue;
+				t->Draw((x * t->tileWidth) - camOffsetX, (y * t->tileHeight) - camOffsetY);
+			}
 		}
 	}
-
 	//End draw game in main texture.
 	EndTextureMode();
 

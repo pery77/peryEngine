@@ -62,7 +62,7 @@ void pery::TilesetManager::MakeTiles(TSXTileSet & tsxTileset)
 	{
 		for (int x = 0; x < tsxTileset.columns; x++)
 		{
-			tile = new Tile(tsxTileset.texture, x, y);
+			tile = new Tile(tsxTileset.texture, x, y, tsxTileset.tileWidth, tsxTileset.tileHeight);
 			AddTile(tile);
 		}
 	}

@@ -1,14 +1,17 @@
 #include "tile.h"
 
 
-pery::Tile::Tile(Texture2D & tileset, int tileCol, int tileRow)
-	:tilesetTexture (tileset)
+
+
+pery::Tile::Tile(Texture2D & tileset, int tileCol, int tileRow, int tileWidth, int tileHeight)
+	: tilesetTexture(tileset), tileWidth(tileWidth) , tileHeight(tileHeight)
 {
-	col = tileCol * TILESIZE;
-	row = tileRow * TILESIZE;
+	col = tileCol * tileHeight;
+	row = tileRow * tileWidth;
+
 }
 
-pery::Tile::~Tile()
+	pery::Tile::~Tile()
 {
 }
 

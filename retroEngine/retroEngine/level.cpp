@@ -31,18 +31,18 @@ pery::Level::~Level()
 
 }
 
-void pery::Level::AddTile(int x, int y, Tile * tile)
+void pery::Level::AddTile(int x, int y, Tile * tile, int layer)
 {
-	if (map[x][y] != NULL)
+	if (map[layer][x][y] != NULL)
 	{
-		delete map[x][y];
-		map[x][y] = NULL;
+		delete map[layer][x][y];
+		map[layer][x][y] = NULL;
 	}
 
-	map[x][y] = tile;
+	map[layer][x][y] = tile;
 }
 
-pery::Tile * pery::Level::GetTile(int x, int y)
+pery::Tile * pery::Level::GetTile(int layer, int x, int y)
 {
 
 	if ( map.size() == 0) return nullptr;
@@ -53,29 +53,30 @@ pery::Tile * pery::Level::GetTile(int x, int y)
 	if (y < 0)			y = 0;
 	if (y > height - 1) y = height - 1;
 
-	return map[x][y];
+	return map[layer][x][y];
 }
 
 void pery::Level::LoadLevel()
 {
 
-
-	
-
 	width  = CurrentMap->MapLoaded.width;
 	height = CurrentMap->MapLoaded.height;
+	layers = CurrentMap->MapLoaded.layers.size();
 
-	SetDimensions(width, height);
+	SetDimensions(CurrentMap->MapLoaded.layers.size(), width, height);
 
-	int co = 0;
-	for (int y = 0; y < GetHeight(); y++)
+	for (int ly = 0; ly < CurrentMap->MapLoaded.layers.size(); ly++)
 	{
-		for (int x = 0; x < GetWidth(); x++)
+		int co = 0;
+		for (int y = 0; y < GetHeight(); y++)
 		{
-			int t = CurrentMap->MapLoaded.layers[0].IDs[co]-1;
-			co++;
-			if (t >= 0) {
-				AddTile(x, y, tilesetManager->GetTile(t));
+			for (int x = 0; x < GetWidth(); x++)
+			{
+				int t = CurrentMap->MapLoaded.layers[ly].IDs[co] - 1;
+				co++;
+				if (t >= 0) {
+					AddTile(x, y, tilesetManager->GetTile(t), ly);
+				}
 			}
 		}
 	}
@@ -91,13 +92,22 @@ int pery::Level::GetHeight()
 	return height;
 }
 
-void pery::Level::SetDimensions(int width, int height)
+int pery::Level::GetLayers()
 {
-	//width are rows
-	map.resize(width);
+	return layers;
+}
 
-	for (int i = 0; i < width; i++)
+void pery::Level::SetDimensions(int layers, int width, int height)
+{
+
+	map.resize(layers);
+	for (int i = 0; i < layers; i++)
 	{
-		map.at(i).resize(height, 0);
+		map[i].resize(width);
+		for (int j = 0; j < width; j++)
+		{
+			map[i][j].resize(height);
+		}
 	}
+
 }

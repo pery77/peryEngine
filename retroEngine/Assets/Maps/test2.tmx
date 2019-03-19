@@ -1,10 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="2019.02.10" orientation="orthogonal" renderorder="right-up" width="200" height="100" tilewidth="16" tileheight="16" infinite="0" backgroundcolor="#385f6b" nextlayerid="6" nextobjectid="1">
+<map version="1.2" tiledversion="2019.02.10" orientation="orthogonal" renderorder="right-up" width="200" height="100" tilewidth="16" tileheight="16" infinite="0" backgroundcolor="#385f6b" nextlayerid="11" nextobjectid="6">
  <tileset firstgid="1" source="../Tilesets/tileset1.tsx"/>
  <tileset firstgid="257" source="../Tilesets/tile2blocks.tsx"/>
- <layer id="5" name="Tile Layer 1" width="200" height="100">
+ <tileset firstgid="353" source="../Tilesets/space_merc.tsx"/>
+ <layer id="7" name="end" width="200" height="100">
   <data encoding="base64" compression="zlib">
-   eJzt2ltKw0AYBtAE0bfiBRTq5bFeNqE+q8/eduAGpN1Dl+BaXIJrcqQOtgNxokQn2nPgY1JaQih8+dMmVQV0ZVCXPgLop2nIsJ6twKKnkFE9W2GZPGbeXw29WHufHXEblsF2yE7mM5uhD1vvsyNuwzIYhRx2vM/cPIK/Ip0fp2E2nIWcf3NGtJlH8Fek8+Mi9OIy5OqL/Rg37O/Ny7ePDspKz/fXoRc3Ibdf7EfcT9Ma51Iu0Cfz5/um8/x4bvs5eR1/a8T9NK1xLuUCfbFel8kgE+iDvbpMhpmk12Zv91xWPslGyJFe0bGjukxGuVSL12YHLTo3KftV8g/d9TD31ew+5LT6eJZlN9ONff3gBzz0NLEb8VnIk8w8OtYPfkDpHjQlnR+TloEule5B2/kBJWz1NOn8gBJK96Ap6f+7UELpHjQl/X8XAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPg9r5+iedc=
+   eJzt1TEKgDAQBMBr/Z36MfVj6ovE6yxsAgaMMgPbhiuybAQAtO94+wAAmmYn4KIPAJQo2Qubwt/V+ON9FzFkxq7CY9CgJz2ZshdzZtEPuFmzF1tm1w8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA+4gQj7AxU
   </data>
  </layer>
+ <layer id="6" name="Back" width="200" height="100">
+  <data encoding="base64" compression="zlib">
+   eJzt2UdKA3EYxuFZB9S72NsB9Cru7HWveBp7PZQldhB8Fy5EHBOjYxJ9HvhtMpnwLeaD+ZPz3qLU82tln7+/Vvb9Zo1mlrE0nibS5CezwW946qBncDmzrKTVtJbWO2g2/qexvo8/n2lwX6PrrTjKPhynk3SazuwHbbZR8gxuN7iv0fVW3GaWu3SfHtKj/aDNzrvkGaz3FMVNuk136T499LR7Kv66Zs4fVbxLfVV/5hxIg2koDaeRLtltulfZ+eOtKt6l3v52M81mF+bSfFpIi2nJflCxsvPHT5uqFcV0rfX7dzLnbtpL++kgHdoPKvZb54/N7MbWN/bjInNepqt0nerpxn5QsU76/wM6TTPnDwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPhvXgDlbTp8
+  </data>
+ </layer>
+ <layer id="5" name="Front" width="200" height="100">
+  <data encoding="base64" compression="zlib">
+   eJzt2E9Kw0AUwOEJ4lIUQcF/y1q9hO71BHoDD6DQO/QInskzOcEGJBBnFk3eIN8HPwJdpCH09YWkBAAAsKyP6AuARp3lzqMvAhq1yt0Gffd7RRDJ/oBpS+yPr5nPD3NZYn/053/oUnqsCFrye3/M9T/fn/8p//afK4JWHHcxHRWCFlx1MV0UGp75huNh/uzgj05ya3PFnq27mFal0s8z2XC8qZi5Teyt5B96abDX3Gduuzv2LguzcW0+mMFbow2zsd1d531hH92ZD2YQPQdTjffHpjLYp+g5qN0fEOG00cb7AyJEz8FU4/e7ECF6DqYav98FAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAJbzDd7Ucfo=
+  </data>
+ </layer>
+ <group id="8" name="Group 1">
+  <properties>
+   <property name="speed" type="int" value="1"/>
+  </properties>
+ </group>
+ <group id="9" name="Group 2"/>
+ <objectgroup id="10" name="ObjectTest">
+  <object id="1" name="intro" type="portal" x="422" y="54" width="87.5" height="69.5"/>
+  <object id="2" x="423.5" y="56" width="83" height="19">
+   <text wrap="1">Hello World</text>
+  </object>
+  <object id="3" name="camara" x="279.5" y="156">
+   <point/>
+  </object>
+  <object id="4" name="Flor" x="48" y="143.5" width="51.5" height="49.5">
+   <ellipse/>
+  </object>
+ </objectgroup>
 </map>

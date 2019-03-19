@@ -6,4 +6,11 @@
   <property name="int" type="int" value="0"/>
  </properties>
  <image source="tileset1.png" width="256" height="256"/>
+ <tile id="20">
+  <objectgroup draworder="index">
+   <object id="1" x="0.25" y="0.1875">
+    <polygon points="0,0 15.5,0 15.8125,15.625 0,15.625"/>
+   </object>
+  </objectgroup>
+ </tile>
 </tileset>
