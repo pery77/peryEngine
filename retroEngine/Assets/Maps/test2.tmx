@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="2019.02.10" orientation="orthogonal" renderorder="right-up" width="200" height="100" tilewidth="16" tileheight="16" infinite="0" backgroundcolor="#385f6b" nextlayerid="11" nextobjectid="6">
+<map version="1.2" tiledversion="2019.02.10" orientation="orthogonal" renderorder="right-up" width="200" height="100" tilewidth="16" tileheight="16" infinite="0" backgroundcolor="#385f6b" nextlayerid="12" nextobjectid="6">
  <tileset firstgid="1" source="../Tilesets/tileset1.tsx"/>
  <tileset firstgid="257" source="../Tilesets/tile2blocks.tsx"/>
  <tileset firstgid="353" source="../Tilesets/space_merc.tsx"/>
- <layer id="7" name="end" width="200" height="100">
+ <layer id="7" name="end" width="200" height="100" visible="0">
   <data encoding="base64" compression="zlib">
    eJzt1TEKgDAQBMBr/Z36MfVj6ovE6yxsAgaMMgPbhiuybAQAtO94+wAAmmYn4KIPAJQo2Qubwt/V+ON9FzFkxq7CY9CgJz2ZshdzZtEPuFmzF1tm1w8AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA+4gQj7AxU
   </data>
@@ -15,7 +15,7 @@
  </layer>
  <layer id="5" name="Front" width="200" height="100">
   <data encoding="base64" compression="zlib">
-   eJzt2E9Kw0AUwOEJ4lIUQcF/y1q9hO71BHoDD6DQO/QInskzOcEGJBBnFk3eIN8HPwJdpCH09YWkBAAAsKyP6AuARp3lzqMvAhq1yt0Gffd7RRDJ/oBpS+yPr5nPD3NZYn/053/oUnqsCFrye3/M9T/fn/8p//afK4JWHHcxHRWCFlx1MV0UGp75huNh/uzgj05ya3PFnq27mFal0s8z2XC8qZi5Teyt5B96abDX3Gduuzv2LguzcW0+mMFbow2zsd1d531hH92ZD2YQPQdTjffHpjLYp+g5qN0fEOG00cb7AyJEz8FU4/e7ECF6DqYav98FAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAJbzDd7Ucfo=
+   eJzt2E9Kw0AUB+BEcSmKoOC/ldbqJXSvJ9ClrjyAQu/QI3gDPYunsJ7DCTYgwZgpmL6g3wc/BrKYDuG9viFFAQAAsFyP0QeAgdpO2Yk+BAzUKOUk6LcfMgKRzA9ot4z58drz/tCXZcyPav/zsiguMlJ5S+uszN9/tlIU7yu9HJ1/7uv86Ot/vtr/MtX7VUYqR6nWj+f1/pzWl29qf9HnsKiNMibrHblN9X2nxgm2X8ZktyP1na9e19Kz1R+ymTJe4D4GOcZlTEZdKT7vZPV6mNFzk9hXyR90PcDcpDylTOdrZa+jNw70Bz24H2jq3pjOz3nWMY9O9Qc9iO6DtjTnxyQz8Jui+yB3fkCErYGmOT8gQnQftKX5fRciRPdBW5rfdwEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACA5fkA5sN6uQ==
   </data>
  </layer>
  <group id="8" name="Group 1">
@@ -25,15 +25,19 @@
  </group>
  <group id="9" name="Group 2"/>
  <objectgroup id="10" name="ObjectTest">
+  <properties>
+   <property name="joeee" type="int" value="0"/>
+  </properties>
   <object id="1" name="intro" type="portal" x="422" y="54" width="87.5" height="69.5"/>
   <object id="2" x="423.5" y="56" width="83" height="19">
    <text wrap="1">Hello World</text>
   </object>
-  <object id="3" name="camara" x="279.5" y="156">
+  <object id="3" name="main" type="camera" x="956.833" y="247.333">
    <point/>
   </object>
   <object id="4" name="Flor" x="48" y="143.5" width="51.5" height="49.5">
    <ellipse/>
   </object>
  </objectgroup>
+ <objectgroup id="11" name="Object Layer 2"/>
 </map>

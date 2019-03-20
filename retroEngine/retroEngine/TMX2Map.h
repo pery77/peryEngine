@@ -4,6 +4,8 @@
 #include <fstream>
 #include <sstream>
 #include <functional>
+#include <map>
+
 
 #include "raylib.h"
 
@@ -12,6 +14,12 @@
 #include "miniz\miniz.h"
 
 namespace pery {
+
+	struct TSXTile
+	{
+		int id;
+		std::map<std::string, std::string> properties;
+	};
 
 	//Struct image
 	struct Image
@@ -35,7 +43,11 @@ namespace pery {
 		int rows;
 
 		Image image;
-		RAYLIB_H::Texture2D texture;
+		Texture2D texture;
+		//properties dictionary
+		std::map<std::string, std::string> properties;
+		std::vector < TSXTile > tiles;
+
 	};
 
 	//Tileset structure
@@ -48,11 +60,33 @@ namespace pery {
 
 	};
 
+	struct MapObjectGroup
+	{
+		int id;
+		int name;
+
+		struct Objects {
+			int id;
+			std::string name;
+			std::string type;
+			
+			int x;
+			int y;
+			int widht;
+			int height;
+
+		};
+
+		std::vector<Objects> objects;
+	};
+
+	//Data node
 	struct Data
 	{
 		std::string encoding;
 		std::string compression;
 
+		//Data string
 		std::string content;
 	};
 
@@ -69,6 +103,10 @@ namespace pery {
 
 		//Store tile IDs
 		std::vector<std::uint32_t> IDs;
+
+		//properties dictionary
+		std::map<std::string, std::string> properties;
+
 	};
 
 	//Map structure
@@ -87,6 +125,8 @@ namespace pery {
 		//Child nodes
 		std::vector<MapTileset> tilesets;
 		std::vector<MapLayer>   layers;
+
+		std::vector<MapObjectGroup> objectgroup;
 	};
 
 
@@ -138,6 +178,8 @@ namespace pery {
 		}
 
 		void ShowMapInfo();
+
+
 
 	private:
 
