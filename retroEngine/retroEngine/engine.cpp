@@ -30,7 +30,7 @@ void pery::Engine::Init()
 	glow = new Glow(ScreenWidth, ScreenHeight);
 	glow->SetFilter(1);
 
-	level = new Level("test2");
+	level = new Level("test1");
 
 	camera = new CameraView(ScreenWidth, ScreenHeight, 1, level->GetWidth(), level->GetHeight());
 }
@@ -87,7 +87,7 @@ void pery::Engine::ProcessInput()
 	if (IsKeyPressed(KEY_Q)) //Reload level
 	{
 		level->~Level();
-		level = new Level("test2");
+		level = new Level("test1");
 	}
 }
 
@@ -112,6 +112,7 @@ void pery::Engine::RenderFrame()
 	//Draw tiles.
 	for (int layer = 0; layer < level->GetLayers(); layer++)
 	{
+		if (!level->CurrentMap->MapLoaded.layers[layer].visible) continue;
 		for (int y = 0, tileY = bounds.y; y < bounds.height; y++, tileY++)
 		{
 			for (int x = 0, tileX = bounds.x; x < bounds.width; x++, tileX++)

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.2" tiledversion="2019.02.10" orientation="orthogonal" renderorder="right-up" width="64" height="20" tilewidth="16" tileheight="16" infinite="0" nextlayerid="6" nextobjectid="1">
+ <tileset firstgid="1" source="../Tilesets/tile2blocks.tsx"/>
+ <imagelayer id="4" name="Image Layer 1">
+  <image source="C:/Users/el-pe/Desktop/PixelArt/Ansimuz/warped-files/warped-files/PNG/environment/environment-preview.png" width="1056" height="352"/>
+ </imagelayer>
+ <layer id="3" name="Tile Layer 2" width="64" height="20">
+  <data encoding="base64" compression="zlib">
+   eJztyrEJgFAQRMFfgRqrsdp/hW4HHgfCD2bgRbtjAPCHJa1pa+7Vz6z2dKSzuVc/s7rSnZ7mXv0AAAB8eQGgMwLa
+  </data>
+ </layer>
+ <group id="2" name="Group 1">
+  <group id="5" name="Group 2"/>
+ </group>
+ <layer id="1" name="layer1" width="64" height="20">
+  <data encoding="base64" compression="zlib">
+   eJztmDEOgDAIAOkH1FmdHNTJL+iu/3+PZXcohEIjXHJDkw69pCx0ANALOoAtKbsVumRXwv0S9/qJYozWDzAm+n0T/b6Jft9Ev2+w/6zkpZfBBvvvSj6KHVxa6E/CZwot9FsS/Xb90v+eMwfYL7n7aHkv8gX2T0rOSk0U/tqPs1DyJ4/sC4VMN1c=
+  </data>
+ </layer>
+</map>

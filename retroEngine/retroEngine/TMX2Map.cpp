@@ -33,82 +33,44 @@ pery::TMX2Map::TMX2Map(std::string TMXName)
 	rapidxml::xml_node<char> * mapNode;
 	mapNode = tmxDoc.first_node("map");
 
-	//Store attributes in CurrentMap struct.
-	MapLoaded.version = mapNode ->first_attribute("version")->value();
-	MapLoaded.orientation = mapNode->first_attribute("orientation")->value();
-
-	//atoi string to interger
-	MapLoaded.width = atoi(mapNode->first_attribute("width")->value());
-	MapLoaded.height = atoi(mapNode->first_attribute("height")->value());
-
-	MapLoaded.tileWidth = atoi(mapNode->first_attribute("tilewidth")->value());
-	MapLoaded.tileHeight = atoi(mapNode->first_attribute("tileheight")->value());
-	
-	//Load backgroundcolor only if node exist
-	if(mapNode->first_attribute("backgroundcolor")!=0)
-		MapLoaded.backgroundColor = mapNode->first_attribute("backgroundcolor")->value();
+	processMap(mapNode);
 
 	//--------------------------------------
 	//Tileset Attributtes
 	rapidxml::xml_node<char> * currentTileSetNode;
 	currentTileSetNode = mapNode->first_node("tileset");
 
-	//Loop tilesets while not null.
-	while (currentTileSetNode != NULL)
-	{
-		//Create a tileset and load attributes.
-		MapTileset t;
-
-		t.firstgid = atoi(currentTileSetNode->first_attribute("firstgid")->value());
-		t.source   = currentTileSetNode->first_attribute("source")->value();
-
-		//Add tileset to CurrentMap tilesets array.
-		MapLoaded.tilesets.push_back(t);
-
-		//Next tile node
-		currentTileSetNode = currentTileSetNode->next_sibling("tileset");
-	}
+	processTilesets(currentTileSetNode);
 
 	//--------------------------------------
 	//Layers
 	rapidxml::xml_node<char> * currentLayerNode;
 	currentLayerNode = mapNode->first_node("layer");
-	while (currentLayerNode != NULL)
+	
+	processLayers(currentLayerNode);
+
+	//Groups
+	rapidxml::xml_node<char> * currentGroupNode;
+	currentGroupNode = mapNode->first_node("group");
+
+	//Loop groups while not null.
+	while (currentGroupNode != NULL)
 	{
-		//Create a Layer and load attributes.
-		MapLayer l;
+		//Process layers in groups
+		rapidxml::xml_node<char> * currentLayerNode;
+		currentLayerNode = currentGroupNode->first_node("layer");
 
-		l.name   = currentLayerNode->first_attribute("name")->value();
+		processLayers(currentLayerNode);
 
-		l.id     = atoi(currentLayerNode->first_attribute("id")->value());
-		l.width  = atoi(currentLayerNode->first_attribute("width")->value());
-		l.height = atoi(currentLayerNode->first_attribute("height")->value());
-
-		//Data
-		rapidxml::xml_node<char> * dataNode;
-		dataNode = currentLayerNode->first_node("data");
-
-		Data d;
-		if (dataNode->first_attribute("encoding") != 0)
-			d.encoding    = dataNode->first_attribute("encoding")->value();
-		if (dataNode->first_attribute("compression") != 0)
-			d.compression = dataNode->first_attribute("compression")->value();
-
-		d.content = dataNode->value();
-
-		//Put data inside layer
-		l.data = d;
-		
-		//Add tileset to CurrentMap tilesets array.
-		MapLoaded.layers.push_back(l);
-
-		//Next tile node
-		currentLayerNode = currentLayerNode->next_sibling("layer");
+		//Next group node
+		currentGroupNode = currentGroupNode->next_sibling("group");
 	}
 
 
 	//--------------------------------------
 	//Objects
+
+
 
 	//Decompress all layer data.
 	for (int i = 0; i < MapLoaded.layers.size(); i++)
@@ -229,6 +191,7 @@ void pery::TMX2Map::ShowMapInfo()
 			" | ID: " << MapLoaded.layers[i].id << std::endl;
 		std::cout << "    ";
 		std::cout << "Layer size: [w:" << MapLoaded.layers[i].width << ",h:" << MapLoaded.layers[i].height << "]" << std::endl;
+		std::cout << "    visible: " << MapLoaded.layers[i].visible << std::endl;
 		std::cout << "    ";
 		std::cout << "Layer Data-> ";
 		std::cout << "Encoding: " << MapLoaded.layers[i].data.encoding <<
@@ -247,4 +210,84 @@ void pery::TMX2Map::ShowMapInfo()
 		}
 	}
 
+}
+
+const char * pery::TMX2Map::getValue(rapidxml::xml_node<char> * node, const char * name)
+{
+	if (node->first_attribute(name) == NULL) return "null";
+	return node->first_attribute(name)->value();
+}
+
+void pery::TMX2Map::processMap(rapidxml::xml_node<char>* node)
+{
+	//Store attributes in CurrentMap struct.
+	MapLoaded.version = getValue(node, "version");
+	MapLoaded.orientation = getValue(node, "orientation");
+
+	//atoi string to interger
+	MapLoaded.width = atoi(getValue(node, "width"));
+	MapLoaded.height = atoi(getValue(node, "height"));
+
+	MapLoaded.tileWidth = atoi(getValue(node, "tilewidth"));
+	MapLoaded.tileHeight = atoi(getValue(node, "tileheight"));
+
+	//Load backgroundcolor only if node exist
+	MapLoaded.backgroundColor = getValue(node, "backgroundcolor");
+}
+
+void pery::TMX2Map::processTilesets(rapidxml::xml_node<char>* node)
+{
+	//Loop tilesets while not null.
+	while (node != NULL)
+	{
+		//Create a tileset and load attributes.
+		MapTileset t;
+
+		t.firstgid = atoi(getValue(node, "firstgid"));
+		t.source = getValue(node, "source");
+
+		//Add tileset to CurrentMap tilesets array.
+		MapLoaded.tilesets.push_back(t);
+
+		//Next tile node
+		node = node->next_sibling("tileset");
+	}
+}
+
+void pery::TMX2Map::processLayers(rapidxml::xml_node<char>* node)
+{
+	while (node != NULL)
+	{
+		//Create a Layer and load attributes.
+		MapLayer l;
+
+		l.name = getValue(node, "name");
+
+		l.id = atoi(getValue(node, "id"));
+		l.width = atoi(getValue(node, "width"));
+		l.height = atoi(getValue(node, "height"));
+
+		l.visible = getValue(node, "visible") == "null" ? true : false;
+
+		//Data
+		rapidxml::xml_node<char> * dataNode;
+		dataNode = node->first_node("data");
+
+		Data d;
+		if (dataNode->first_attribute("encoding") != 0)
+			d.encoding = dataNode->first_attribute("encoding")->value();
+		if (dataNode->first_attribute("compression") != 0)
+			d.compression = dataNode->first_attribute("compression")->value();
+
+		d.content = dataNode->value();
+
+		//Put data inside layer
+		l.data = d;
+
+		//Add layer to CurrentMap layers array.
+		MapLoaded.layers.push_back(l);
+
+		//Next layer node
+		node = node->next_sibling("layer");
+	}
 }

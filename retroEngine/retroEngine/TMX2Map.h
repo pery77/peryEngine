@@ -98,6 +98,8 @@ namespace pery {
 		int width;
 		int height;
 
+		bool visible;
+
 		//Data child
 		Data data;
 
@@ -179,7 +181,7 @@ namespace pery {
 
 		void ShowMapInfo();
 
-
+		const char * getValue(rapidxml::xml_node<char> * node, const char * name);
 
 	private:
 
@@ -333,6 +335,8 @@ namespace pery {
 			return true;
 		}
 
-		
+		void processMap(rapidxml::xml_node<char> * node);
+		void processTilesets(rapidxml::xml_node<char> * node);
+		void processLayers(rapidxml::xml_node<char> * node);
 	};
 }
