@@ -84,10 +84,17 @@ void pery::Engine::ProcessInput()
 	{
 		camera->GoTo(0, 0);
 	}
-	if (IsKeyPressed(KEY_Q)) //Reload level
+	if (IsKeyPressed(KEY_ONE)) //Reload level
 	{
 		level->~Level();
 		level = new Level("test1");
+		camera = new CameraView(ScreenWidth, ScreenHeight, 1, level->GetWidth(), level->GetHeight());
+	}
+	if (IsKeyPressed(KEY_TWO)) //Reload level
+	{
+		level->~Level();
+		level = new Level("test2");
+		camera = new CameraView(ScreenWidth, ScreenHeight, 1, level->GetWidth(), level->GetHeight());
 	}
 }
 

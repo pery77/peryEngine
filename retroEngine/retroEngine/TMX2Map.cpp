@@ -33,43 +33,20 @@ pery::TMX2Map::TMX2Map(std::string TMXName)
 	rapidxml::xml_node<char> * mapNode;
 	mapNode = tmxDoc.first_node("map");
 
+	//Process map attributes
 	processMap(mapNode);
 
-	//--------------------------------------
 	//Tileset Attributtes
-	rapidxml::xml_node<char> * currentTileSetNode;
-	currentTileSetNode = mapNode->first_node("tileset");
+	processTilesets(mapNode);
 
-	processTilesets(currentTileSetNode);
+	//Layers in root
+	processLayers(mapNode, NULL);
 
-	//--------------------------------------
-	//Layers
-	rapidxml::xml_node<char> * currentLayerNode;
-	currentLayerNode = mapNode->first_node("layer");
+	//Groups in root (Recursive, read child groups and layers).
+	processGroup(mapNode, NULL);
 	
-	processLayers(currentLayerNode);
-
-	//Groups
-	rapidxml::xml_node<char> * currentGroupNode;
-	currentGroupNode = mapNode->first_node("group");
-
-	//Loop groups while not null.
-	while (currentGroupNode != NULL)
-	{
-		//Process layers in groups
-		rapidxml::xml_node<char> * currentLayerNode;
-		currentLayerNode = currentGroupNode->first_node("layer");
-
-		processLayers(currentLayerNode);
-
-		//Next group node
-		currentGroupNode = currentGroupNode->next_sibling("group");
-	}
-
-
-	//--------------------------------------
 	//Objects
-
+	processObjectGroup(mapNode, NULL);
 
 
 	//Decompress all layer data.
@@ -212,6 +189,7 @@ void pery::TMX2Map::ShowMapInfo()
 
 }
 
+//Get attribute value (name) from node
 const char * pery::TMX2Map::getValue(rapidxml::xml_node<char> * node, const char * name)
 {
 	if (node->first_attribute(name) == NULL) return "null";
@@ -235,8 +213,11 @@ void pery::TMX2Map::processMap(rapidxml::xml_node<char>* node)
 	MapLoaded.backgroundColor = getValue(node, "backgroundcolor");
 }
 
-void pery::TMX2Map::processTilesets(rapidxml::xml_node<char>* node)
+void pery::TMX2Map::processTilesets(rapidxml::xml_node<char>* parentNode)
 {
+	rapidxml::xml_node<char> * node;
+	node = parentNode->first_node("tileset");
+
 	//Loop tilesets while not null.
 	while (node != NULL)
 	{
@@ -254,8 +235,11 @@ void pery::TMX2Map::processTilesets(rapidxml::xml_node<char>* node)
 	}
 }
 
-void pery::TMX2Map::processLayers(rapidxml::xml_node<char>* node)
+void pery::TMX2Map::processLayers(rapidxml::xml_node<char>* parentNode, Group * parentGroup)
 {
+	rapidxml::xml_node<char> * node;
+	node = parentNode->first_node("layer");
+
 	while (node != NULL)
 	{
 		//Create a Layer and load attributes.
@@ -268,6 +252,8 @@ void pery::TMX2Map::processLayers(rapidxml::xml_node<char>* node)
 		l.height = atoi(getValue(node, "height"));
 
 		l.visible = getValue(node, "visible") == "null" ? true : false;
+		//Inherit parent visibility
+		if (parentGroup != NULL && !parentGroup->visible) l.visible = false; 
 
 		//Data
 		rapidxml::xml_node<char> * dataNode;
@@ -289,5 +275,63 @@ void pery::TMX2Map::processLayers(rapidxml::xml_node<char>* node)
 
 		//Next layer node
 		node = node->next_sibling("layer");
+	}
+}
+
+void pery::TMX2Map::processGroup(rapidxml::xml_node<char>* parentNode, Group * parentGroup)
+{
+	rapidxml::xml_node<char> * node;
+	node = parentNode->first_node("group");
+
+	//Loop groups while not null.
+	while (node != NULL)
+	{
+		//Create group structure, not used, only visible state for childs.
+		Group g;
+		g.name = getValue(node, "name");
+		g.id   = atoi(getValue(node, "id"));
+
+		g.visible = getValue(node, "visible") == "null" ? true : false;
+
+		//Inherit parent visibility
+		if (parentGroup != NULL && !parentGroup->visible) g.visible = false;
+	
+		//Recursive Groups ( try to find chidren groups )
+		processGroup(node, &g);
+
+		//Process layers in current group
+		processLayers(node, &g);
+
+		//Process ObjectGroup in current group
+		processObjectGroup(node, &g);
+
+		//Next group node in same branch.
+		node = node->next_sibling("group");
+	}
+}
+
+void pery::TMX2Map::processObjectGroup(rapidxml::xml_node<char>* parentNode, Group * parentGroup)
+{
+	rapidxml::xml_node<char> * node;
+	node = parentNode->first_node("objectgroup");
+
+	//Loop objectgroup while not null.
+	while (node != NULL)
+	{
+		MapObjectGroup og;
+		og.name = getValue(node, "name");
+		og.id = atoi(getValue(node, "id"));
+
+		og.visible = getValue(node, "visible") == "null" ? true : false;
+
+		//Inherit parent visibility
+		if (parentGroup != NULL && !parentGroup->visible) og.visible = false;
+
+
+		//processObjects(node); //TODO
+
+		std::cout<<og.name<<" v: "<< og.visible<<std::endl;
+		//Next layer node
+		node = node->next_sibling("objectgroup");
 	}
 }

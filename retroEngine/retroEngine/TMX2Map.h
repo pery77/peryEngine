@@ -63,7 +63,7 @@ namespace pery {
 	struct MapObjectGroup
 	{
 		int id;
-		int name;
+		std::string name;
 
 		struct Objects {
 			int id;
@@ -75,9 +75,12 @@ namespace pery {
 			int widht;
 			int height;
 
+			bool visible;
+
 		};
 
 		std::vector<Objects> objects;
+		bool visible;
 	};
 
 	//Data node
@@ -88,6 +91,14 @@ namespace pery {
 
 		//Data string
 		std::string content;
+	};
+	struct Group
+	{
+		std::string name;
+		int id;
+
+		bool visible;
+
 	};
 
 	struct MapLayer
@@ -335,8 +346,10 @@ namespace pery {
 			return true;
 		}
 
-		void processMap(rapidxml::xml_node<char> * node);
-		void processTilesets(rapidxml::xml_node<char> * node);
-		void processLayers(rapidxml::xml_node<char> * node);
-	};
+		void processMap(rapidxml::xml_node<char> * parentNode);
+		void processTilesets(rapidxml::xml_node<char> * parentNode);
+		void processLayers(rapidxml::xml_node<char> * parentNode, Group * parentGroup);
+		void processGroup(rapidxml::xml_node<char> * parentNode, Group * parentGroup);
+		void processObjectGroup(rapidxml::xml_node<char> * parentNode, Group * parentGroup);
+};
 }
