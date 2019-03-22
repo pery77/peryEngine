@@ -42,6 +42,9 @@ pery::TMX2Map::TMX2Map(std::string TMXName)
 	//Layers in root
 	processLayers(mapNode, NULL);
 
+	//ImageLayers in root
+	processImageLayers(mapNode, NULL);
+
 	//Groups in root (Recursive, read child groups and layers).
 	processGroup(mapNode, NULL);
 	
@@ -187,6 +190,35 @@ void pery::TMX2Map::ShowMapInfo()
 		}
 	}
 
+	//Show objects info
+	std::cout << MapLoaded.objects.size() << " objects(s)" << std::endl;
+	std::cout << std::endl;
+	for (int i = 0; i < MapLoaded.objects.size(); i++)
+	{
+		std::cout << "    Object: " << i << std::endl;
+		std::cout << "    ";
+		std::cout << "Name: " << MapLoaded.objects[i].name <<
+			" | ID: " << MapLoaded.objects[i].id << std::endl;
+
+		std::cout << std::endl;
+
+	}
+
+	std::cout << std::endl;
+
+	//Show imagelayers info
+	std::cout << MapLoaded.imageLayers.size() << " imageLayer(s)" << std::endl;
+	std::cout << std::endl;
+	for (int i = 0; i < MapLoaded.imageLayers.size(); i++)
+	{
+		std::cout << "    ImageLayer: " << i << std::endl;
+		std::cout << "    ";
+		std::cout << "Name: " << MapLoaded.imageLayers[i].name <<
+			" | ID: " << MapLoaded.imageLayers[i].id << std::endl;
+	}
+
+	std::cout << std::endl;
+
 }
 
 //Get attribute value (name) from node
@@ -305,6 +337,9 @@ void pery::TMX2Map::processGroup(rapidxml::xml_node<char>* parentNode, Group * p
 		//Process ObjectGroup in current group
 		processObjectGroup(node, &g);
 
+		//Process imagelayers in current group
+		processImageLayers(node, &g);
+
 		//Next group node in same branch.
 		node = node->next_sibling("group");
 	}
@@ -327,11 +362,82 @@ void pery::TMX2Map::processObjectGroup(rapidxml::xml_node<char>* parentNode, Gro
 		//Inherit parent visibility
 		if (parentGroup != NULL && !parentGroup->visible) og.visible = false;
 
+		processObjects(node, parentGroup); 
 
-		//processObjects(node); //TODO
-
-		std::cout<<og.name<<" v: "<< og.visible<<std::endl;
 		//Next layer node
 		node = node->next_sibling("objectgroup");
+	}
+}
+
+void pery::TMX2Map::processObjects(rapidxml::xml_node<char>* parentNode, Group * parentGroup)
+{
+	rapidxml::xml_node<char> * node;
+	node = parentNode->first_node("object");
+
+	while (node != NULL)
+	{
+		MapObject o;
+
+		o.name = getValue(node, "name");
+		o.id = atoi(getValue(node, "id"));
+		o.type = getValue(node, "type");
+
+		o.x = atoi(getValue(node, "x"));
+		o.y = atoi(getValue(node, "y"));
+
+		o.width = atoi(getValue(node, "width"));
+		o.height = atoi(getValue(node, "height"));
+
+		o.visible = getValue(node, "visible") == "null" ? true : false;
+		//Inherit parent visibility
+		if (parentGroup != NULL && !parentGroup->visible) o.visible = false;
+
+		//Add current object to CurrentMap layers array.
+		MapLoaded.objects.push_back(o);
+
+		node = node->next_sibling("object");
+	}
+}
+
+void pery::TMX2Map::processImageLayers(rapidxml::xml_node<char>* parentNode, Group * parentGroup)
+{
+	rapidxml::xml_node<char> * node;
+	node = parentNode->first_node("imagelayer");
+
+	while (node != NULL)
+	{
+		MapImageLayer il;
+
+		il.name = getValue(node, "name");
+		il.id = atoi(getValue(node, "id"));
+
+		il.offsetx = atoi(getValue(node, "offsetx"));
+		il.offsety = atoi(getValue(node, "offsety"));
+
+		il.visible = getValue(node, "visible") == "null" ? true : false;
+		//Inherit parent visibility
+		if (parentGroup != NULL && !parentGroup->visible) il.visible = false;
+
+		//Get a child image node.
+		rapidxml::xml_node<char> * iNode;
+		iNode = node->first_node("image");
+
+		//If exist
+		if (iNode != NULL) {
+
+			Image i;
+			i.source = getValue(iNode, "source");
+			i.width = atoi(getValue(iNode, "widht"));
+			i.height = atoi(getValue(iNode, "heiht"));
+
+			//Add to image layer.
+			il.image = i;
+		}
+
+		//Add image layer to current map
+		MapLoaded.imageLayers.push_back(il);
+
+		//Next image layer in same brach
+		node = node->next_sibling("imagelayer");
 	}
 }

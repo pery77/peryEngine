@@ -19,6 +19,11 @@ pery::Level::Level(std::string levelName)
 	}
 
 	LoadLevel();
+
+	if (CurrentMap->MapLoaded.imageLayers.size() > 0) {
+		const char * imageSource = CurrentMap->MapLoaded.imageLayers[0].image.source.c_str();
+		CurrentMap->MapLoaded.imageLayers[0].image.texture = LoadTexture(imageSource);
+	}
 }
 
 pery::Level::~Level()

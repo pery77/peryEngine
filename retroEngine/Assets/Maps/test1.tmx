@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="2019.02.10" orientation="orthogonal" renderorder="right-up" width="64" height="20" tilewidth="16" tileheight="16" infinite="0" nextlayerid="13" nextobjectid="3">
+<map version="1.2" tiledversion="2019.02.10" orientation="orthogonal" renderorder="right-up" width="64" height="20" tilewidth="16" tileheight="16" infinite="0" nextlayerid="13" nextobjectid="5">
  <tileset firstgid="1" source="../Tilesets/tile2blocks.tsx"/>
  <tileset firstgid="97" source="../Tilesets/tileset1.tsx"/>
- <imagelayer id="4" name="Image Layer 1" visible="0">
-  <image source="C:/Users/el-pe/Desktop/PixelArt/Ansimuz/warped-files/warped-files/PNG/environment/environment-preview.png" width="1056" height="352"/>
- </imagelayer>
  <group id="6" name="Group 3">
   <group id="7" name="Group 4">
    <objectgroup id="12" name="Object Layer 4"/>
@@ -19,17 +16,28 @@
    eJztyrEJgFAQRMFfgRqrsdp/hW4HHgfCD2bgRbtjAPCHJa1pa+7Vz6z2dKSzuVc/s7rSnZ7mXv0AAAB8eQGgMwLa
   </data>
   </layer>
-  <objectgroup id="11" name="Object Layer 3"/>
+  <objectgroup id="11" name="Object Layer 3">
+   <object id="4" name="3n 3l 3" x="665" y="-36.5" width="83" height="19">
+    <text fontfamily="Moonbeam" wrap="1" color="#0000ff">en el 3</text>
+   </object>
+  </objectgroup>
  </group>
  <group id="2" name="Group 1">
   <group id="5" name="Group 2" visible="0"/>
  </group>
+ <imagelayer id="4" name="Image Layer 1">
+  <image source="C:/Users/el-pe/Desktop/PixelArt/Ansimuz/warped-files/warped-files/PNG/environment/environment-preview.png" width="1056" height="352"/>
+ </imagelayer>
  <layer id="1" name="layer1" width="64" height="20">
   <data encoding="base64" compression="zlib">
    eJztmDEOgDAIAOkH1FmdHNTJL+iu/3+PZXcohEIjXHJDkw69pCx0ANALOoAtKbsVumRXwv0S9/qJYozWDzAm+n0T/b6Jft9Ev2+w/6zkpZfBBvvvSj6KHVxa6E/CZwot9FsS/Xb90v+eMwfYL7n7aHkv8gX2T0rOSk0U/tqPs1DyJ4/sC4VMN1c=
   </data>
  </layer>
- <objectgroup id="10" name="Object Layer 2"/>
+ <objectgroup id="10" name="Object Layer 2">
+  <object id="3" name="en el 2" type="poligono" x="411.5" y="-37">
+   <polygon points="0,0 142,1 70,66.5 -2.5,38 52.5,27.5 -3,16"/>
+  </object>
+ </objectgroup>
  <objectgroup id="9" name="Object Layer 1">
   <object id="1" name="main" type="camera" x="469.5" y="111">
    <point/>

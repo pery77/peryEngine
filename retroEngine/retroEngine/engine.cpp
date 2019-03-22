@@ -116,10 +116,13 @@ void pery::Engine::RenderFrame()
 	//Draw game to texture.
 	BeginTextureMode(mainRender);
 
-	//Draw tiles.
+	DrawTexture(level->CurrentMap->MapLoaded.imageLayers[0].image.texture, 0 - camera->GetPosition().x * 0.5, 0 - camera->GetPosition().y, WHITE);
+	
+	//Draw layers
 	for (int layer = 0; layer < level->GetLayers(); layer++)
 	{
 		if (!level->CurrentMap->MapLoaded.layers[layer].visible) continue;
+		//Draw tiles.
 		for (int y = 0, tileY = bounds.y; y < bounds.height; y++, tileY++)
 		{
 			for (int x = 0, tileX = bounds.x; x < bounds.width; x++, tileX++)

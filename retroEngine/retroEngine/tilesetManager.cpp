@@ -18,7 +18,7 @@ pery::TilesetManager::~TilesetManager()
 
 	for (int i = 0; i < tilesetsList.size(); i++)
 	{
-		UnloadTexture(tilesetsList[i].texture);
+		UnloadTexture(tilesetsList[i].image.texture);
 	}
 	tilesetsList.clear();
 }
@@ -31,9 +31,9 @@ void pery::TilesetManager::AddTileset(TSXTileSet & tsxTileset)
 	std::string st = "../Assets/Tilesets/" + tsxTileset.image.source;
 
 	const char * imageSource = st.c_str();
-	tsxTileset.texture = LoadTexture(imageSource);
+	tsxTileset.image.texture = LoadTexture(imageSource);
 
-	SetTextureFilter(tsxTileset.texture, 0);
+	SetTextureFilter(tsxTileset.image.texture, 0);
 
 	MakeTiles(tsxTileset);
 
@@ -62,7 +62,7 @@ void pery::TilesetManager::MakeTiles(TSXTileSet & tsxTileset)
 	{
 		for (int x = 0; x < tsxTileset.columns; x++)
 		{
-			tile = new Tile(tsxTileset.texture, x, y, tsxTileset.tileWidth, tsxTileset.tileHeight);
+			tile = new Tile(tsxTileset.image.texture, x, y, tsxTileset.tileWidth, tsxTileset.tileHeight);
 			AddTile(tile);
 		}
 	}

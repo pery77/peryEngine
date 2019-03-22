@@ -15,10 +15,34 @@
 
 namespace pery {
 
-	struct TSXTile
-	{
+	//Objects
+	struct MapObject {
 		int id;
-		std::map<std::string, std::string> properties;
+		std::string name;
+		std::string type;
+
+		int x;
+		int y;
+		int width;
+		int height;
+
+		bool visible;
+
+	};
+
+	//Tiles in tsx file.
+	struct TSXTile
+	{		
+		int id;
+
+		struct AnimationFrame
+		{
+			int tileid;
+			int duration;
+		};
+
+		std::vector<MapObject> objects;
+		std::vector<AnimationFrame> frames;
 	};
 
 	//Struct image
@@ -27,6 +51,8 @@ namespace pery {
 		std::string source;
 		int width;
 		int height;
+
+		Texture2D texture;
 	};
 
 	//Tsx file tileset
@@ -43,7 +69,7 @@ namespace pery {
 		int rows;
 
 		Image image;
-		Texture2D texture;
+
 		//properties dictionary
 		std::map<std::string, std::string> properties;
 		std::vector < TSXTile > tiles;
@@ -60,26 +86,12 @@ namespace pery {
 
 	};
 
+
 	struct MapObjectGroup
 	{
 		int id;
 		std::string name;
 
-		struct Objects {
-			int id;
-			std::string name;
-			std::string type;
-			
-			int x;
-			int y;
-			int widht;
-			int height;
-
-			bool visible;
-
-		};
-
-		std::vector<Objects> objects;
 		bool visible;
 	};
 
@@ -92,13 +104,14 @@ namespace pery {
 		//Data string
 		std::string content;
 	};
+
+	//Group (layers and objectsgroup conainer )
 	struct Group
 	{
 		std::string name;
 		int id;
 
 		bool visible;
-
 	};
 
 	struct MapLayer
@@ -122,6 +135,17 @@ namespace pery {
 
 	};
 
+	struct MapImageLayer
+	{
+		int id;
+		std::string	name;
+		int offsetx; 
+		int offsety;
+
+		Image image;
+		bool visible;
+	};
+
 	//Map structure
 	struct Map
 	{
@@ -136,15 +160,11 @@ namespace pery {
 		int tileHeight;
 
 		//Child nodes
-		std::vector<MapTileset> tilesets;
-		std::vector<MapLayer>   layers;
-
-		std::vector<MapObjectGroup> objectgroup;
+		std::vector<MapTileset>    tilesets;
+		std::vector<MapLayer>      layers;
+		std::vector<MapObject>     objects;
+		std::vector<MapImageLayer> imageLayers;
 	};
-
-
-
-
 
 	class TMX2Map {
 
@@ -351,5 +371,7 @@ namespace pery {
 		void processLayers(rapidxml::xml_node<char> * parentNode, Group * parentGroup);
 		void processGroup(rapidxml::xml_node<char> * parentNode, Group * parentGroup);
 		void processObjectGroup(rapidxml::xml_node<char> * parentNode, Group * parentGroup);
+		void processObjects(rapidxml::xml_node<char> * parentNode, Group * parentGroup);
+		void processImageLayers(rapidxml::xml_node<char> * parentNode, Group * parentGroup);
 };
 }

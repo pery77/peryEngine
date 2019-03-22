@@ -6,11 +6,9 @@
   <property name="int" type="int" value="0"/>
  </properties>
  <image source="tileset1.png" width="256" height="256"/>
- <tile id="20">
+ <tile id="5">
   <objectgroup draworder="index">
-   <object id="1" x="0.25" y="0.1875">
-    <polygon points="0,0 15.5,0 15.8125,15.625 0,15.625"/>
-   </object>
+   <object id="2" name="tile" type="collider" x="0" y="0" width="16" height="16"/>
   </objectgroup>
  </tile>
  <tile id="116">
@@ -18,5 +16,12 @@
    <frame tileid="116" duration="100"/>
    <frame tileid="117" duration="100"/>
   </animation>
+ </tile>
+ <tile id="119">
+  <objectgroup draworder="index">
+   <object id="1" type="grass" x="9.125" y="15.25">
+    <point/>
+   </object>
+  </objectgroup>
  </tile>
 </tileset>
