@@ -18,13 +18,15 @@ pery::Level::Level(std::string levelName)
 		tilesetManager->AddTileset(CurrentMap->MapLoaded.tilesets[ts].tileset);
 	}
 
+	width    = CurrentMap->MapLoaded.width;
+	height   = CurrentMap->MapLoaded.height;
+	layers   = CurrentMap->MapLoaded.renderQueue.size();
+	tileSize = CurrentMap->MapLoaded.tileHeight;
+
+	SetDimensions(CurrentMap->MapLoaded.renderQueue.size(), width, height);
+
 	LoadLevel();
-	/*
-	if (CurrentMap->MapLoaded.imageLayers.size() > 0) {
-		const char * imageSource = CurrentMap->MapLoaded.imageLayers[0].image.source.c_str();
-		CurrentMap->MapLoaded.imageLayers[0].image.texture = LoadTexture(imageSource);
-	}
-	*/
+
 }
 
 pery::Level::~Level()
@@ -65,12 +67,6 @@ pery::Tile * pery::Level::GetTile(int layer, int x, int y)
 void pery::Level::LoadLevel()
 {
 
-	width  = CurrentMap->MapLoaded.width;
-	height = CurrentMap->MapLoaded.height;
-	layers = CurrentMap->MapLoaded.renderQueue.size();
-
-	SetDimensions(CurrentMap->MapLoaded.renderQueue.size(), width, height);
-
 	for (int i = 0; i < CurrentMap->MapLoaded.renderQueue.size(); i++)
 	{
 		if (CurrentMap->MapLoaded.renderQueue[i].imageLayer.id != -1)
@@ -94,21 +90,6 @@ void pery::Level::LoadLevel()
 			}
 		}
 	}
-}
-
-int pery::Level::GetWidth()
-{
-	return width;
-}
-
-int pery::Level::GetHeight()
-{
-	return height;
-}
-
-int pery::Level::GetLayers()
-{
-	return layers;
 }
 
 void pery::Level::SetDimensions(int layers, int width, int height)

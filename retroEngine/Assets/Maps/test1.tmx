@@ -9,21 +9,22 @@
     <polygon points="0,0 142,1 70,66.5 -2.5,38 52.5,27.5 -3,16"/>
    </object>
   </objectgroup>
-  <imagelayer id="13" name="Image Layer 2" offsetx="15" offsety="-61">
-   <image source="C:/Users/el-pe/Desktop/PixelArt/Surt/psygen.png" width="1152" height="768"/>
-  </imagelayer>
   <objectgroup id="9" name="Object Layer 1">
    <object id="1" name="main" type="camera" x="469.5" y="111">
     <point/>
    </object>
    <object id="2" name="welcom to bla bla bla" type="info" x="133" y="60" width="158.5" height="109.5"/>
   </objectgroup>
-  <group id="5" name="Group 2" visible="0">
+  <group id="5" name="Group 2">
    <group id="7" name="Group 4">
     <objectgroup id="12" name="Object Layer 4"/>
    </group>
-   <imagelayer id="4" name="im1" offsetx="856.667" offsety="12">
+   <imagelayer id="4" name="im1">
     <image source="C:/Users/el-pe/Desktop/PixelArt/Ansimuz/warped-files/warped-files/PNG/environment/environment-preview.png" width="1056" height="352"/>
+    <properties>
+     <property name="speedX" type="float" value="0.5"/>
+     <property name="speedY" type="float" value="1"/>
+    </properties>
    </imagelayer>
   </group>
   <objectgroup id="11" name="Object Layer 3">
@@ -42,7 +43,10 @@
   </data>
   </layer>
  </group>
- <layer id="1" name="l1" width="64" height="20" visible="0">
+ <layer id="1" name="l1" width="64" height="20">
+  <properties>
+   <property name="toImage" type="bool" value="true"/>
+  </properties>
   <data encoding="base64" compression="zlib">
    eJzjY2Bg4KciFmAYWMAIxOpEYiUgViNBPTFYg/ZepBqQGmgHDDAY9f/IBqP+H9mAWv4vheIyKplHL0At/7cyIMJgKIUDNdN/KwNqOJQxDP5woEX+H0ppAeR/eyrjVgbMtDBYwwHkf28aYWzhMNjCgNb+b4Pa04rGRwaMVOaTAmjp/8EY3+iAXvE/WMFAxj+10z05+QDkf2qOfSBjWPwPlnERbADkf2k6YRk6+YkUMFz9D8oLxKRRPSAGAODYSs0=
   </data>

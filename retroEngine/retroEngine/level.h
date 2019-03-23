@@ -20,9 +20,11 @@ namespace pery
 		Tile* GetTile(int layer, int x, int y);
 
 		void LoadLevel();
-		int GetWidth();
-		int GetHeight();
-		int GetLayers();
+
+		int GetWidth()    { return width;    }
+		int GetHeight()   { return height;   }
+		int GetLayers()   { return layers;   }
+		int GetTileSize() { return tileSize; }
 
 		TMX2Map* CurrentMap;
 
@@ -30,7 +32,7 @@ namespace pery
 
 		std::vector<std::vector<std::vector<Tile*>>> map; //[Layer,x,y]
 
-		int width, height, layers;
+		int width, height, layers, tileSize;
 		void SetDimensions(int layers, int width, int height);
 		std::string levelName;
 

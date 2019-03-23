@@ -1,8 +1,6 @@
 #pragma once
 #include "raylib.h"
 #include <iostream> //For NULL
-#define TILESIZE 16
-
 namespace pery
 {
 	class Tile
@@ -21,8 +19,6 @@ namespace pery
 		Texture2D & tilesetTexture;
 		int col;
 		int row;
-
-
 
 	};
 }

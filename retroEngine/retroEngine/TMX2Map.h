@@ -147,6 +147,9 @@ namespace pery {
 		Image image;
 		bool visible = true;
 
+		//properties dictionary
+		std::map<std::string, std::string> properties;
+
 	};
 
 	struct RenderQueue
@@ -376,6 +379,6 @@ namespace pery {
 		}
 
 		void parseTMX(rapidxml::xml_node<>* node, int indent = 0, Group * parentGroup = NULL);
-
+		void processProperties(rapidxml::xml_node<>* node, std::map<std::string, std::string> * properties);
 	};
 }

@@ -22,6 +22,7 @@ namespace pery {
 		//Start the engine
 		void Go();
 
+
 	private:
 
 		void Init();		 //Initialize engine.
@@ -29,6 +30,8 @@ namespace pery {
 		void RenderFrame();  //Draw loop
 		void ProcessInput(); //Keys events loop.
 		void Update();		 //Update loop.
+
+		void LoadLevel(std::string name);
 
 		//Main texture for render
 		RenderTexture2D mainRender;

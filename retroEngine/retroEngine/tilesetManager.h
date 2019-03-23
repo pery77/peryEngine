@@ -5,9 +5,6 @@
 #include "tools.h"
 #include "TMX2Map.h"
 
-//How many tiles in texture
-#define TILESETSIZE 16
-
 namespace pery {
 	class TilesetManager {
 

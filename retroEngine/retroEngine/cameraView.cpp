@@ -1,25 +1,27 @@
 #include "cameraView.h"
 
-pery::CameraView::CameraView(int w, int h, float speed, int levelWidth, int levelHeight)
+pery::CameraView::CameraView(int w, int h, float speed, int levelWidth, int levelHeight, int tileSize)
 {
 	//Set size
 	size.x = w;
 	size.y = h;
-
+	/*
 	//Clamp speed
 	if (speed < 0.0)
 		speed = 0.0;
 	if (speed > 1.0)
 		speed = 1.0;
-
+	*/
 	this->speed = speed;
 
 	//Move camera to 0,0
 	Move(0, 0);
 
+	TileSize = tileSize;
+
 	//Store variables for stop camera on borders.
-	stopX = ((levelWidth  * TILESIZE) - w);
-	stopY = ((levelHeight * TILESIZE) - h);
+	stopX = ((levelWidth  * TileSize) - w);
+	stopY = ((levelHeight * TileSize) - h);
 }
 
 pery::CameraView::~CameraView()
@@ -49,8 +51,8 @@ void pery::CameraView::Update()
 	float vx, vy, v;
 
 	//Find x and y
-	x = (float)(target.x - position.x);
-	y = (float)(target.y - position.y);
+	x = (float)(target.x  - position.x);
+	y = (float)(target.y  - position.y);
 
 	//If we're within 1 pixel of the target already, just snap
 	//to target and stay there. Otherwise, continue
@@ -70,8 +72,7 @@ void pery::CameraView::Update()
 		//Keep v above 1 pixel per update, otherwise it may never get to
 		//the target. v is an absolute value thanks to the squaring of x
 		//and y earlier
-		if (v < 1.0f)
-			v = 1.0f;
+		if (v < 1.0f) v = 1.0f;
 
 		//Similar triangles to get vx and vy
 		vx = x * (v / d);
@@ -92,19 +93,19 @@ void pery::CameraView::Update()
 Rectangle pery::CameraView::GetTileBounds()
 {
 
-	int x = (int)(position.x / TILESIZE);
-	int y = (int)(position.y / TILESIZE);
+	int x = (int)(position.x / TileSize);
+	int y = (int)(position.y / TileSize);
 
 	//+1 in case camera size isn't divisible by tileSize
 	//And +1 again because these values start at 0, and
 	//we want them to start at one
-	int w = (int)(size.x / TILESIZE + 2);
-	int h = (int)(size.y / TILESIZE + 2);
+	int w = (int)(size.x / TileSize + 2);
+	int h = (int)(size.y / TileSize + 2);
 
 	//And +1 again if we're offset from the tile
-	if (x % TILESIZE != 0)
+	if (x % TileSize != 0)
 		w++;
-	if (y % TILESIZE != 0)
+	if (y % TileSize != 0)
 		h++;
 
 	return { (float)x, (float)y, (float)w, (float)h };

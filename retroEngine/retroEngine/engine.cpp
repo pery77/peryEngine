@@ -1,5 +1,8 @@
 #include "engine.h"
 
+Vector2 ballPosition = { 0, 0 };
+
+
 pery::Engine::Engine()
 {
 }
@@ -30,9 +33,7 @@ void pery::Engine::Init()
 	glow = new Glow(ScreenWidth, ScreenHeight);
 	glow->SetFilter(1);
 
-	level = new Level("test1");
-
-	camera = new CameraView(ScreenWidth, ScreenHeight, 1, level->GetWidth(), level->GetHeight());
+	LoadLevel("test1");
 }
 
 //Start engine.
@@ -56,51 +57,41 @@ void pery::Engine::MainLoop()
 
 void pery::Engine::ProcessInput()
 {
-	if (IsMouseButtonReleased(MOUSE_LEFT_BUTTON))
-	{
-		int x = GetMousePosition().x;
-		int y = GetMousePosition().y;
 
-		camera->GoTo(x, y);
-	}
+	if (IsKeyDown(KEY_D)) ballPosition.x += 4;
+	if (IsKeyDown(KEY_A)) ballPosition.x -= 4;
+	if (IsKeyDown(KEY_W)) ballPosition.y -= 4;
+	if (IsKeyDown(KEY_S)) ballPosition.y += 4;
 
-	if (IsKeyPressed(KEY_W))
-	{
-		camera->GoTo(camera->GetPosition().x, camera->GetPosition().y - 16);
-	}
-	if (IsKeyPressed(KEY_S))
-	{
-		camera->GoTo(camera->GetPosition().x, camera->GetPosition().y + 16);
-	}
-	if (IsKeyPressed(KEY_D))
-	{
-		camera->GoTo(camera->GetPosition().x + 16, camera->GetPosition().y);
-	}
-	if (IsKeyPressed(KEY_A))
-	{
-		camera->GoTo(camera->GetPosition().x - 16, camera->GetPosition().y);
-	}
+
+	camera->GoTo(ballPosition.x, ballPosition.y);
+
+
+
 	if (IsKeyPressed(KEY_SPACE))
 	{
 		camera->GoTo(0, 0);
 	}
 	if (IsKeyPressed(KEY_ONE)) //Reload level
 	{
-		level->~Level();
-		level = new Level("test1");
-		camera = new CameraView(ScreenWidth, ScreenHeight, 1, level->GetWidth(), level->GetHeight());
+		LoadLevel("test1");
 	}
 	if (IsKeyPressed(KEY_TWO)) //Reload level
 	{
-		level->~Level();
-		level = new Level("test2");
-		camera = new CameraView(ScreenWidth, ScreenHeight, 1, level->GetWidth(), level->GetHeight());
+		LoadLevel("test2");
 	}
 }
 
 void pery::Engine::Update()
 {
 	camera->Update();
+}
+
+void pery::Engine::LoadLevel(std::string name)
+{
+	if (level != NULL) level->~Level();
+	level = new Level(name);
+	camera = new CameraView(ScreenWidth, ScreenHeight, 1, level->GetWidth(), level->GetHeight(), level->GetTileSize());
 }
 
 //Draw loop.
@@ -116,14 +107,16 @@ void pery::Engine::RenderFrame()
 	//Draw game to texture.
 	BeginTextureMode(mainRender);
 
+	//Draw level
 	for (int i = 0; i < level->GetLayers(); i++)
 	{
+
 		if (level->CurrentMap->MapLoaded.renderQueue[i].imageLayer.id != -1)
 		{
 			if (level->CurrentMap->MapLoaded.renderQueue[i].imageLayer.visible)
 			{
 				DrawTexture(level->CurrentMap->MapLoaded.renderQueue[i].imageLayer.image.texture,
-					level->CurrentMap->MapLoaded.renderQueue[i].imageLayer.offsetx - camera->GetPosition().x * 0.5,
+					level->CurrentMap->MapLoaded.renderQueue[i].imageLayer.offsetx - camera->GetPosition().x * 1,
 					level->CurrentMap->MapLoaded.renderQueue[i].imageLayer.offsety - camera->GetPosition().y, WHITE);
 			}
 		}
@@ -131,20 +124,30 @@ void pery::Engine::RenderFrame()
 		{
 			if (level->CurrentMap->MapLoaded.renderQueue[i].layer.visible)
 			{
+
 				//Draw tiles.
 				for (int y = 0, tileY = bounds.y; y < bounds.height; y++, tileY++)
 				{
 					for (int x = 0, tileX = bounds.x; x < bounds.width; x++, tileX++)
 					{
+
 						Tile * t = level->GetTile(i, tileX, tileY);
 						if (t == NULL) continue;
-						t->Draw((x * t->tileWidth) - camOffsetX, (y * t->tileHeight) - camOffsetY);
+						t->Draw((x * t->tileWidth) - camOffsetX,
+							(y * t->tileHeight) - camOffsetY);
+						//DrawText(FormatText("%i", x*16-camOffsetX), x*16, y*16, 8, RED);
+
 					}
 				}
 			}
 		}
 	}
 	
+
+	Vector2 cursor = { ballPosition.x - camera->GetPosition().x + 240, ballPosition.y - camera->GetPosition().y + 136 };
+	DrawText(FormatText("%f", camera->GetPosition().x), cursor.x, cursor.y, 2, RED);
+	DrawCircleV(cursor, 4, RED);
+
 	//End draw game in main texture.
 	EndTextureMode();
 

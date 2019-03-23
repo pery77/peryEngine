@@ -280,6 +280,8 @@ void pery::TMX2Map::parseTMX( rapidxml::xml_node<>* node, int indent, Group * pa
 			//Decompress zlib data string and store in currentlayer IDs array
 			DecompressLayerData(&l);
 
+			processProperties(node, &l.properties);
+
 			//Add layer to CurrentMap renderQueue array.
 			RenderQueue r;
 			r.layer = l;
@@ -359,6 +361,8 @@ void pery::TMX2Map::parseTMX( rapidxml::xml_node<>* node, int indent, Group * pa
 				il.image = i;
 			}
 
+			processProperties(node, &il.properties);
+
 			//Add image layer to current map
 			RenderQueue r;
 			r.imageLayer = il;
@@ -389,4 +393,26 @@ void pery::TMX2Map::parseTMX( rapidxml::xml_node<>* node, int indent, Group * pa
 	}
 
 	
+}
+
+void pery::TMX2Map::processProperties(rapidxml::xml_node<>* node, std::map<std::string, std::string>* properties)
+{
+	rapidxml::xml_node<char> * propertiesNode;
+	propertiesNode = node->first_node("properties");
+
+	if (propertiesNode != NULL)
+	{
+		rapidxml::xml_node<char> * propertyNode;
+		propertyNode = propertiesNode->first_node("property");
+
+		while (propertyNode != NULL)
+		{
+			std::string key (getValue(propertyNode, "name"));
+			std::string value(getValue(propertyNode, "value"));
+			std::cout << key << value << std::endl;
+			properties->emplace(key,value);
+			propertyNode = propertyNode->next_sibling("property");
+		}
+		
+	}
 }
