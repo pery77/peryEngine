@@ -32,7 +32,7 @@ namespace pery {
 
 	//Tiles in tsx file.
 	struct TSXTile
-	{		
+	{
 		int id;
 
 		struct AnimationFrame
@@ -117,12 +117,13 @@ namespace pery {
 	struct MapLayer
 	{
 		//Attributes
-		int id;
-		std::string name;
-		int width;
-		int height;
+		int id           = -1;
+		int width        = -1;
+		int height       = -1;
 
-		bool visible;
+		std::string name = "null";
+
+		bool visible = true;
 
 		//Data child
 		Data data;
@@ -137,33 +138,41 @@ namespace pery {
 
 	struct MapImageLayer
 	{
-		int id;
-		std::string	name;
-		int offsetx; 
-		int offsety;
+		int id      = -1;
+		int offsetx = -1;
+		int offsety = -1;
+
+		std::string	name = "null";
 
 		Image image;
-		bool visible;
+		bool visible = true;
+
+	};
+
+	struct RenderQueue
+	{
+		MapLayer      layer;
+		MapImageLayer imageLayer;
 	};
 
 	//Map structure
 	struct Map
 	{
 		//Map attibuttes
-		std::string name;
-		std::string version;
-		std::string orientation;
-		std::string backgroundColor;
-		int width;
-		int height;
-		int tileWidth;
-		int tileHeight;
+		std::string name	        = "null";
+		std::string version         = "null";
+		std::string orientation     = "null";
+		std::string backgroundColor = "null";
+		int width      = -1;
+		int height     = -1;
+		int tileWidth  = -1;
+		int tileHeight = -1;
 
 		//Child nodes
-		std::vector<MapTileset>    tilesets;
-		std::vector<MapLayer>      layers;
-		std::vector<MapObject>     objects;
-		std::vector<MapImageLayer> imageLayers;
+		std::vector<MapTileset>    tilesets = {};
+		std::vector<MapObject>     objects  = {};
+
+		std::vector<RenderQueue> renderQueue = {};
 	};
 
 	class TMX2Map {
@@ -176,10 +185,10 @@ namespace pery {
 		Map MapLoaded;
 
 		//Decompress zlib string.
-		void DecompressLayerData(int layer)
+		void DecompressLayerData(MapLayer * layer)
 		{
 			//Get data
-			std::string data = MapLoaded.layers[layer].data.content.c_str();
+			std::string data = layer->data.content.c_str();
 
 			//using a string stream we can remove whitespace such as tabs
 			std::stringstream ss;
@@ -190,7 +199,7 @@ namespace pery {
 			data = base64_decode(data);
 
 			//Get total layer tiles
-			int tileCount = MapLoaded.layers[layer].width * MapLoaded.layers[layer].height;
+			int tileCount = layer->width * layer->height;
 
 			std::size_t expectedSize = tileCount * 4; //4 bytes per tile
 			std::vector<unsigned char> byteData;
@@ -201,12 +210,12 @@ namespace pery {
 
 			byteData.insert(byteData.end(), data.begin(), data.end());
 
-			MapLoaded.layers[layer].IDs.reserve(tileCount);
+			layer->IDs.reserve(tileCount);
 
 			for (auto i = 0u; i < expectedSize - 3u; i += 4u)
 			{
 				std::uint32_t id = byteData[i] | byteData[i + 1] << 8 | byteData[i + 2] << 16 | byteData[i + 3] << 24;
-				MapLoaded.layers[layer].IDs.push_back(id);
+				layer->IDs.push_back(id);
 			}
 		}
 
@@ -366,12 +375,7 @@ namespace pery {
 			return true;
 		}
 
-		void processMap(rapidxml::xml_node<char> * parentNode);
-		void processTilesets(rapidxml::xml_node<char> * parentNode);
-		void processLayers(rapidxml::xml_node<char> * parentNode, Group * parentGroup);
-		void processGroup(rapidxml::xml_node<char> * parentNode, Group * parentGroup);
-		void processObjectGroup(rapidxml::xml_node<char> * parentNode, Group * parentGroup);
-		void processObjects(rapidxml::xml_node<char> * parentNode, Group * parentGroup);
-		void processImageLayers(rapidxml::xml_node<char> * parentNode, Group * parentGroup);
-};
+		void parseTMX(rapidxml::xml_node<>* node, int indent = 0, Group * parentGroup = NULL);
+
+	};
 }

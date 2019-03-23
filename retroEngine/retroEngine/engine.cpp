@@ -116,23 +116,35 @@ void pery::Engine::RenderFrame()
 	//Draw game to texture.
 	BeginTextureMode(mainRender);
 
-	DrawTexture(level->CurrentMap->MapLoaded.imageLayers[0].image.texture, 0 - camera->GetPosition().x * 0.5, 0 - camera->GetPosition().y, WHITE);
-	
-	//Draw layers
-	for (int layer = 0; layer < level->GetLayers(); layer++)
+	for (int i = 0; i < level->GetLayers(); i++)
 	{
-		if (!level->CurrentMap->MapLoaded.layers[layer].visible) continue;
-		//Draw tiles.
-		for (int y = 0, tileY = bounds.y; y < bounds.height; y++, tileY++)
+		if (level->CurrentMap->MapLoaded.renderQueue[i].imageLayer.id != -1)
 		{
-			for (int x = 0, tileX = bounds.x; x < bounds.width; x++, tileX++)
+			if (level->CurrentMap->MapLoaded.renderQueue[i].imageLayer.visible)
 			{
-				Tile * t = level->GetTile(layer, tileX, tileY);
-				if (t == NULL) continue;
-				t->Draw((x * t->tileWidth) - camOffsetX, (y * t->tileHeight) - camOffsetY);
+				DrawTexture(level->CurrentMap->MapLoaded.renderQueue[i].imageLayer.image.texture,
+					level->CurrentMap->MapLoaded.renderQueue[i].imageLayer.offsetx - camera->GetPosition().x * 0.5,
+					level->CurrentMap->MapLoaded.renderQueue[i].imageLayer.offsety - camera->GetPosition().y, WHITE);
+			}
+		}
+		if (level->CurrentMap->MapLoaded.renderQueue[i].layer.id != -1)
+		{
+			if (level->CurrentMap->MapLoaded.renderQueue[i].layer.visible)
+			{
+				//Draw tiles.
+				for (int y = 0, tileY = bounds.y; y < bounds.height; y++, tileY++)
+				{
+					for (int x = 0, tileX = bounds.x; x < bounds.width; x++, tileX++)
+					{
+						Tile * t = level->GetTile(i, tileX, tileY);
+						if (t == NULL) continue;
+						t->Draw((x * t->tileWidth) - camOffsetX, (y * t->tileHeight) - camOffsetY);
+					}
+				}
 			}
 		}
 	}
+	
 	//End draw game in main texture.
 	EndTextureMode();
 

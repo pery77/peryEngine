@@ -33,30 +33,7 @@ pery::TMX2Map::TMX2Map(std::string TMXName)
 	rapidxml::xml_node<char> * mapNode;
 	mapNode = tmxDoc.first_node("map");
 
-	//Process map attributes
-	processMap(mapNode);
-
-	//Tileset Attributtes
-	processTilesets(mapNode);
-
-	//Layers in root
-	processLayers(mapNode, NULL);
-
-	//ImageLayers in root
-	processImageLayers(mapNode, NULL);
-
-	//Groups in root (Recursive, read child groups and layers).
-	processGroup(mapNode, NULL);
-	
-	//Objects
-	processObjectGroup(mapNode, NULL);
-
-
-	//Decompress all layer data.
-	for (int i = 0; i < MapLoaded.layers.size(); i++)
-	{
-		DecompressLayerData(i);
-	}
+	parseTMX(mapNode);
 
 	//Load TXS (tilesets files)
 	for (int ts = 0; ts < MapLoaded.tilesets.size(); ts++)
@@ -120,7 +97,7 @@ pery::TMX2Map::~TMX2Map()
 void pery::TMX2Map::ShowMapInfo()
 {
 	std::cout << "[MAP INFO]" << std::endl;
-
+	//return;
 	//Show map info
 	std::cout << "Map Name: " << MapLoaded.name <<
 		" | Version: " << MapLoaded.version <<
@@ -159,13 +136,13 @@ void pery::TMX2Map::ShowMapInfo()
 	}
 
 	std::cout << std::endl;
-
+/*
 	//Show layers info
 	std::cout << MapLoaded.layers.size() << " layer(s)" << std::endl;
 	std::cout << std::endl;
 	for (int i = 0; i < MapLoaded.layers.size(); i++)
 	{
-		std::cout << "    Layer: " << i << std::endl;
+		std::cout << "    Layer: " << i << " index: "<< MapLoaded.layers[i].index << std::endl;
 		std::cout << "    ";
 		std::cout << "Name: " << MapLoaded.layers[i].name <<
 			" | ID: " << MapLoaded.layers[i].id << std::endl;
@@ -189,7 +166,7 @@ void pery::TMX2Map::ShowMapInfo()
 			std::cout << std::endl;
 		}
 	}
-
+*/
 	//Show objects info
 	std::cout << MapLoaded.objects.size() << " objects(s)" << std::endl;
 	std::cout << std::endl;
@@ -205,18 +182,18 @@ void pery::TMX2Map::ShowMapInfo()
 	}
 
 	std::cout << std::endl;
-
+/*
 	//Show imagelayers info
 	std::cout << MapLoaded.imageLayers.size() << " imageLayer(s)" << std::endl;
 	std::cout << std::endl;
 	for (int i = 0; i < MapLoaded.imageLayers.size(); i++)
 	{
-		std::cout << "    ImageLayer: " << i << std::endl;
+		std::cout << "    ImageLayer: " << i << " index: " << MapLoaded.layers[i].index << std::endl;
 		std::cout << "    ";
 		std::cout << "Name: " << MapLoaded.imageLayers[i].name <<
 			" | ID: " << MapLoaded.imageLayers[i].id << std::endl;
 	}
-
+*/
 	std::cout << std::endl;
 
 }
@@ -228,216 +205,188 @@ const char * pery::TMX2Map::getValue(rapidxml::xml_node<char> * node, const char
 	return node->first_attribute(name)->value();
 }
 
-void pery::TMX2Map::processMap(rapidxml::xml_node<char>* node)
+void pery::TMX2Map::parseTMX( rapidxml::xml_node<>* node, int indent, Group * parentGroup)
 {
-	//Store attributes in CurrentMap struct.
-	MapLoaded.version = getValue(node, "version");
-	MapLoaded.orientation = getValue(node, "orientation");
+	const auto ind = std::string(indent * 4, ' ');
+	printf("%s", ind.c_str());
 
-	//atoi string to interger
-	MapLoaded.width = atoi(getValue(node, "width"));
-	MapLoaded.height = atoi(getValue(node, "height"));
-
-	MapLoaded.tileWidth = atoi(getValue(node, "tilewidth"));
-	MapLoaded.tileHeight = atoi(getValue(node, "tileheight"));
-
-	//Load backgroundcolor only if node exist
-	MapLoaded.backgroundColor = getValue(node, "backgroundcolor");
-}
-
-void pery::TMX2Map::processTilesets(rapidxml::xml_node<char>* parentNode)
-{
-	rapidxml::xml_node<char> * node;
-	node = parentNode->first_node("tileset");
-
-	//Loop tilesets while not null.
-	while (node != NULL)
-	{
-		//Create a tileset and load attributes.
-		MapTileset t;
-
-		t.firstgid = atoi(getValue(node, "firstgid"));
-		t.source = getValue(node, "source");
-
-		//Add tileset to CurrentMap tilesets array.
-		MapLoaded.tilesets.push_back(t);
-
-		//Next tile node
-		node = node->next_sibling("tileset");
-	}
-}
-
-void pery::TMX2Map::processLayers(rapidxml::xml_node<char>* parentNode, Group * parentGroup)
-{
-	rapidxml::xml_node<char> * node;
-	node = parentNode->first_node("layer");
-
-	while (node != NULL)
-	{
-		//Create a Layer and load attributes.
-		MapLayer l;
-
-		l.name = getValue(node, "name");
-
-		l.id = atoi(getValue(node, "id"));
-		l.width = atoi(getValue(node, "width"));
-		l.height = atoi(getValue(node, "height"));
-
-		l.visible = getValue(node, "visible") == "null" ? true : false;
-		//Inherit parent visibility
-		if (parentGroup != NULL && !parentGroup->visible) l.visible = false; 
-
-		//Data
-		rapidxml::xml_node<char> * dataNode;
-		dataNode = node->first_node("data");
-
-		Data d;
-		if (dataNode->first_attribute("encoding") != 0)
-			d.encoding = dataNode->first_attribute("encoding")->value();
-		if (dataNode->first_attribute("compression") != 0)
-			d.compression = dataNode->first_attribute("compression")->value();
-
-		d.content = dataNode->value();
-
-		//Put data inside layer
-		l.data = d;
-
-		//Add layer to CurrentMap layers array.
-		MapLoaded.layers.push_back(l);
-
-		//Next layer node
-		node = node->next_sibling("layer");
-	}
-}
-
-void pery::TMX2Map::processGroup(rapidxml::xml_node<char>* parentNode, Group * parentGroup)
-{
-	rapidxml::xml_node<char> * node;
-	node = parentNode->first_node("group");
-
-	//Loop groups while not null.
-	while (node != NULL)
-	{
-		//Create group structure, not used, only visible state for childs.
-		Group g;
-		g.name = getValue(node, "name");
-		g.id   = atoi(getValue(node, "id"));
-
-		g.visible = getValue(node, "visible") == "null" ? true : false;
-
-		//Inherit parent visibility
-		if (parentGroup != NULL && !parentGroup->visible) g.visible = false;
+	const rapidxml::node_type t = node->type();
 	
-		//Recursive Groups ( try to find chidren groups )
-		processGroup(node, &g);
-
-		//Process layers in current group
-		processLayers(node, &g);
-
-		//Process ObjectGroup in current group
-		processObjectGroup(node, &g);
-
-		//Process imagelayers in current group
-		processImageLayers(node, &g);
-
-		//Next group node in same branch.
-		node = node->next_sibling("group");
-	}
-}
-
-void pery::TMX2Map::processObjectGroup(rapidxml::xml_node<char>* parentNode, Group * parentGroup)
-{
-	rapidxml::xml_node<char> * node;
-	node = parentNode->first_node("objectgroup");
-
-	//Loop objectgroup while not null.
-	while (node != NULL)
+	if (t == rapidxml::node_element)
 	{
-		MapObjectGroup og;
-		og.name = getValue(node, "name");
-		og.id = atoi(getValue(node, "id"));
+		char * currentNode = node->name();
+		
+		printf("[%s]\n", currentNode);
 
-		og.visible = getValue(node, "visible") == "null" ? true : false;
+		if (std::strcmp(currentNode, "map") == 0)
+		{
+			//Store attributes in CurrentMap struct.
+			MapLoaded.version = getValue(node, "version");
+			MapLoaded.orientation = getValue(node, "orientation");
 
-		//Inherit parent visibility
-		if (parentGroup != NULL && !parentGroup->visible) og.visible = false;
+			//atoi string to interger
+			MapLoaded.width = atoi(getValue(node, "width"));
+			MapLoaded.height = atoi(getValue(node, "height"));
 
-		processObjects(node, parentGroup); 
+			MapLoaded.tileWidth = atoi(getValue(node, "tilewidth"));
+			MapLoaded.tileHeight = atoi(getValue(node, "tileheight"));
 
-		//Next layer node
-		node = node->next_sibling("objectgroup");
-	}
-}
-
-void pery::TMX2Map::processObjects(rapidxml::xml_node<char>* parentNode, Group * parentGroup)
-{
-	rapidxml::xml_node<char> * node;
-	node = parentNode->first_node("object");
-
-	while (node != NULL)
-	{
-		MapObject o;
-
-		o.name = getValue(node, "name");
-		o.id = atoi(getValue(node, "id"));
-		o.type = getValue(node, "type");
-
-		o.x = atoi(getValue(node, "x"));
-		o.y = atoi(getValue(node, "y"));
-
-		o.width = atoi(getValue(node, "width"));
-		o.height = atoi(getValue(node, "height"));
-
-		o.visible = getValue(node, "visible") == "null" ? true : false;
-		//Inherit parent visibility
-		if (parentGroup != NULL && !parentGroup->visible) o.visible = false;
-
-		//Add current object to CurrentMap layers array.
-		MapLoaded.objects.push_back(o);
-
-		node = node->next_sibling("object");
-	}
-}
-
-void pery::TMX2Map::processImageLayers(rapidxml::xml_node<char>* parentNode, Group * parentGroup)
-{
-	rapidxml::xml_node<char> * node;
-	node = parentNode->first_node("imagelayer");
-
-	while (node != NULL)
-	{
-		MapImageLayer il;
-
-		il.name = getValue(node, "name");
-		il.id = atoi(getValue(node, "id"));
-
-		il.offsetx = atoi(getValue(node, "offsetx"));
-		il.offsety = atoi(getValue(node, "offsety"));
-
-		il.visible = getValue(node, "visible") == "null" ? true : false;
-		//Inherit parent visibility
-		if (parentGroup != NULL && !parentGroup->visible) il.visible = false;
-
-		//Get a child image node.
-		rapidxml::xml_node<char> * iNode;
-		iNode = node->first_node("image");
-
-		//If exist
-		if (iNode != NULL) {
-
-			Image i;
-			i.source = getValue(iNode, "source");
-			i.width = atoi(getValue(iNode, "widht"));
-			i.height = atoi(getValue(iNode, "heiht"));
-
-			//Add to image layer.
-			il.image = i;
+			//Load backgroundcolor only if node exist
+			MapLoaded.backgroundColor = getValue(node, "backgroundcolor");
 		}
 
-		//Add image layer to current map
-		MapLoaded.imageLayers.push_back(il);
+		if (std::strcmp(currentNode, "tileset") == 0)
+		{
+			//Create a tileset and load attributes.
+			MapTileset t;
 
-		//Next image layer in same brach
-		node = node->next_sibling("imagelayer");
+			t.firstgid = atoi(getValue(node, "firstgid"));
+			t.source = getValue(node, "source");
+
+			//Add tileset to CurrentMap tilesets array.
+			MapLoaded.tilesets.push_back(t);
+		}
+
+		if (std::strcmp(currentNode, "layer") == 0)
+		{
+			//Create a Layer and load attributes.
+			MapLayer l;
+
+			l.name = getValue(node, "name");
+
+			l.id = atoi(getValue(node, "id"));
+			l.width = atoi(getValue(node, "width"));
+			l.height = atoi(getValue(node, "height"));
+
+			l.visible = getValue(node, "visible") == "null" ? true : false;
+			//Inherit parent visibility
+			if (parentGroup != NULL && !parentGroup->visible) l.visible = false;
+
+			//Data
+			rapidxml::xml_node<char> * dataNode;
+			dataNode = node->first_node("data");
+
+			Data d;
+			if (dataNode->first_attribute("encoding") != 0)
+				d.encoding = dataNode->first_attribute("encoding")->value();
+			if (dataNode->first_attribute("compression") != 0)
+				d.compression = dataNode->first_attribute("compression")->value();
+
+			d.content = dataNode->value();
+
+			//Put data inside layer
+			l.data = d;
+
+			//Decompress zlib data string and store in currentlayer IDs array
+			DecompressLayerData(&l);
+
+			//Add layer to CurrentMap renderQueue array.
+			RenderQueue r;
+			r.layer = l;
+
+			MapLoaded.renderQueue.push_back(r);
+		}
+
+		if (std::strcmp(currentNode, "objectgroup") == 0)
+		{
+
+			MapObjectGroup og;
+			og.name = getValue(node, "name");
+			og.id = atoi(getValue(node, "id"));
+
+			og.visible = getValue(node, "visible") == "null" ? true : false;
+
+			//Inherit parent visibility
+			if (parentGroup != NULL && !parentGroup->visible) og.visible = false;
+
+			//processObjects(node, parentGroup);
+			rapidxml::xml_node<char> * objectNode;
+			objectNode = node->first_node("object");
+
+			while (objectNode != NULL)
+			{
+				MapObject o;
+
+				o.name = getValue(objectNode, "name");
+				o.id = atoi(getValue(objectNode, "id"));
+				o.type = getValue(objectNode, "type");
+
+				o.x = atoi(getValue(objectNode, "x"));
+				o.y = atoi(getValue(objectNode, "y"));
+
+				o.width = atoi(getValue(objectNode, "width"));
+				o.height = atoi(getValue(objectNode, "height"));
+
+				o.visible = getValue(objectNode, "visible") == "null" ? true : false;
+				//Inherit parent visibility
+				if (parentGroup != NULL && !parentGroup->visible) o.visible = false;
+
+				//Add current object to CurrentMap objects array.
+				MapLoaded.objects.push_back(o);
+
+				objectNode = objectNode->next_sibling("object");
+			}
+
+		}
+
+		if (std::strcmp(currentNode, "imagelayer") == 0)
+		{
+			MapImageLayer il;
+
+			il.name = getValue(node, "name");
+			il.id = atoi(getValue(node, "id"));
+
+			il.offsetx = atoi(getValue(node, "offsetx"));
+			il.offsety = atoi(getValue(node, "offsety"));
+
+			il.visible = getValue(node, "visible") == "null" ? true : false;
+			//Inherit parent visibility
+			if (parentGroup != NULL && !parentGroup->visible) il.visible = false;
+
+			//Get a child image node.
+			rapidxml::xml_node<char> * iNode;
+			iNode = node->first_node("image");
+
+			//If exist
+			if (iNode != NULL) {
+
+				Image i;
+				i.source = getValue(iNode, "source");
+				i.width = atoi(getValue(iNode, "widht"));
+				i.height = atoi(getValue(iNode, "heiht"));
+
+				//Add to image layer.
+				il.image = i;
+			}
+
+			//Add image layer to current map
+			RenderQueue r;
+			r.imageLayer = il;
+
+			MapLoaded.renderQueue.push_back(r);
+		}
+
+		if (std::strcmp(currentNode, "group") == 0)
+		{
+			//Create group structure, not used, only visible state for childs.
+			Group g;
+			g.name = getValue(node, "name");
+			g.id = atoi(getValue(node, "id"));
+
+			g.visible = getValue(node, "visible") == "null" ? true : false;
+
+			//Inherit parent visibility
+			if (parentGroup != NULL && !parentGroup->visible) g.visible = false;
+			
+			parentGroup = &g;
+		}
+
+		//Child node.
+		for (rapidxml::xml_node<>* n = node->first_node(); n; n = n->next_sibling()) {
+			parseTMX(n, indent + 1, parentGroup);
+		}
+
 	}
+
+	
 }

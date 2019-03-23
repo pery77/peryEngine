@@ -19,11 +19,12 @@ pery::Level::Level(std::string levelName)
 	}
 
 	LoadLevel();
-
+	/*
 	if (CurrentMap->MapLoaded.imageLayers.size() > 0) {
 		const char * imageSource = CurrentMap->MapLoaded.imageLayers[0].image.source.c_str();
 		CurrentMap->MapLoaded.imageLayers[0].image.texture = LoadTexture(imageSource);
 	}
+	*/
 }
 
 pery::Level::~Level()
@@ -66,21 +67,29 @@ void pery::Level::LoadLevel()
 
 	width  = CurrentMap->MapLoaded.width;
 	height = CurrentMap->MapLoaded.height;
-	layers = CurrentMap->MapLoaded.layers.size();
+	layers = CurrentMap->MapLoaded.renderQueue.size();
 
-	SetDimensions(CurrentMap->MapLoaded.layers.size(), width, height);
+	SetDimensions(CurrentMap->MapLoaded.renderQueue.size(), width, height);
 
-	for (int ly = 0; ly < CurrentMap->MapLoaded.layers.size(); ly++)
+	for (int i = 0; i < CurrentMap->MapLoaded.renderQueue.size(); i++)
 	{
-		int co = 0;
-		for (int y = 0; y < GetHeight(); y++)
+		if (CurrentMap->MapLoaded.renderQueue[i].imageLayer.id != -1)
 		{
-			for (int x = 0; x < GetWidth(); x++)
+			const char * imageSource = CurrentMap->MapLoaded.renderQueue[i].imageLayer.image.source.c_str();
+			CurrentMap->MapLoaded.renderQueue[i].imageLayer.image.texture = LoadTexture(imageSource);
+		}
+		if (CurrentMap->MapLoaded.renderQueue[i].layer.id != -1)
+		{
+			int co = 0;
+			for (int y = 0; y < height; y++)
 			{
-				int t = CurrentMap->MapLoaded.layers[ly].IDs[co] - 1;
-				co++;
-				if (t >= 0) {
-					AddTile(x, y, tilesetManager->GetTile(t), ly);
+				for (int x = 0; x < width; x++)
+				{
+					int t = CurrentMap->MapLoaded.renderQueue[i].layer.IDs[co] - 1;
+					co++;
+					if (t >= 0) {
+						AddTile(x, y, tilesetManager->GetTile(t), i);
+					}
 				}
 			}
 		}
