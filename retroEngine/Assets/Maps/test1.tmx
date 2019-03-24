@@ -1,54 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="2019.02.10" orientation="orthogonal" renderorder="right-up" width="64" height="20" tilewidth="16" tileheight="16" infinite="0" nextlayerid="14" nextobjectid="5">
+<map version="1.2" tiledversion="2019.02.10" orientation="orthogonal" renderorder="right-up" width="64" height="20" tilewidth="16" tileheight="16" infinite="0" nextlayerid="18" nextobjectid="5">
  <tileset firstgid="1" source="../Tilesets/tile2blocks.tsx"/>
  <tileset firstgid="97" source="../Tilesets/tileset1.tsx"/>
- <group id="6" name="Group 3"/>
- <group id="2" name="Group 1">
-  <objectgroup id="10" name="Object Layer 2">
-   <object id="3" name="en el 2" type="poligono" x="411.5" y="-37">
-    <polygon points="0,0 142,1 70,66.5 -2.5,38 52.5,27.5 -3,16"/>
-   </object>
-  </objectgroup>
-  <objectgroup id="9" name="Object Layer 1">
-   <object id="1" name="main" type="camera" x="469.5" y="111">
-    <point/>
-   </object>
-   <object id="2" name="welcom to bla bla bla" type="info" x="133" y="60" width="158.5" height="109.5"/>
-  </objectgroup>
-  <group id="5" name="Group 2">
-   <group id="7" name="Group 4">
-    <objectgroup id="12" name="Object Layer 4"/>
-   </group>
-   <imagelayer id="4" name="im1">
-    <image source="C:/Users/el-pe/Desktop/PixelArt/Ansimuz/warped-files/warped-files/PNG/environment/environment-preview.png" width="1056" height="352"/>
-    <properties>
-     <property name="speedX" type="float" value="0.5"/>
-     <property name="speedY" type="float" value="1"/>
-    </properties>
-   </imagelayer>
-  </group>
-  <objectgroup id="11" name="Object Layer 3">
-   <object id="4" name="3n 3l 3" x="665" y="-36.5" width="83" height="19">
-    <text fontfamily="Moonbeam" wrap="1" color="#0000ff">en el 3</text>
-   </object>
-  </objectgroup>
-  <layer id="3" name="l3" width="64" height="20">
-   <data encoding="base64" compression="zlib">
-   eJzt08ENgCAMheFOgE6B7n/TDbqVvWoCJcGApv+XvFN74EEQAfAWnX2Ayeh/lyyLZS3se/PWnZGOStSZ9+Yc0K/H8/2zZbPshX1v3rrzFfz/2Ogfm0rsO6B/7P4A8BcXqUMkFg==
-  </data>
-  </layer>
-  <layer id="8" name="l2" width="64" height="20">
-   <data encoding="base64" compression="zlib">
-   eJzt1VkKgDAMBNBc1eUCLheoenBTNFCxgghZwHkw3zZhWokAAL5rzrScjtMbfHOqxMtAtjuozeo5f6LrDqy7kHnOn8kOLLsQofulRPcuaO4g2vzC4z5E3YFGF6K9f08070OUf98bZRdGOs47u57InnRh4ayczfc4AADwcztTESbS
-  </data>
-  </layer>
- </group>
- <layer id="1" name="l1" width="64" height="20">
+ <tileset firstgid="353" source="../Tilesets/space_merc.tsx"/>
+ <layer id="16" name="Tile Layer 2" width="64" height="20">
   <properties>
-   <property name="toImage" type="bool" value="true"/>
+   <property name="isImage" type="bool" value="true"/>
+   <property name="speedX" type="float" value="0.5"/>
+   <property name="speedY" type="float" value="0.5"/>
   </properties>
   <data encoding="base64" compression="zlib">
-   eJzjY2Bg4KciFmAYWMAIxOpEYiUgViNBPTFYg/ZepBqQGmgHDDAY9f/IBqP+H9mAWv4vheIyKplHL0At/7cyIMJgKIUDNdN/KwNqOJQxDP5woEX+H0ppAeR/eyrjVgbMtDBYwwHkf28aYWzhMNjCgNb+b4Pa04rGRwaMVOaTAmjp/8EY3+iAXvE/WMFAxj+10z05+QDkf2qOfSBjWPwPlnERbADkf2k6YRk6+YkUMFz9D8oLxKRRPSAGAODYSs0=
+   eJztV0EOwyAMCx9Ydx6797T/f2/tYRLKFnBwuk4MS7m0wbETUGkSkfwnkeQzUiXO1nyUf6sXui9na/7G/Fs9GCl6/O/IYD9QlHNhgXLoPE9tK3d1cOh1mVhfAvWha0X4ZxDhneHxrIvSOjHRi8sW10E4evhvW9xJ7iiOhxzXA0sjqr02nyj/OYCnxs/4r+VN/+/vvPfCEfz33IVLjl/2P8+/nRfx7UL873UWI1r1Lf2odmT/M314rW3tM+s/vDVD9vuP+GfOAcKhe4T0TPOjzz15WvsTwIsg5A==
+  </data>
+ </layer>
+ <layer id="17" name="Tile Layer 3" width="64" height="20">
+  <properties>
+   <property name="isImage" type="bool" value="true"/>
+   <property name="speedX" type="float" value="0"/>
+   <property name="speedY" type="float" value="0"/>
+  </properties>
+  <data encoding="base64" compression="zlib">
+   eJzt0dEJwCAMhOGL49QdtAO3k9khmg3yEKFS/w/ycngQogQAAJpP9zknvdsRt/kH/nEvl0m3xVm2s6rhOz8WZ9nOqo4i1RJn2Q4A4HsvpcERKQ==
+  </data>
+ </layer>
+ <layer id="15" name="Tile Layer 1" width="64" height="20">
+  <data encoding="base64" compression="zlib">
+   eJztk+kNwjAMhcMi7EaL+p8W2AB24liAASrBNrgSkayHE8c9hFBi6SlK4jzny9E455rMlWsU/sJf+PON3Phf0M+NH8PKj+e39Lo5fGJryv3L/L3R50a6T9/O6Eit/4S+xP9LlqVrH0hH1v+39299lxgn0pn1Lfx4dnOExXNqfb+e+yB/777P2P8ZPDsM/Fuh4P4hT8mL5/ZO3ut6Ffbx67mP569JFbQhVZATyx/mtrDHTYJvBWNaDS1P8q4Zf0dqoQ2phZxY/jC3J10+upJ2Cb4tjGk1tDzJuwP+pTTwP5hC/GOk3ZWmGL/kPeaNaPwWBu0tWPdZ7t+5N3oo01w=
   </data>
  </layer>
 </map>

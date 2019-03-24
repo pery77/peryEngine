@@ -134,13 +134,21 @@ namespace pery {
 		//properties dictionary
 		std::map<std::string, std::string> properties;
 
+		//Fields for image mode
+		bool isImage;
+		RenderTexture2D targetTexture;
+		float speedX = 1;
+		float speedY = 1;
+		int offsetx = 0;
+		int offsety = 0;
+
 	};
 
 	struct MapImageLayer
 	{
 		int id      = -1;
-		int offsetx = -1;
-		int offsety = -1;
+		int offsetx = 0;
+		int offsety = 0;
 
 		std::string	name = "null";
 
@@ -149,6 +157,10 @@ namespace pery {
 
 		//properties dictionary
 		std::map<std::string, std::string> properties;
+
+		//Velocity relative to camera, for paralax effect.
+		float speedX = 1;
+		float speedY = 1;
 
 	};
 
@@ -228,6 +240,36 @@ namespace pery {
 
 	private:
 
+		//Find a string value in a map and return it.
+		std::string findString(std::map<std::string, std::string> * map, std::string key)
+		{
+			std::map<std::string, std::string>::iterator it;
+			it = map->find(key);
+			if (it == map->end()) return "null"; else return it->second;
+		}
+
+		//Find a in value in a map and return it.
+		int findInt(std::map<std::string, std::string> * map, std::string key)
+		{
+			std::map<std::string, std::string>::iterator it;
+			it = map->find(key);
+			if (it == map->end()) return NAN; else return atoi((it->second).c_str());
+		}
+		//Find a float value in a map and return it.
+		float findFloat(std::map<std::string, std::string> * map, std::string key)
+		{
+			std::map<std::string, std::string>::iterator it;
+			it = map->find(key);
+			if (it == map->end()) return NAN; else return atof((it->second).c_str());
+		}
+
+		//Find a bool value in a map and return it.
+		bool findBool(std::map<std::string, std::string> * map, std::string key)
+		{
+			std::map<std::string, std::string>::iterator it;
+			it = map->find(key);
+			if (it == map->end() || (it->second) != "true" ) return false; else return true;
+		}
 		//Decode and Decompress algorithm addapted from:
 		//https://github.com/fallahn/tmxlite
 

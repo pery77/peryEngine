@@ -258,6 +258,9 @@ void pery::TMX2Map::parseTMX( rapidxml::xml_node<>* node, int indent, Group * pa
 			l.width = atoi(getValue(node, "width"));
 			l.height = atoi(getValue(node, "height"));
 
+			l.offsetx = atoi(getValue(node, "offsetx"));
+			l.offsety = atoi(getValue(node, "offsety"));
+
 			l.visible = getValue(node, "visible") == "null" ? true : false;
 			//Inherit parent visibility
 			if (parentGroup != NULL && !parentGroup->visible) l.visible = false;
@@ -281,6 +284,15 @@ void pery::TMX2Map::parseTMX( rapidxml::xml_node<>* node, int indent, Group * pa
 			DecompressLayerData(&l);
 
 			processProperties(node, &l.properties);
+
+			bool isI = findBool(&l.properties, "isImage");
+			l.isImage = isI;
+
+			float sX = findFloat(&l.properties, "speedX");
+			if (!isnan(sX)) l.speedX = sX;
+
+			float sY = findFloat(&l.properties, "speedY");
+			if (!isnan(sY)) l.speedY = sY;
 
 			//Add layer to CurrentMap renderQueue array.
 			RenderQueue r;
@@ -362,7 +374,15 @@ void pery::TMX2Map::parseTMX( rapidxml::xml_node<>* node, int indent, Group * pa
 			}
 
 			processProperties(node, &il.properties);
+			
+			float sX = findFloat(&il.properties, "speedX");
+			if (!isnan(sX)) il.speedX = sX;
 
+			float sY = findFloat(&il.properties, "speedY");
+			if (!isnan(sY)) il.speedY = sY;
+			
+
+			printf(">>>>>>speedx: %f, speedY: %f\n",il.speedX, il.speedY);
 			//Add image layer to current map
 			RenderQueue r;
 			r.imageLayer = il;
@@ -409,8 +429,9 @@ void pery::TMX2Map::processProperties(rapidxml::xml_node<>* node, std::map<std::
 		{
 			std::string key (getValue(propertyNode, "name"));
 			std::string value(getValue(propertyNode, "value"));
-			std::cout << key << value << std::endl;
+
 			properties->emplace(key,value);
+
 			propertyNode = propertyNode->next_sibling("property");
 		}
 		

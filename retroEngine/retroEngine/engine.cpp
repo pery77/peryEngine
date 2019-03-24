@@ -115,28 +115,40 @@ void pery::Engine::RenderFrame()
 		{
 			if (level->CurrentMap->MapLoaded.renderQueue[i].imageLayer.visible)
 			{
-				DrawTexture(level->CurrentMap->MapLoaded.renderQueue[i].imageLayer.image.texture,
-					level->CurrentMap->MapLoaded.renderQueue[i].imageLayer.offsetx - camera->GetPosition().x * 1,
-					level->CurrentMap->MapLoaded.renderQueue[i].imageLayer.offsety - camera->GetPosition().y, WHITE);
+				MapImageLayer * il = &level->CurrentMap->MapLoaded.renderQueue[i].imageLayer;
+
+				DrawTexture(il->image.texture,
+					il->offsetx - camera->GetPosition().x * il->speedX,
+					il->offsety - camera->GetPosition().y * il->speedY, WHITE);
 			}
 		}
 		if (level->CurrentMap->MapLoaded.renderQueue[i].layer.id != -1)
 		{
-			if (level->CurrentMap->MapLoaded.renderQueue[i].layer.visible)
+			MapLayer * l = &level->CurrentMap->MapLoaded.renderQueue[i].layer;
+			if (l->isImage)
 			{
-
-				//Draw tiles.
-				for (int y = 0, tileY = bounds.y; y < bounds.height; y++, tileY++)
+				DrawTexture(l->targetTexture.texture,
+					l->offsetx - camera->GetPosition().x * l->speedX,
+					l->offsety - camera->GetPosition().y * l->speedY, WHITE);
+			}
+			else
+			{
+				if (l->visible)
 				{
-					for (int x = 0, tileX = bounds.x; x < bounds.width; x++, tileX++)
+
+					//Draw tiles.
+					for (int y = 0, tileY = bounds.y; y < bounds.height; y++, tileY++)
 					{
+						for (int x = 0, tileX = bounds.x; x < bounds.width; x++, tileX++)
+						{
 
-						Tile * t = level->GetTile(i, tileX, tileY);
-						if (t == NULL) continue;
-						t->Draw((x * t->tileWidth) - camOffsetX,
-							(y * t->tileHeight) - camOffsetY);
-						//DrawText(FormatText("%i", x*16-camOffsetX), x*16, y*16, 8, RED);
+							Tile * t = level->GetTile(i, tileX, tileY);
+							if (t == NULL) continue;
+							t->Draw((x * t->tileWidth) - camOffsetX,
+								(y * t->tileHeight) - camOffsetY);
+							//DrawText(FormatText("%i", x*16-camOffsetX), x*16, y*16, 8, RED);
 
+						}
 					}
 				}
 			}
@@ -145,7 +157,7 @@ void pery::Engine::RenderFrame()
 	
 
 	Vector2 cursor = { ballPosition.x - camera->GetPosition().x + 240, ballPosition.y - camera->GetPosition().y + 136 };
-	DrawText(FormatText("%f", camera->GetPosition().x), cursor.x, cursor.y, 2, RED);
+	DrawText(FormatText("%i,%i",(int)camera->GetPosition().x,(int)camera->GetPosition().y), cursor.x-10, cursor.y+10, 2, RED);
 	DrawCircleV(cursor, 4, RED);
 
 	//End draw game in main texture.

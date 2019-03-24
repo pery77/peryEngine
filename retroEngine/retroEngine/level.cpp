@@ -76,6 +76,7 @@ void pery::Level::LoadLevel()
 		}
 		if (CurrentMap->MapLoaded.renderQueue[i].layer.id != -1)
 		{
+
 			int co = 0;
 			for (int y = 0; y < height; y++)
 			{
@@ -88,6 +89,46 @@ void pery::Level::LoadLevel()
 					}
 				}
 			}
+			//Render layer into texture.
+			if (CurrentMap->MapLoaded.renderQueue[i].layer.isImage)
+			{
+				int w = width * tileSize;
+				int h = height * tileSize;
+				
+				RenderTexture2D target = LoadRenderTexture(w, h);
+				CurrentMap->MapLoaded.renderQueue[i].layer.targetTexture = LoadRenderTexture(w, h);
+
+				BeginDrawing();
+
+					BeginTextureMode(target);
+						ClearBackground(BLACK);
+						//Draw tiles.
+						for (int y = 0, tileY = 0; y < height; y++, tileY++)
+						{
+							for (int x = 0, tileX = 0; x < width; x++, tileX++)
+							{		
+								Tile * t = GetTile(i, tileX, tileY);
+								if (t == NULL) continue;
+								t->Draw((x * t->tileWidth),
+									(y * t->tileHeight));
+							}
+						}
+					EndTextureMode();
+
+					BeginTextureMode(CurrentMap->MapLoaded.renderQueue[i].layer.targetTexture);
+						ClearBackground(BLACK);
+						DrawTexture(target.texture, 0, 0, WHITE);
+					EndTextureMode();
+
+				EndDrawing();
+
+				UnloadRenderTexture(target);
+				//UnloadRenderTexture(targetFlipped);
+
+			}
+
+
+			
 		}
 	}
 }
