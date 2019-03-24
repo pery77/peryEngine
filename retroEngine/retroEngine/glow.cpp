@@ -16,7 +16,7 @@ pery::Glow::Glow(int screenWidth, int screenHeight)
 
 pery::Glow::~Glow()
 {
-	LOG("Unload glow");
+	printf("Unload glow");
 	Unload();
 }
 

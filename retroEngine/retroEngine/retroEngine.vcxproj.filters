@@ -45,12 +45,6 @@
     <ClCompile Include="cameraView.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="tools.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="reader.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="miniz\miniz.c">
       <Filter>Source Files\miniz</Filter>
     </ClCompile>
@@ -83,14 +77,8 @@
     <ClInclude Include="cameraView.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="tools.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="minijson_reader.hpp">
       <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="reader.h">
-      <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="gason.h">
       <Filter>Header Files</Filter>

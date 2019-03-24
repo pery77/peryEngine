@@ -1,28 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="2019.02.10" orientation="orthogonal" renderorder="right-up" width="64" height="20" tilewidth="16" tileheight="16" infinite="0" nextlayerid="18" nextobjectid="5">
+<map version="1.2" tiledversion="2019.02.10" orientation="orthogonal" renderorder="right-up" width="64" height="20" tilewidth="16" tileheight="16" infinite="0" backgroundcolor="#001722" nextlayerid="19" nextobjectid="5">
  <tileset firstgid="1" source="../Tilesets/tile2blocks.tsx"/>
  <tileset firstgid="97" source="../Tilesets/tileset1.tsx"/>
  <tileset firstgid="353" source="../Tilesets/space_merc.tsx"/>
- <layer id="16" name="Tile Layer 2" width="64" height="20">
-  <properties>
-   <property name="isImage" type="bool" value="true"/>
-   <property name="speedX" type="float" value="0.5"/>
-   <property name="speedY" type="float" value="0.5"/>
-  </properties>
-  <data encoding="base64" compression="zlib">
-   eJztV0EOwyAMCx9Ydx6797T/f2/tYRLKFnBwuk4MS7m0wbETUGkSkfwnkeQzUiXO1nyUf6sXui9na/7G/Fs9GCl6/O/IYD9QlHNhgXLoPE9tK3d1cOh1mVhfAvWha0X4ZxDhneHxrIvSOjHRi8sW10E4evhvW9xJ7iiOhxzXA0sjqr02nyj/OYCnxs/4r+VN/+/vvPfCEfz33IVLjl/2P8+/nRfx7UL873UWI1r1Lf2odmT/M314rW3tM+s/vDVD9vuP+GfOAcKhe4T0TPOjzz15WvsTwIsg5A==
-  </data>
- </layer>
- <layer id="17" name="Tile Layer 3" width="64" height="20">
-  <properties>
-   <property name="isImage" type="bool" value="true"/>
-   <property name="speedX" type="float" value="0"/>
-   <property name="speedY" type="float" value="0"/>
-  </properties>
-  <data encoding="base64" compression="zlib">
+ <group id="18" name="fondos">
+  <layer id="17" name="Tile Layer 3" width="64" height="20">
+   <properties>
+    <property name="isImage" type="bool" value="true"/>
+    <property name="speedX" type="float" value="0"/>
+    <property name="speedY" type="float" value="0"/>
+   </properties>
+   <data encoding="base64" compression="zlib">
    eJzt0dEJwCAMhOGL49QdtAO3k9khmg3yEKFS/w/ycngQogQAAJpP9zknvdsRt/kH/nEvl0m3xVm2s6rhOz8WZ9nOqo4i1RJn2Q4A4HsvpcERKQ==
   </data>
- </layer>
+  </layer>
+  <layer id="16" name="Tile Layer 2" width="64" height="20">
+   <properties>
+    <property name="isImage" type="bool" value="true"/>
+    <property name="speedX" type="float" value="0.5"/>
+    <property name="speedY" type="float" value="0.5"/>
+   </properties>
+   <data encoding="base64" compression="zlib">
+   eJztV7sOwyAMNEMz9jWG7p36/79XMlRCVgxnbJIo5aRbIvvw2SBIIKL4Jwy0jlDg3jX38i/1gvdl75q3mH+tB2dii/8FEewHinwuVqAaPE6zthT7VmjwvGjIz4H64Gt5+LfAw7tFR5PnVevAQCuuifeTaLToz4kvo7aXxof69UCqEa29NB8v/9FBp6Rv8V+K8/Z/SZyMemv6W/rXvgtz/4/EpzIf0e/tv+UtnGscef+P8y/HedxdiP9lnZvA2vpS/WjtyP639OGXW9tn0n94bYbW+x/xbzkHiAbvEdIzro9+18Tx2r/TuiES
+  </data>
+  </layer>
+ </group>
  <layer id="15" name="Tile Layer 1" width="64" height="20">
   <data encoding="base64" compression="zlib">
    eJztk+kNwjAMhcMi7EaL+p8W2AB24liAASrBNrgSkayHE8c9hFBi6SlK4jzny9E455rMlWsU/sJf+PON3Phf0M+NH8PKj+e39Lo5fGJryv3L/L3R50a6T9/O6Eit/4S+xP9LlqVrH0hH1v+39299lxgn0pn1Lfx4dnOExXNqfb+e+yB/777P2P8ZPDsM/Fuh4P4hT8mL5/ZO3ut6Ffbx67mP569JFbQhVZATyx/mtrDHTYJvBWNaDS1P8q4Zf0dqoQ2phZxY/jC3J10+upJ2Cb4tjGk1tDzJuwP+pTTwP5hC/GOk3ZWmGL/kPeaNaPwWBu0tWPdZ7t+5N3oo01w=

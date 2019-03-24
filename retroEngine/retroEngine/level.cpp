@@ -31,7 +31,11 @@ pery::Level::Level(std::string levelName)
 
 pery::Level::~Level()
 {
-	LOG("Unload level");
+	printf("Unload level");
+	for (int i = 0; i < layers; i++)
+	{
+		UnloadRenderTexture(CurrentMap->MapLoaded.renderQueue[i].layer.targetTexture);
+	}
 	delete tilesetManager;
 	delete CurrentMap;
 
@@ -96,12 +100,15 @@ void pery::Level::LoadLevel()
 				int h = height * tileSize;
 				
 				RenderTexture2D target = LoadRenderTexture(w, h);
+				SetTextureFilter(target.texture, 0);
+
 				CurrentMap->MapLoaded.renderQueue[i].layer.targetTexture = LoadRenderTexture(w, h);
+				SetTextureFilter(CurrentMap->MapLoaded.renderQueue[i].layer.targetTexture.texture, 0);
 
 				BeginDrawing();
 
 					BeginTextureMode(target);
-						ClearBackground(BLACK);
+						ClearBackground(BLANK);
 						//Draw tiles.
 						for (int y = 0, tileY = 0; y < height; y++, tileY++)
 						{
@@ -116,14 +123,13 @@ void pery::Level::LoadLevel()
 					EndTextureMode();
 
 					BeginTextureMode(CurrentMap->MapLoaded.renderQueue[i].layer.targetTexture);
-						ClearBackground(BLACK);
+						ClearBackground(BLANK);
 						DrawTexture(target.texture, 0, 0, WHITE);
 					EndTextureMode();
 
 				EndDrawing();
 
 				UnloadRenderTexture(target);
-				//UnloadRenderTexture(targetFlipped);
 
 			}
 

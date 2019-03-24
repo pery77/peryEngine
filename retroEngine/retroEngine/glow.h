@@ -1,6 +1,6 @@
 #pragma once
 #include "raylib.h"
-#include "tools.h"
+#include <string>
 
 namespace pery {
 	class Glow
@@ -9,7 +9,7 @@ namespace pery {
 
 		Glow(int screenWidth, int screenHeight);
 		~Glow();
-
+		
 		Texture2D DrawGlow(Texture2D texture);
 		Texture2D Blur(Texture2D texture);
 		void BigGlow(Texture2D texture);

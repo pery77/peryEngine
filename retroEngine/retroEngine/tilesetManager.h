@@ -2,7 +2,6 @@
 #include "raylib.h"
 #include <vector>
 #include "tile.h"
-#include "tools.h"
 #include "TMX2Map.h"
 
 namespace pery {

@@ -4,7 +4,6 @@
 #include <fstream>
 #include "tile.h"
 #include "tilesetManager.h"
-#include "tools.h"
 
 #include "TMX2Map.h"
 

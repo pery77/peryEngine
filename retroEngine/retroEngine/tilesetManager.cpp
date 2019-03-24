@@ -3,24 +3,27 @@
 
 pery::TilesetManager::TilesetManager()
 {
-	LOG("TileManager Created");
+	printf("TileManager Created");
 
 }
 
 pery::TilesetManager::~TilesetManager()
 {
-	LOG("Unload TilesetManager");
-	for (int i = 0; i < tilesList.size(); i++)
-	{
-		delete tilesList[i];
-	}
-	tilesList.clear();
+	printf("Unload TilesetManager");
 
 	for (int i = 0; i < tilesetsList.size(); i++)
 	{
 		UnloadTexture(tilesetsList[i].image.texture);
 	}
 	tilesetsList.clear();
+
+	for (int i = 0; i < tilesList.size(); i++)
+	{
+		delete tilesList[i];
+	}
+	tilesList.clear();
+
+
 }
 
 void pery::TilesetManager::AddTileset(TSXTileSet & tsxTileset)

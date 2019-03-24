@@ -233,6 +233,9 @@ void pery::TMX2Map::parseTMX( rapidxml::xml_node<>* node, int indent, Group * pa
 
 			//Load backgroundcolor only if node exist
 			MapLoaded.backgroundColor = getValue(node, "backgroundcolor");
+
+			if(MapLoaded.backgroundColor != "null")
+				MapLoaded.bgColor = hex2Color(MapLoaded.backgroundColor);
 		}
 
 		if (std::strcmp(currentNode, "tileset") == 0)

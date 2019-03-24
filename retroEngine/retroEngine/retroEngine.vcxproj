@@ -145,11 +145,9 @@
     <ClCompile Include="level.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="miniz\miniz.c" />
-    <ClCompile Include="reader.cpp" />
     <ClCompile Include="tilesetManager.cpp" />
     <ClCompile Include="tile.cpp" />
     <ClCompile Include="TMX2Map.cpp" />
-    <ClCompile Include="tools.cpp" />
     <ClCompile Include="water.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -165,11 +163,9 @@
     <ClInclude Include="rapidxml\rapidxml_iterators.hpp" />
     <ClInclude Include="rapidxml\rapidxml_print.hpp" />
     <ClInclude Include="rapidxml\rapidxml_utils.hpp" />
-    <ClInclude Include="reader.h" />
     <ClInclude Include="tilesetManager.h" />
     <ClInclude Include="tile.h" />
     <ClInclude Include="TMX2Map.h" />
-    <ClInclude Include="tools.h" />
     <ClInclude Include="water.h" />
   </ItemGroup>
   <ItemGroup>

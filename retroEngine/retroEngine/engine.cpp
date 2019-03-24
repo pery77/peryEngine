@@ -2,14 +2,13 @@
 
 Vector2 ballPosition = { 0, 0 };
 
-
 pery::Engine::Engine()
 {
 }
 
 pery::Engine::~Engine()
 {
-	pery::Tools::Log("Unload Engine");
+	printf("Unload Engine");
 	UnloadRenderTexture(mainRender);
 	delete glow;
 	delete camera;
@@ -103,20 +102,24 @@ void pery::Engine::RenderFrame()
 	camOffsetY = camera->GetOffset().y;
 
 	BeginDrawing();
-	ClearBackground(BLACK);
+	ClearBackground(BLANK);
 	//Draw game to texture.
 	BeginTextureMode(mainRender);
-
+	//DrawBackground solid color.
+	if (level->CurrentMap->MapLoaded.backgroundColor != "null")
+	{
+		DrawRectangle(0, 0, ScreenWidth, ScreenHeight, level->CurrentMap->MapLoaded.bgColor);
+	}
 	//Draw level
 	for (int i = 0; i < level->GetLayers(); i++)
 	{
 
 		if (level->CurrentMap->MapLoaded.renderQueue[i].imageLayer.id != -1)
 		{
-			if (level->CurrentMap->MapLoaded.renderQueue[i].imageLayer.visible)
-			{
-				MapImageLayer * il = &level->CurrentMap->MapLoaded.renderQueue[i].imageLayer;
+			MapImageLayer * il = &level->CurrentMap->MapLoaded.renderQueue[i].imageLayer;
 
+			if (il->visible)
+			{
 				DrawTexture(il->image.texture,
 					il->offsetx - camera->GetPosition().x * il->speedX,
 					il->offsety - camera->GetPosition().y * il->speedY, WHITE);
@@ -125,7 +128,8 @@ void pery::Engine::RenderFrame()
 		if (level->CurrentMap->MapLoaded.renderQueue[i].layer.id != -1)
 		{
 			MapLayer * l = &level->CurrentMap->MapLoaded.renderQueue[i].layer;
-			if (l->isImage)
+
+			if (l->isImage && l->visible)
 			{
 				DrawTexture(l->targetTexture.texture,
 					l->offsetx - camera->GetPosition().x * l->speedX,
@@ -159,9 +163,12 @@ void pery::Engine::RenderFrame()
 	Vector2 cursor = { ballPosition.x - camera->GetPosition().x + 240, ballPosition.y - camera->GetPosition().y + 136 };
 	DrawText(FormatText("%i,%i",(int)camera->GetPosition().x,(int)camera->GetPosition().y), cursor.x-10, cursor.y+10, 2, RED);
 	DrawCircleV(cursor, 4, RED);
-
+	
 	//End draw game in main texture.
 	EndTextureMode();
+
+	ClearBackground(BLACK);
+
 
 	//Blend texture for postprocess effect.
 	BeginBlendMode(1);

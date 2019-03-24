@@ -6,10 +6,9 @@
 #include <functional>
 #include <map>
 
-
 #include "raylib.h"
 
-#include "tools.h"
+
 #include "rapidxml\rapidxml.hpp"
 #include "miniz\miniz.h"
 
@@ -188,6 +187,9 @@ namespace pery {
 		std::vector<MapObject>     objects  = {};
 
 		std::vector<RenderQueue> renderQueue = {};
+
+		//Background color
+		Color bgColor;
 	};
 
 	class TMX2Map {
@@ -270,6 +272,35 @@ namespace pery {
 			it = map->find(key);
 			if (it == map->end() || (it->second) != "true" ) return false; else return true;
 		}
+
+		//Convert hex string to color
+		Color hex2Color(std::string str)
+		{
+			//removes preceding #
+			if (str[0] == '#')
+				str.erase(0, 1);
+
+			if (str.size() == 6 || str.size() == 8)
+			{
+				unsigned int value, r, g, b;
+				unsigned int a = 255;
+
+				std::stringstream input(str);
+				input >> std::hex >> value;
+
+				r = (value >> 16) & 0xff;
+				g = (value >> 8) & 0xff;
+				b = value & 0xff;
+
+				if (str.size() == 8)
+				{
+					a = (value >> 24) & 0xff;
+				}
+
+				return { (unsigned char)r, (unsigned char)g, (unsigned char)b, (unsigned char)a };
+			}
+		}
+
 		//Decode and Decompress algorithm addapted from:
 		//https://github.com/fallahn/tmxlite
 
@@ -347,7 +378,7 @@ namespace pery {
 		{
 			if (!source)
 			{
-				LOG("Input string is empty, decompression failed.");
+				printf("Input string is empty, decompression failed.");
 				return false;
 			}
 
@@ -364,7 +395,7 @@ namespace pery {
 
 			if (inflateInit(&stream) != Z_OK)
 			{
-				LOG("inflate init failed");
+				printf("inflate init failed");
 				return false;
 			}
 
@@ -379,10 +410,10 @@ namespace pery {
 				case Z_STREAM_ERROR:
 					result = Z_DATA_ERROR;
 				case Z_DATA_ERROR:
-					LOG("If using gzip compression try using zlib instead");
+					printf("If using gzip compression try using zlib instead");
 				case Z_MEM_ERROR:
 					inflateEnd(&stream);
-					LOG(std::to_string(result));
+					printf(std::to_string(result).c_str());
 					return false;
 				}
 
@@ -402,8 +433,8 @@ namespace pery {
 
 			if (stream.avail_in != 0)
 			{
-				LOG("stream.avail_in is 0");
-				LOG("zlib decompression failed.");
+				printf("stream.avail_in is 0");
+				printf("zlib decompression failed.");
 				return false;
 			}
 
