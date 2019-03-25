@@ -2,8 +2,7 @@
 <map version="1.2" tiledversion="2019.02.10" orientation="orthogonal" renderorder="right-up" width="64" height="20" tilewidth="16" tileheight="16" infinite="0" backgroundcolor="#001722" nextlayerid="20" nextobjectid="24">
  <tileset firstgid="1" source="../Tilesets/tile2blocks.tsx"/>
  <tileset firstgid="97" source="../Tilesets/tileset1.tsx"/>
- <tileset firstgid="353" source="../Tilesets/space_merc.tsx"/>
- <group id="18" name="fondos" visible="0">
+ <group id="18" name="fondos">
   <layer id="17" name="Tile Layer 3" width="64" height="20">
    <properties>
     <property name="isImage" type="bool" value="true"/>
@@ -11,7 +10,7 @@
     <property name="speedY" type="float" value="0"/>
    </properties>
    <data encoding="base64" compression="zlib">
-   eJzt0dEJwCAMhOGL49QdtAO3k9khmg3yEKFS/w/ycngQogQAAJpP9zknvdsRt/kH/nEvl0m3xVm2s6rhOz8WZ9nOqo4i1RJn2Q4A4HsvpcERKQ==
+   eJztwQENAAAAwqD3T20PBxQAAAAA8GoUAAAB
   </data>
   </layer>
   <layer id="16" name="Tile Layer 2" width="64" height="20">

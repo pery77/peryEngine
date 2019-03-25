@@ -61,30 +61,13 @@ pery::TMX2Map::TMX2Map(std::string TMXName)
 
 		//XML Parse
 		tsxDoc.parse<rapidxml::parse_no_data_nodes>(&tsxFileContentCopy[0]);
-		
-		//Main node (Map node)
+
+		//Main node (tileset node)
 		rapidxml::xml_node<char> * tilesetNode;
 		tilesetNode = tsxDoc.first_node("tileset");
 		
-		MapLoaded.tilesets[ts].tileset.name    = tilesetNode->first_attribute("name")   ->value();
-		MapLoaded.tilesets[ts].tileset.version = tilesetNode->first_attribute("version")->value();
+		parseTSX(tilesetNode,ts);
 
-		MapLoaded.tilesets[ts].tileset.tileWidth  = atoi(tilesetNode->first_attribute("tilewidth") ->value());
-		MapLoaded.tilesets[ts].tileset.tileHeight = atoi(tilesetNode->first_attribute("tileheight")->value());
-
-		MapLoaded.tilesets[ts].tileset.tileCount = atoi(tilesetNode->first_attribute("tilecount")->value());
-		MapLoaded.tilesets[ts].tileset.columns   = atoi(tilesetNode->first_attribute("columns")->value());
-
-		MapLoaded.tilesets[ts].tileset.rows = MapLoaded.tilesets[ts].tileset.tileCount / MapLoaded.tilesets[ts].tileset.columns;
-
-		//Image
-		rapidxml::xml_node<char> * imageNode;
-		imageNode = tilesetNode->first_node("image");
-
-		MapLoaded.tilesets[ts].tileset.image.source = imageNode->first_attribute("source")->value();
-
-		MapLoaded.tilesets[ts].tileset.image.width  = atoi(imageNode->first_attribute("width") ->value());
-		MapLoaded.tilesets[ts].tileset.image.height = atoi(imageNode->first_attribute("height")->value());
 	}
 
 }
@@ -428,6 +411,106 @@ void pery::TMX2Map::parseTMX( rapidxml::xml_node<>* node, int indent, Group * pa
 	}
 
 	
+}
+
+void pery::TMX2Map::parseTSX(rapidxml::xml_node<>* node, int currentTileset, int indent, Group * parentGroup)
+{
+	const auto ind = std::string(indent * 4, ' ');
+	printf("%s", ind.c_str());
+
+	const rapidxml::node_type t = node->type();
+
+	if (t == rapidxml::node_element)
+	{
+		char * currentNode = node->name();
+
+		printf("[%s][id: %s]\n", currentNode, getValue(node, "name"));
+		TSXTileSet * t = &MapLoaded.tilesets[currentTileset].tileset;
+
+		if (std::strcmp(currentNode, "tileset") == 0)
+		{
+			t->name    = getValue(node, "name");
+			t->version = getValue(node, "version");
+
+			t->tileWidth  = atoi(getValue(node, "tilewidth"));
+			t->tileHeight = atoi(getValue(node, "tileheight"));
+
+			t->tileCount = atoi(getValue(node, "tilecount"));
+			t->columns   = atoi(getValue(node, "columns"));
+
+			t->rows = t->tileCount / t->columns;
+		}
+
+		if (std::strcmp(currentNode, "image") == 0)
+		{
+			//Image
+			t->image.source = getValue(node, "source");
+
+			t->image.width = atoi(getValue(node, "width"));
+			t->image.height = atoi(getValue(node, "height"));
+			
+		}
+		if (std::strcmp(currentNode, "tile") == 0)
+		{
+			printf("[%s]\n", getValue(node, "id"));
+		}
+
+		/*
+		if (std::strcmp(currentNode, "objectgroup") == 0)
+		{
+
+			MapObjectGroup og;
+			og.name = getValue(node, "name");
+			og.id = atoi(getValue(node, "id"));
+
+			og.visible = getValue(node, "visible") == "null" ? true : false;
+
+			//Inherit parent visibility
+			if (parentGroup != NULL && !parentGroup->visible) og.visible = false;
+
+			//processObjects(node, parentGroup);
+			rapidxml::xml_node<char> * objectNode;
+			objectNode = node->first_node("object");
+
+			while (objectNode != NULL)
+			{
+				MapObject o;
+
+				o.name = getValue(objectNode, "name");
+				o.id = atoi(getValue(objectNode, "id"));
+				o.type = getValue(objectNode, "type");
+
+				o.x = atoi(getValue(objectNode, "x"));
+				o.y = atoi(getValue(objectNode, "y"));
+
+				o.width = atoi(getValue(objectNode, "width"));
+				o.height = atoi(getValue(objectNode, "height"));
+
+				o.visible = getValue(objectNode, "visible") == "null" ? true : false;
+				//Inherit parent visibility
+				if (parentGroup != NULL && !parentGroup->visible) o.visible = false;
+
+				//Inherit parent name if current name is null.
+				if (o.name == "null") o.name = og.name;
+
+				//Add current object to CurrentMap objects array.
+				MapLoaded.objects.push_back(o);
+
+				objectNode = objectNode->next_sibling("object");
+			}
+
+		}
+
+		*/
+
+		//Child node.
+		for (rapidxml::xml_node<>* n = node->first_node(); n; n = n->next_sibling()) {
+			parseTSX(n, currentTileset, indent + 1, parentGroup);
+		}
+
+	}
+
+
 }
 
 void pery::TMX2Map::processProperties(rapidxml::xml_node<>* node, std::map<std::string, std::string>* properties)

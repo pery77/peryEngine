@@ -452,6 +452,7 @@ namespace pery {
 		}
 
 		void parseTMX(rapidxml::xml_node<>* node, int indent = 0, Group * parentGroup = NULL);
+		void parseTSX(rapidxml::xml_node<>* node, int currentTileset, int indent = 0,   Group * parentGroup = NULL);
 		void processProperties(rapidxml::xml_node<>* node, std::map<std::string, std::string> * properties);
 	};
 }
