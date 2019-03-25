@@ -27,6 +27,8 @@ namespace pery
 
 		TMX2Map* CurrentMap;
 
+		std::vector<Rectangle> Colliders;
+
 	private:
 
 		std::vector<std::vector<std::vector<Tile*>>> map; //[Layer,x,y]

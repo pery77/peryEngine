@@ -19,4 +19,9 @@
    </object>
   </objectgroup>
  </tile>
+ <tile id="120">
+  <objectgroup draworder="index">
+   <object id="1" name="collision" x="0" y="0" width="16" height="16"/>
+  </objectgroup>
+ </tile>
 </tileset>

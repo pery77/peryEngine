@@ -136,6 +136,14 @@ void pery::TMX2Map::ShowMapInfo()
 	}
 
 	std::cout << std::endl;
+
+	printf("Layers.\n");
+	for (int i = 0; i < MapLoaded.renderQueue.size(); i++)
+	{
+		RenderQueue *  rq = &MapLoaded.renderQueue[i];
+		printf("  Layer: %s\n",rq->layer.name.c_str());
+		printf("  visibility: %s\n", rq->layer.visible ? "true" : "false");
+	}
 /*
 	//Show layers info
 	std::cout << MapLoaded.layers.size() << " layer(s)" << std::endl;
@@ -178,6 +186,7 @@ void pery::TMX2Map::ShowMapInfo()
 			" | ID: " << MapLoaded.objects[i].id << std::endl;
 
 		std::cout << std::endl;
+
 
 	}
 
@@ -337,6 +346,9 @@ void pery::TMX2Map::parseTMX( rapidxml::xml_node<>* node, int indent, Group * pa
 				o.visible = getValue(objectNode, "visible") == "null" ? true : false;
 				//Inherit parent visibility
 				if (parentGroup != NULL && !parentGroup->visible) o.visible = false;
+
+				//Inherit parent name if current name is null.
+				if(o.name=="null") o.name = og.name;
 
 				//Add current object to CurrentMap objects array.
 				MapLoaded.objects.push_back(o);

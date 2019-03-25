@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="2019.02.10" orientation="orthogonal" renderorder="right-up" width="64" height="20" tilewidth="16" tileheight="16" infinite="0" backgroundcolor="#001722" nextlayerid="19" nextobjectid="5">
+<map version="1.2" tiledversion="2019.02.10" orientation="orthogonal" renderorder="right-up" width="64" height="20" tilewidth="16" tileheight="16" infinite="0" backgroundcolor="#001722" nextlayerid="20" nextobjectid="24">
  <tileset firstgid="1" source="../Tilesets/tile2blocks.tsx"/>
  <tileset firstgid="97" source="../Tilesets/tileset1.tsx"/>
  <tileset firstgid="353" source="../Tilesets/space_merc.tsx"/>
- <group id="18" name="fondos">
+ <group id="18" name="fondos" visible="0">
   <layer id="17" name="Tile Layer 3" width="64" height="20">
    <properties>
     <property name="isImage" type="bool" value="true"/>
@@ -27,7 +27,26 @@
  </group>
  <layer id="15" name="Tile Layer 1" width="64" height="20">
   <data encoding="base64" compression="zlib">
-   eJztk+kNwjAMhcMi7EaL+p8W2AB24liAASrBNrgSkayHE8c9hFBi6SlK4jzny9E455rMlWsU/sJf+PON3Phf0M+NH8PKj+e39Lo5fGJryv3L/L3R50a6T9/O6Eit/4S+xP9LlqVrH0hH1v+39299lxgn0pn1Lfx4dnOExXNqfb+e+yB/777P2P8ZPDsM/Fuh4P4hT8mL5/ZO3ut6Ffbx67mP569JFbQhVZATyx/mtrDHTYJvBWNaDS1P8q4Zf0dqoQ2phZxY/jC3J10+upJ2Cb4tjGk1tDzJuwP+pTTwP5hC/GOk3ZWmGL/kPeaNaPwWBu0tWPdZ7t+5N3oo01w=
+   eJztk30KwjAMxbOLeBK9imAn+99NvYHeyY8LeICB3sYWVgjPtmk3h0gbeIxu6Ut+bdYQUZO5co3CX/gLf76RG/8L1rnxY6Ty4/nNve8bPqE95f7d/H2iz03rPr2d0RFb/wlrF/8vWeaufdA6svW/zX/qXGKctM5sncKPZ8djWRGttLaJ/YQ8p+SG9nMf5O/p84ztP4NnZ8JyrwftI/rg/i5PXpMHz+3J3eui8vvY/dzH8tdaCp4+KcgJ5ZtvOBObCF8F76QaUp7Lu2b8nVYLT59ayAnlm29mJi6Drlq7CN8W3kk1pDyXdwf8c8nwP5h8/GMk3ZWkEL/Le8yMSPwpDNIspPZZ7p/oDRsD1RA=
   </data>
  </layer>
+ <objectgroup color="#aa0000" id="19" name="collider">
+  <object id="7" x="0" y="0" width="16" height="320"/>
+  <object id="8" x="16" y="0" width="992" height="16"/>
+  <object id="9" x="16" y="240" width="384" height="80"/>
+  <object id="10" x="448" y="240" width="560" height="80"/>
+  <object id="11" x="1008" y="0" width="16" height="320"/>
+  <object id="12" x="928" y="208" width="64" height="32"/>
+  <object id="13" x="944" y="176" width="32" height="32"/>
+  <object id="14" x="64" y="176" width="32" height="16"/>
+  <object id="15" x="160" y="208" width="32" height="32"/>
+  <object id="17" x="272" y="160" width="32" height="16"/>
+  <object id="19" x="496" y="208" width="32" height="32"/>
+  <object id="20" x="560" y="176" width="32" height="16"/>
+  <object id="21" x="672" y="208" width="32" height="32"/>
+  <object id="22" x="784" y="160" width="32" height="16"/>
+  <object id="23" x="240" y="240">
+   <polyline points="0,0 64,-32 80,-32 80,0 0,0"/>
+  </object>
+ </objectgroup>
 </map>

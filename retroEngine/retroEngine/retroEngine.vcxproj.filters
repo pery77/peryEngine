@@ -77,12 +77,6 @@
     <ClInclude Include="cameraView.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="minijson_reader.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="gason.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="rapidxml\rapidxml.hpp">
       <Filter>Source Files\rapidxml</Filter>
     </ClInclude>

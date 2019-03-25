@@ -137,6 +137,18 @@ void pery::Level::LoadLevel()
 			
 		}
 	}
+
+	for (int i = 0; i < CurrentMap->MapLoaded.objects.size(); i++)
+	{
+		MapObject * o = &CurrentMap->MapLoaded.objects[i];
+		if (o->name == "collider")
+		{
+			Rectangle r = { (float)o->x, (float)o->y, (float)o->width, (float)o->height };
+			Colliders.push_back(r);				
+		}
+
+	}
+
 }
 
 void pery::Level::SetDimensions(int layers, int width, int height)

@@ -154,10 +154,8 @@
     <ClInclude Include="..\..\raylib\include\raylib.h" />
     <ClInclude Include="cameraView.h" />
     <ClInclude Include="engine.h" />
-    <ClInclude Include="gason.h" />
     <ClInclude Include="glow.h" />
     <ClInclude Include="level.h" />
-    <ClInclude Include="minijson_reader.hpp" />
     <ClInclude Include="miniz\miniz.h" />
     <ClInclude Include="rapidxml\rapidxml.hpp" />
     <ClInclude Include="rapidxml\rapidxml_iterators.hpp" />

@@ -158,11 +158,27 @@ void pery::Engine::RenderFrame()
 			}
 		}
 	}
-	
 
-	Vector2 cursor = { ballPosition.x - camera->GetPosition().x + 240, ballPosition.y - camera->GetPosition().y + 136 };
-	DrawText(FormatText("%i,%i",(int)camera->GetPosition().x,(int)camera->GetPosition().y), cursor.x-10, cursor.y+10, 2, RED);
-	DrawCircleV(cursor, 4, RED);
+	bool c = false;
+	Vector2 cursor = { ballPosition.x - camera->GetPosition().x + ScreenWidth * 0.3, ballPosition.y - camera->GetPosition().y + ScreenHeight * 0.5 };
+
+	for (int i = 0; i < level->Colliders.size(); i++)
+	{
+		float x = level->Colliders[i].x - camera->GetPosition().x;
+		float y = level->Colliders[i].y - camera->GetPosition().y;
+		float w = level->Colliders[i].width;
+		float h = level->Colliders[i].height;
+		//DrawRectangle(x, y, w, h, {255,0,0,80});
+
+		if (CheckCollisionCircleRec({ cursor.x, cursor.y }, 4, { x, y, w, h })) c = true;
+		
+	}
+	Color col = GREEN;
+	if (c) col = RED;
+
+	//DrawText(FormatText("%i,%i",(int)camera->GetPosition().x,(int)camera->GetPosition().y), cursor.x-10, cursor.y+10, 2, RED);
+	DrawText(FormatText("%i,%i", (int)cursor.x, (int)cursor.y), cursor.x - 10, cursor.y + 10, 2, RED);
+	DrawCircleV(cursor, 4, col);
 	
 	//End draw game in main texture.
 	EndTextureMode();
