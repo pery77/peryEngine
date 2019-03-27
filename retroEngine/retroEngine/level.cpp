@@ -3,6 +3,47 @@ using namespace std;
 
 #include <iostream>
 
+//Collision 
+void pery::Level::CreateBoxCollider(int x, int y, int w, int h)
+{
+	w = w * 0.5f;
+	h = h * 0.5f;
+
+	b2BodyDef BodyDef;
+	BodyDef.position = b2Vec2(x + w, y + h);
+	BodyDef.type = b2_staticBody;
+
+	b2Body* Body = World->CreateBody(&BodyDef);
+
+	b2PolygonShape Shape;
+	Shape.SetAsBox(w, h); // Creates a box shape. Divide your desired width and height by 2.
+	
+	b2FixtureDef FixtureDef;
+	FixtureDef.density = 0.f;  // Sets the density of the body
+	FixtureDef.shape = &Shape; // Sets the shape
+	
+	Body->CreateFixture(&FixtureDef); // Apply the fixture definition
+}
+
+void pery::Level::CreateBox(int x, int y)
+{
+	b2BodyDef BodyDef;
+	BodyDef.position = b2Vec2(x, y);
+	BodyDef.type = b2_dynamicBody;
+
+	b2Body* Body = World->CreateBody(&BodyDef);
+
+	b2PolygonShape Shape;
+	Shape.SetAsBox(8, 8);
+
+	b2FixtureDef FixtureDef;
+	FixtureDef.density = 1.f;
+	FixtureDef.friction = 0.7f;
+	FixtureDef.shape = &Shape;
+
+	Body->CreateFixture(&FixtureDef);
+}
+
 pery::Level::Level(std::string levelName)
 {
 
@@ -25,6 +66,10 @@ pery::Level::Level(std::string levelName)
 
 	SetDimensions(CurrentMap->MapLoaded.renderQueue.size(), width, height);
 
+	//Setup phyisics
+	b2Vec2 Gravity(0, 9.8 * pixelsPerMeter);
+	World = new b2World(Gravity);
+
 	LoadLevel();
 
 }
@@ -40,6 +85,8 @@ pery::Level::~Level()
 	delete CurrentMap;
 
 	map.clear();
+
+	delete World;
 
 }
 
@@ -144,7 +191,8 @@ void pery::Level::LoadLevel()
 		if (o->name == "collider")
 		{
 			Rectangle r = { (float)o->x, (float)o->y, (float)o->width, (float)o->height };
-			Colliders.push_back(r);				
+			Colliders.push_back(r);		
+			CreateBoxCollider( o->x, o->y, o->width, o->height);
 		}
 
 	}

@@ -1,9 +1,12 @@
 #include "engine.h"
 
 Vector2 ballPosition = { 0, 0 };
+Vector2 MouseWorldPosition;
+
 
 pery::Engine::Engine()
 {
+
 }
 
 pery::Engine::~Engine()
@@ -33,6 +36,12 @@ void pery::Engine::Init()
 	glow->SetFilter(1);
 
 	LoadLevel("test1");
+
+	for (int i = 1; i < 30; i++)
+	{
+		level->CreateBox(16 + i * 16, 32);
+	}
+
 }
 
 //Start engine.
@@ -65,7 +74,12 @@ void pery::Engine::ProcessInput()
 
 	camera->GoTo(ballPosition.x, ballPosition.y);
 
-
+	if (IsMouseButtonReleased(MOUSE_LEFT_BUTTON))
+	{
+		int MouseX = (int)MouseWorldPosition.x;
+		int MouseY = (int)MouseWorldPosition.y;
+		level->CreateBox( MouseX, MouseY);
+	}
 
 	if (IsKeyPressed(KEY_SPACE))
 	{
@@ -84,6 +98,11 @@ void pery::Engine::ProcessInput()
 void pery::Engine::Update()
 {
 	camera->Update();
+	level->World->Step(1 / 60.f, 8, 3);
+
+
+
+
 }
 
 void pery::Engine::LoadLevel(std::string name)
@@ -100,6 +119,11 @@ void pery::Engine::RenderFrame()
 	Rectangle bounds = camera->GetTileBounds();
 	camOffsetX = camera->GetOffset().x;
 	camOffsetY = camera->GetOffset().y;
+
+	float MouseX = (GetMousePosition().x * 1 / ScreenScale) + camera->GetPosition().x;
+	float MouseY = (GetMousePosition().y * 1 / ScreenScale) + camera->GetPosition().y;
+
+	MouseWorldPosition = { MouseX, MouseY };
 
 	BeginDrawing();
 	ClearBackground(BLANK);
@@ -170,7 +194,7 @@ void pery::Engine::RenderFrame()
 		float h = level->Colliders[i].height;
 		//DrawRectangle(x, y, w, h, {255,0,0,80});
 
-		if (CheckCollisionCircleRec({ cursor.x, cursor.y }, 4, { x, y, w, h })) c = true;
+		//if (CheckCollisionCircleRec({ cursor.x, cursor.y }, 4, { x, y, w, h })) c = true;
 		
 	}
 	Color col = GREEN;
@@ -179,7 +203,33 @@ void pery::Engine::RenderFrame()
 	//DrawText(FormatText("%i,%i",(int)camera->GetPosition().x,(int)camera->GetPosition().y), cursor.x-10, cursor.y+10, 2, RED);
 	DrawText(FormatText("%i,%i", (int)cursor.x, (int)cursor.y), cursor.x - 10, cursor.y + 10, 2, RED);
 	DrawCircleV(cursor, 4, col);
+
+	DrawText(FormatText("%i,%i", (int)MouseX, (int)MouseY),MouseX - camera->GetPosition().x,
+		MouseY - camera->GetPosition().y, 2, RED);
+
+	for (b2Body* BodyIterator = level->World->GetBodyList(); BodyIterator != 0; BodyIterator = BodyIterator->GetNext())
+	{
+		if (BodyIterator->GetType() == b2_dynamicBody)
+		{
+
+			Vector2 p = { BodyIterator->GetPosition().x - camera->GetPosition().x, 
+				 BodyIterator->GetPosition().y - camera->GetPosition().y };
+			DrawRectanglePro({ p.x, p.y, 16, 16 }, { 8,8 },
+				180 / b2_pi * BodyIterator->GetAngle(), BLUE);
+		}
+		else
+		{/*
+			sf::Sprite GroundSprite;
+			GroundSprite.SetTexture(GroundTexture);
+			GroundSprite.SetOrigin(400.f, 8.f);
+			GroundSprite.SetPosition(BodyIterator->GetPosition().x * SCALE, BodyIterator->GetPosition().y * SCALE);
+			GroundSprite.SetRotation(180 / b2_pi * BodyIterator->GetAngle());
+			Window.Draw(GroundSprite);*/
+		}
+	}
 	
+	
+
 	//End draw game in main texture.
 	EndTextureMode();
 

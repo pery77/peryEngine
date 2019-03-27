@@ -6,6 +6,7 @@
 #include "tilesetManager.h"
 
 #include "TMX2Map.h"
+#include "Box2D\Box2D.h"
 
 namespace pery
 {
@@ -27,11 +28,18 @@ namespace pery
 
 		TMX2Map* CurrentMap;
 
+		//Collision
 		std::vector<Rectangle> Colliders;
+		
+		void CreateBoxCollider(int x, int y, int w, int h);
+		void CreateBox( int x, int y);
+
+		const float pixelsPerMeter = 16.0f;
+		b2World * World;
 
 	private:
 
-		std::vector<std::vector<std::vector<Tile*>>> map; //[Layer,x,y]
+		std::vector<std::vector<std::vector<Tile*>>> map; //[layer,x,y]
 
 		int width, height, layers, tileSize;
 		void SetDimensions(int layers, int width, int height);

@@ -4,7 +4,6 @@
 #include "level.h"
 #include "cameraView.h"
 
-
 namespace pery {
 
 	class Engine {
