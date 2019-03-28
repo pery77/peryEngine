@@ -189,6 +189,7 @@
     <ClCompile Include="engine.cpp" />
     <ClCompile Include="glow.cpp" />
     <ClCompile Include="level.cpp" />
+    <ClCompile Include="levelEntity.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="miniz\miniz.c" />
     <ClCompile Include="tilesetManager.cpp" />
@@ -247,6 +248,7 @@
     <ClInclude Include="Box2D\Rope\b2Rope.h" />
     <ClInclude Include="cameraView.h" />
     <ClInclude Include="engine.h" />
+    <ClInclude Include="levelEntity.h" />
     <ClInclude Include="glow.h" />
     <ClInclude Include="level.h" />
     <ClInclude Include="miniz\miniz.h" />

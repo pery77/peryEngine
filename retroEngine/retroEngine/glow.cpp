@@ -10,7 +10,7 @@ pery::Glow::Glow(int screenWidth, int screenHeight)
 	SetFilter(0);
 	SetSpread(1);
 
-	Glow::SetValues(0.5, 1, 1);
+	Glow::SetValues(0.99, 0, 0);
 
 }
 
@@ -70,7 +70,8 @@ Texture2D pery::Glow::Blur(Texture2D texture)
 
 void pery::Glow::BigGlow(Texture2D texture)
 {
-	SetValues(.6, 1, 1.1);
+	//SetValues(.6, 1, 1.1);
+	SetValues(.9, 0.1, 0.1);
 	SetSpread(4);
 	BlurTexture = DrawGlow(texture);
 	SetSpread(2);

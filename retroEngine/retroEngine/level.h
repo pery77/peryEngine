@@ -7,6 +7,7 @@
 
 #include "TMX2Map.h"
 #include "Box2D\Box2D.h"
+#include "levelEntity.h"
 
 namespace pery
 {
@@ -36,6 +37,8 @@ namespace pery
 
 		const float pixelsPerMeter = 16.0f;
 		b2World * World;
+
+		std::vector<LevelEntity *> entities;
 
 	private:
 

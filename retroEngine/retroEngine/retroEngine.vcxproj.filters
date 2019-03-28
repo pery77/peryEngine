@@ -213,6 +213,9 @@
     <ClCompile Include="Box2D\Rope\b2Rope.cpp">
       <Filter>Source Files\Box2D\Rope</Filter>
     </ClCompile>
+    <ClCompile Include="levelEntity.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\raylib\include\raylib.h">
@@ -397,6 +400,9 @@
     </ClInclude>
     <ClInclude Include="Box2D\Rope\b2Rope.h">
       <Filter>Source Files\Box2D\Rope</Filter>
+    </ClInclude>
+    <ClInclude Include="levelEntity.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

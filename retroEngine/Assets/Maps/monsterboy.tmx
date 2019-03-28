@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.2" tiledversion="2019.02.10" orientation="orthogonal" renderorder="right-up" width="128" height="128" tilewidth="16" tileheight="16" infinite="0" nextlayerid="4" nextobjectid="1">
+ <tileset firstgid="1" source="../Tilesets/monsterboy.tsx"/>
+ <layer id="3" name="Back" width="128" height="128">
+  <properties>
+   <property name="isImage" type="bool" value="true"/>
+   <property name="speedX" type="float" value="0"/>
+   <property name="speedY" type="float" value="0"/>
+  </properties>
+  <data encoding="base64" compression="zlib">
+   eJzt1sdxYlEYBWFMOAjvSQnvTUry3qQEEiDhV9OLyeCp6tUM/VX18l+dxb0XkUjkgpKUojRlKEs5ylOBilSiMlWoSrW/t0HuFa6g+7n/v61ODWpSi9rUoS71qE8DGtKIxjShKc1+4V7hmtOCPumLlrSiNX3TD21oSzva04GOdPqFe4XL/c+b+5839z9viSj/d0pSitKUoSzlKE8FKlKJylShKtWiwe8VrjobNKhJLWpTh7rUoz4NaEgjGtOEpjSLBr9XuC7Z4Iqu6YZu6Y7u6YEe6Yme6YVe6Y3e6SMa/F7hmrPBgj7pi5a0ojV90w9taEs72tOBjnSKBr9XuBIx3m9KUorSlKEs5ShPBSpSicpUoSrVYsHvFS73P2/uf97qbNCgJrWoTR3qUo/6NKAhjWhME5rSLBb8XuG6ZIMruqYbuqU7uqcHeqQneqYXeqU3eqePWPB7hWvOBgv6pC9a0orW9E0/tKEt7WhPBzrSKRb8XuFKxHm/KUkpSlOGspSjPBWoSCUqU4WqVIsHv1e46mzQoCa1qE0d6lKP+jSgIY1oTBOa0iwe/F6SJEmSJEmSJEmSJEmSJEmSJEmSJEmSJEmSJEmSJEmSJEmSJEmSJEmSJEmSJEmSJEmSJEmSJEmSJEmSJEmSJEmSJEmSJEmSJEmSJEmSJEmSJEn/lz8CJErE
+  </data>
+ </layer>
+ <layer id="1" name="Map" width="128" height="128">
+  <data encoding="base64" compression="zlib">
+   eJzt3UFOwkAYBtAWVtzABONh9BzqwpvgBdyJMcrCm+AhhBA1UQ/iEDACNlJrf9vIe8kXSjKFIV9nGlbNMgAAdslR0xOgUedNT2Dporf+/jjPspOU07yZ+eyKNvR/mToeplytdH2Tjm9TRvoP1Yb+izym3p9SnvUfKrL/UW/7mO+c6T5cVP8HvfXXKu70H26Qxf4H6HeybL9T7Vz9x5v3X+ce8JA6mxRkWqFL/cervf+01icFmVbYA/Qfr0z/s7z8Pv6b/mfLvuff9ZKOX1PeUq5dB2EG+WeGna/Z3MeLxhSN2za+7PlV7x2UM84X+Vin/W7x+t1M2XF1fEaVewflrHa/etyWzK8R/ceJXuN1RP9xmljP+m+Ppte2/pu1121/9A8AAAAAAAAAAAAAAAAAAAAAAMB/cRgczxdrt0Fw2vp8IRbGwbn/u58CAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwI++u2iDT
+  </data>
+ </layer>
+</map>

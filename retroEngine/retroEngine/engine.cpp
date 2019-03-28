@@ -35,7 +35,7 @@ void pery::Engine::Init()
 	glow = new Glow(ScreenWidth, ScreenHeight);
 	glow->SetFilter(1);
 
-	LoadLevel("test1");
+	LoadLevel("monsterboy");
 
 	for (int i = 1; i < 30; i++)
 	{
@@ -91,7 +91,7 @@ void pery::Engine::ProcessInput()
 	}
 	if (IsKeyPressed(KEY_TWO)) //Reload level
 	{
-		LoadLevel("test2");
+		LoadLevel("monsterboy");
 	}
 }
 
@@ -244,7 +244,8 @@ void pery::Engine::RenderFrame()
 	glow->BigGlow(mainRender.texture);
 	DrawTexturePro(glow->BlurTexture, sourceRec, scaledRec, { 0, 0 }, 0, WHITE);
 	//Draw glow second pass
-	glow->SetValues(.5, 1.1, 1.5);
+	//glow->SetValues(.5, 1.1, 1.5);
+	glow->SetValues(.99, 0.1, 0.1);
 	glow->BlurTexture = glow->DrawGlow(mainRender.texture);
 	DrawTexturePro(glow->BlurTexture, sourceRec, scaledRec, { 0, 0 }, 0, WHITE);
 	//End draw main + postprocess 
