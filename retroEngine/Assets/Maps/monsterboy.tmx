@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="2019.02.10" orientation="orthogonal" renderorder="right-up" width="128" height="128" tilewidth="16" tileheight="16" infinite="0" nextlayerid="4" nextobjectid="1">
+<map version="1.2" tiledversion="2019.02.10" orientation="orthogonal" renderorder="right-up" width="128" height="128" tilewidth="16" tileheight="16" infinite="0" nextlayerid="5" nextobjectid="9">
  <tileset firstgid="1" source="../Tilesets/monsterboy.tsx"/>
  <layer id="3" name="Back" width="128" height="128">
   <properties>
@@ -13,7 +13,17 @@
  </layer>
  <layer id="1" name="Map" width="128" height="128">
   <data encoding="base64" compression="zlib">
-   eJzt3UFOwkAYBtAWVtzABONh9BzqwpvgBdyJMcrCm+AhhBA1UQ/iEDACNlJrf9vIe8kXSjKFIV9nGlbNMgAAdslR0xOgUedNT2Dporf+/jjPspOU07yZ+eyKNvR/mToeplytdH2Tjm9TRvoP1Yb+izym3p9SnvUfKrL/UW/7mO+c6T5cVP8HvfXXKu70H26Qxf4H6HeybL9T7Vz9x5v3X+ce8JA6mxRkWqFL/cervf+01icFmVbYA/Qfr0z/s7z8Pv6b/mfLvuff9ZKOX1PeUq5dB2EG+WeGna/Z3MeLxhSN2za+7PlV7x2UM84X+Vin/W7x+t1M2XF1fEaVewflrHa/etyWzK8R/ceJXuN1RP9xmljP+m+Ppte2/pu1121/9A8AAAAAAAAAAAAAAAAAAAAAAMB/cRgczxdrt0Fw2vp8IRbGwbn/u58CAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwI++u2iDT
+   eJzt3d1qE0EYxvHZpCpBVNCTmqr1WuqhqGDPCtUD7yTegGfGihYRvJAInqmgB/aDqqjobThrs3QzOx+7OzPdrPP/wUvSZrNJ99l5Z7KlVAgAAACk5FbXbwCdetz1G5h7Mlr8ejsT4oGsh1k37ycVy5D/U5nxVNazUtYv5P2XsnbJP6plyF/nSOb+Vda3Uv7bkfvBJ1mf4+1+KcXMf3fk3sbmkZL1kXI+hHZZ7vtKYv0mVv43Rou3bbxWslDPh9Duy/1vJpb/RMT9DLA2EOLaoN1zX8ks3szrt6w/LbIZWx57L+uDoz42f8leyfMP2QO+yIz2NLXfIjt1/Ku2ZN2U26xnJ7dbDfZ/QW5/0VGX/vN+EDx/Odb3NLXfoge48t8Ri9nntzsN9n9Hbn/XUfcSyX/dks9hVr+P++R/OD/W+Wv9kPd/yvol67khgwNRHf8H7pf5x9Q7fHtK30yyk5oOqqX2cd02uu1c29d9vm3uyLNWx3/d/E29w7en9M0sO65inK4N9eNXrbrbhdhHuXcUmeR8xr/puT777KNy9uX7rjrrKN9zo3yOmOaOcVYdq+Oa87Wpd/j0lD5qMz6vZ/r6XnosVP62tYPPXM34P9YmD1P+5Qo5b5jy95mrTb3Dp6f00WnnH3L8pzZWY7Ad92I98K5BnrY1xOqwfemkNlfHoOZly6/OeaB7ft7zrw7t6wVX6TD+/RV52ZjW9brzQc1/1ZB909JJba6Oofj8b6PO63nu6uc9Xc9Wc58Oqtd8ilvbNSPT9Z/UrtXFoOvXqnKGZ+Tj5xr07XL2odd/qV2ri0F3vFW2TNWaGb7vu/4/v1It5n9/rmOf0+Wpy7TJ9cOm+d9eqRbrf3918q+bUxf5M/79uLKvs13M7IvaENVi/e+vbv6h9tm2JqJarP/9lY9xiN/pqhVqn7r8Wf/7i9mzQ5YO87+/rnP1zZ/1f7oY/2lj/Q8AAAAAAAAAAAAAAAAAAAAASMVG5OL/iy033d9Vhqxl/f9CODaLXG9P70cBAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgEb+AgaYvsU=
   </data>
  </layer>
+ <objectgroup color="#aa0000" id="4" name="collider">
+  <object id="1" x="0" y="240" width="672" height="48"/>
+  <object id="2" x="0" y="80" width="16" height="96"/>
+  <object id="3" x="0" y="176" width="32" height="64"/>
+  <object id="4" x="528" y="112" width="48" height="16"/>
+  <object id="5" x="608" y="96" width="48" height="48"/>
+  <object id="6" x="688" y="128" width="32" height="32"/>
+  <object id="7" x="752" y="192" width="96" height="256"/>
+  <object id="8" x="704" y="256" width="32" height="16"/>
+ </objectgroup>
 </map>

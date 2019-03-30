@@ -36,12 +36,12 @@ void pery::Engine::Init()
 	glow->SetFilter(1);
 
 	LoadLevel("monsterboy");
-
+	/*
 	for (int i = 1; i < 30; i++)
 	{
 		level->CreateBox(16 + i * 16, 32);
 	}
-
+	*/
 }
 
 //Start engine.
@@ -99,15 +99,12 @@ void pery::Engine::Update()
 {
 	camera->Update();
 	level->World->Step(1 / 60.f, 8, 3);
-
-
-
-
 }
 
 void pery::Engine::LoadLevel(std::string name)
 {
 	if (level != NULL) level->~Level();
+	
 	level = new Level(name);
 	camera = new CameraView(ScreenWidth, ScreenHeight, 1, level->GetWidth(), level->GetHeight(), level->GetTileSize());
 }
@@ -186,17 +183,6 @@ void pery::Engine::RenderFrame()
 	bool c = false;
 	Vector2 cursor = { ballPosition.x - camera->GetPosition().x + ScreenWidth * 0.3, ballPosition.y - camera->GetPosition().y + ScreenHeight * 0.5 };
 
-	for (int i = 0; i < level->Colliders.size(); i++)
-	{
-		float x = level->Colliders[i].x - camera->GetPosition().x;
-		float y = level->Colliders[i].y - camera->GetPosition().y;
-		float w = level->Colliders[i].width;
-		float h = level->Colliders[i].height;
-		//DrawRectangle(x, y, w, h, {255,0,0,80});
-
-		//if (CheckCollisionCircleRec({ cursor.x, cursor.y }, 4, { x, y, w, h })) c = true;
-		
-	}
 	Color col = GREEN;
 	if (c) col = RED;
 
@@ -207,28 +193,8 @@ void pery::Engine::RenderFrame()
 	DrawText(FormatText("%i,%i", (int)MouseX, (int)MouseY),MouseX - camera->GetPosition().x,
 		MouseY - camera->GetPosition().y, 2, RED);
 
-	for (b2Body* BodyIterator = level->World->GetBodyList(); BodyIterator != 0; BodyIterator = BodyIterator->GetNext())
-	{
-		if (BodyIterator->GetType() == b2_dynamicBody)
-		{
+	level->ProcessEntities(camera->GetPosition().x, camera->GetPosition().y);
 
-			Vector2 p = { BodyIterator->GetPosition().x - camera->GetPosition().x, 
-				 BodyIterator->GetPosition().y - camera->GetPosition().y };
-			DrawRectanglePro({ p.x, p.y, 16, 16 }, { 8,8 },
-				180 / b2_pi * BodyIterator->GetAngle(), BLUE);
-		}
-		else
-		{/*
-			sf::Sprite GroundSprite;
-			GroundSprite.SetTexture(GroundTexture);
-			GroundSprite.SetOrigin(400.f, 8.f);
-			GroundSprite.SetPosition(BodyIterator->GetPosition().x * SCALE, BodyIterator->GetPosition().y * SCALE);
-			GroundSprite.SetRotation(180 / b2_pi * BodyIterator->GetAngle());
-			Window.Draw(GroundSprite);*/
-		}
-	}
-	
-	
 
 	//End draw game in main texture.
 	EndTextureMode();

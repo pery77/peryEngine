@@ -30,15 +30,14 @@ namespace pery
 		TMX2Map* CurrentMap;
 
 		//Collision
-		std::vector<Rectangle> Colliders;
-		
-		void CreateBoxCollider(int x, int y, int w, int h);
 		void CreateBox( int x, int y);
 
 		const float pixelsPerMeter = 16.0f;
 		b2World * World;
 
 		std::vector<LevelEntity *> entities;
+
+		void ProcessEntities(int cameraX, int cameraY);
 
 	private:
 
