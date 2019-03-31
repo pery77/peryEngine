@@ -35,8 +35,9 @@ void pery::LevelEntity::CreateCollider(bool isStatic)
 	Body->CreateFixture(&FixtureDef); // Apply the fixture definition
 }
 
-void pery::LevelEntity::CreateSprite()
+void pery::LevelEntity::CreateSprite(Texture2D & tileset)
 {
+	sprite = new Sprite(tileset, 15, 2, 16, 16);
 }
 
 void pery::LevelEntity::DrawCollider(int cameraX, int cameraY)
@@ -50,4 +51,19 @@ void pery::LevelEntity::DrawCollider(int cameraX, int cameraY)
 
 	DrawRectanglePro(r, { (float)width,(float)height },
 		angle, col);
+
+}
+
+void pery::LevelEntity::DrawSprite(int cameraX, int cameraY)
+{
+	if (sprite != NULL) 
+	{
+		float angle = 180 / b2_pi * Body->GetAngle();
+		Rectangle r = { Body->GetPosition().x - cameraX, Body->GetPosition().y - cameraY,
+			(float)width * 2, (float)height * 2 };
+
+		DrawTexturePro(sprite->tilesetTexture, sprite->source, r, sprite->origin, angle, WHITE);
+
+	}
+		
 }

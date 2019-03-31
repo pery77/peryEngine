@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28307.329
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "retroEngine", "retroEngine\retroEngine.vcxproj", "{B6E37482-4353-446D-9DB6-9E7A829472A8}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "peryEngine", "peryEngine\peryEngine.vcxproj", "{B6E37482-4353-446D-9DB6-9E7A829472A8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

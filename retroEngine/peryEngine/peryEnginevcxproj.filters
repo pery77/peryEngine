@@ -216,6 +216,9 @@
     <ClCompile Include="levelEntity.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="sprite.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\raylib\include\raylib.h">
@@ -256,9 +259,6 @@
     </ClInclude>
     <ClInclude Include="miniz\miniz.h">
       <Filter>Source Files\miniz</Filter>
-    </ClInclude>
-    <ClInclude Include="TMX2Map.h">
-      <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="Box2D\Box2D.h">
       <Filter>Source Files\Box2D</Filter>
@@ -402,6 +402,12 @@
       <Filter>Source Files\Box2D\Rope</Filter>
     </ClInclude>
     <ClInclude Include="levelEntity.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="TMX2Map.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="sprite.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

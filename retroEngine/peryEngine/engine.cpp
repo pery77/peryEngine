@@ -35,13 +35,9 @@ void pery::Engine::Init()
 	glow = new Glow(ScreenWidth, ScreenHeight);
 	glow->SetFilter(1);
 
+	//Load first level.
 	LoadLevel("monsterboy");
-	/*
-	for (int i = 1; i < 30; i++)
-	{
-		level->CreateBox(16 + i * 16, 32);
-	}
-	*/
+	
 }
 
 //Start engine.
@@ -56,9 +52,9 @@ void pery::Engine::MainLoop()
 	while (!WindowShouldClose())    // Detect window close button or ESC key
 	{
 		ProcessInput();
-		Update();
 		RenderFrame();
-	}
+		Update();
+	}		
 
 	CloseWindow();					// Close window and OpenGL context
 }
@@ -98,7 +94,7 @@ void pery::Engine::ProcessInput()
 void pery::Engine::Update()
 {
 	camera->Update();
-	level->World->Step(1 / 60.f, 8, 3);
+	level->World->Step(1 / 60.f, 8, 3); //Physics update (60fps)
 }
 
 void pery::Engine::LoadLevel(std::string name)
@@ -106,7 +102,10 @@ void pery::Engine::LoadLevel(std::string name)
 	if (level != NULL) level->~Level();
 	
 	level = new Level(name);
+
+	if (camera != NULL) delete camera;
 	camera = new CameraView(ScreenWidth, ScreenHeight, 1, level->GetWidth(), level->GetHeight(), level->GetTileSize());
+
 }
 
 //Draw loop.

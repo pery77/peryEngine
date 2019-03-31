@@ -21,8 +21,9 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
     <ProjectGuid>{B6E37482-4353-446D-9DB6-9E7A829472A8}</ProjectGuid>
-    <RootNamespace>retroEngine</RootNamespace>
+    <RootNamespace>peryEngine</RootNamespace>
     <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
+    <ProjectName>peryEngine</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -192,6 +193,7 @@
     <ClCompile Include="levelEntity.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="miniz\miniz.c" />
+    <ClCompile Include="sprite.cpp" />
     <ClCompile Include="tilesetManager.cpp" />
     <ClCompile Include="tile.cpp" />
     <ClCompile Include="TMX2Map.cpp" />
@@ -256,6 +258,7 @@
     <ClInclude Include="rapidxml\rapidxml_iterators.hpp" />
     <ClInclude Include="rapidxml\rapidxml_print.hpp" />
     <ClInclude Include="rapidxml\rapidxml_utils.hpp" />
+    <ClInclude Include="sprite.h" />
     <ClInclude Include="tilesetManager.h" />
     <ClInclude Include="tile.h" />
     <ClInclude Include="TMX2Map.h" />

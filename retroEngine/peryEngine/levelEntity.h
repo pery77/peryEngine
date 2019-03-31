@@ -1,7 +1,6 @@
 #pragma once
-#include "raylib.h"
-#include "cameraView.h"
 
+#include "sprite.h"
 #include "Box2D\Box2D.h"
 
 
@@ -17,9 +16,12 @@ namespace pery
 		b2World* World;
 		b2Body*  Body;
 
+		Sprite* sprite;
+
 		void CreateCollider(bool isStatic);
-		void CreateSprite();
+		void CreateSprite(Texture2D & tileset);
 		void DrawCollider(int x, int y);
+		void DrawSprite(int x, int y);
 
 		int x, y, width, height;
 
