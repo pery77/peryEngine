@@ -79,7 +79,7 @@ void pery::Engine::ProcessInput()
 
 	if (IsKeyPressed(KEY_SPACE))
 	{
-		camera->GoTo(0, 0);
+		ballPosition = { 0,0 };
 	}
 	if (IsKeyPressed(KEY_ONE)) //Reload level
 	{
@@ -134,6 +134,7 @@ void pery::Engine::RenderFrame()
 	for (int i = 0; i < level->GetLayers(); i++)
 	{
 
+		//Draw image layer
 		if (level->CurrentMap->MapLoaded.renderQueue[i].imageLayer.id != -1)
 		{
 			MapImageLayer * il = &level->CurrentMap->MapLoaded.renderQueue[i].imageLayer;
@@ -145,16 +146,18 @@ void pery::Engine::RenderFrame()
 					il->offsety - camera->GetPosition().y * il->speedY, WHITE);
 			}
 		}
+		//Draw layer
 		if (level->CurrentMap->MapLoaded.renderQueue[i].layer.id != -1)
 		{
 			MapLayer * l = &level->CurrentMap->MapLoaded.renderQueue[i].layer;
-
+			//Draw layer as image (has isImage property :true)
 			if (l->isImage && l->visible)
 			{
 				DrawTexture(l->targetTexture.texture,
 					l->offsetx - camera->GetPosition().x * l->speedX,
 					l->offsety - camera->GetPosition().y * l->speedY, WHITE);
 			}
+			//Draw normal layer (tiles in screen)
 			else
 			{
 				if (l->visible)
@@ -170,7 +173,6 @@ void pery::Engine::RenderFrame()
 							if (t == NULL) continue;
 							t->Draw((x * t->tileWidth) - camOffsetX,
 								(y * t->tileHeight) - camOffsetY);
-							//DrawText(FormatText("%i", x*16-camOffsetX), x*16, y*16, 8, RED);
 
 						}
 					}

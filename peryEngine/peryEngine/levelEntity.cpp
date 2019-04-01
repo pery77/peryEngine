@@ -35,9 +35,9 @@ void pery::LevelEntity::CreateCollider(bool isStatic)
 	Body->CreateFixture(&FixtureDef); // Apply the fixture definition
 }
 
-void pery::LevelEntity::CreateSprite(Texture2D & tileset)
+void pery::LevelEntity::CreateSprite(TSXTileSet & tileset, int id)
 {
-	sprite = new Sprite(tileset, 15, 2, 16, 16);
+	sprite = new Sprite(tileset, id);
 }
 
 void pery::LevelEntity::DrawCollider(int cameraX, int cameraY)

@@ -19,7 +19,7 @@ namespace pery
 		Sprite* sprite;
 
 		void CreateCollider(bool isStatic);
-		void CreateSprite(Texture2D & tileset);
+		void CreateSprite(TSXTileSet & tileset, int id);
 		void DrawCollider(int x, int y);
 		void DrawSprite(int x, int y);
 

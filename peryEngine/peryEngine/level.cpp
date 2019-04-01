@@ -8,7 +8,7 @@ void pery::Level::CreateBox(int x, int y)
 {
 	LevelEntity * le = new LevelEntity(World, x-8, y-8, 16, 16);
 	le->CreateCollider(true);
-	le->CreateSprite(CurrentMap->MapLoaded.tilesets[0].tileset.image.texture);
+	le->CreateSprite(CurrentMap->MapLoaded.tilesets[0].tileset, 285);
 	entities.push_back(le);
 }
 
@@ -16,9 +16,8 @@ void pery::Level::ProcessEntities(int cameraX, int cameraY)
 {
 	for (int i = 0; i < entities.size(); i++)
 	{
-		//entities[i]->DrawCollider(cameraX , cameraY);
 		entities[i]->DrawSprite(cameraX, cameraY);
-	
+		//entities[i]->DrawCollider(cameraX , cameraY);
 	}
 }
 
@@ -47,6 +46,7 @@ pery::Level::Level(std::string levelName)
 	//Setup phyisics
 	b2Vec2 Gravity(0, 9.8 * pixelsPerMeter);
 	World = new b2World(Gravity);
+
 
 	LoadLevel();
 
