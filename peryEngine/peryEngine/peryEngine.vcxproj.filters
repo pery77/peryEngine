@@ -173,6 +173,9 @@
       <Filter>peryEngine</Filter>
     </ClCompile>
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="player.cpp">
+      <Filter>peryEngine</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Box2D\Common\b2BlockAllocator.h">
@@ -363,6 +366,9 @@
     </ClInclude>
     <ClInclude Include="water.h">
       <Filter>peryEngine</Filter>
+    </ClInclude>
+    <ClInclude Include="player.h">
+      <Filter>peryEngine\headers</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -193,6 +193,7 @@
     <ClCompile Include="levelEntity.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="miniz\miniz.c" />
+    <ClCompile Include="player.cpp" />
     <ClCompile Include="sprite.cpp" />
     <ClCompile Include="tilesetManager.cpp" />
     <ClCompile Include="tile.cpp" />
@@ -254,6 +255,7 @@
     <ClInclude Include="glow.h" />
     <ClInclude Include="level.h" />
     <ClInclude Include="miniz\miniz.h" />
+    <ClInclude Include="player.h" />
     <ClInclude Include="rapidxml\rapidxml.hpp" />
     <ClInclude Include="rapidxml\rapidxml_iterators.hpp" />
     <ClInclude Include="rapidxml\rapidxml_print.hpp" />

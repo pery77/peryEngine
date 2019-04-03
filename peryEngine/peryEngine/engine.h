@@ -3,6 +3,7 @@
 #include "glow.h"
 #include "level.h"
 #include "cameraView.h"
+#include "player.h"
 
 namespace pery {
 
