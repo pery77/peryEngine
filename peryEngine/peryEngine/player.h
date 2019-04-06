@@ -6,7 +6,7 @@ namespace pery
 	{
 
 	public:
-		Player();
+		Player() = default;
 		~Player();
 	};
 
